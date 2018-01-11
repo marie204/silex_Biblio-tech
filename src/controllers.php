@@ -43,7 +43,7 @@ $app->get('/nouveautes', function () use ($app){
 });
 
 $app->get('/admin', function () use ($app){
-    return 'ok7';
+    return 'ok8';
 });
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {

@@ -1,0 +1,66 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<header>
+	<div class="container headerContent">
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+			<a class="navbar-brand" href="index.php?page=accueil">BIBLIO-TECH</a>
+			<span id="openbtn" class="openbtn">&#9776;</span>
+		</nav>
+		<div class="row justify-content-between">
+			<div class="logo"></div>
+			<div class="reseaux col-12-justify-content-end">
+				<a href="http://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x caret" aria-hidden="true"></i></a>
+				<a href="http://viadeo.com/" target="_blank"><i class="fa fa-viadeo fa-2x caret" aria-hidden="true"></i></a>
+				<a href="http://facebook.com/" target="_blank"><i class="fa fa-facebook fa-2x caret" aria-hidden="true"></i></a>
+				<a href="http://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x caret" aria-hidden="true"></i></a>
+				<a href="http://linkedin.com/" target="_blank"><i class="fa fa-linkedin fa-2x caret" aria-hidden="true"></i></a>
+			</div>
+		</div>
+		<div class="row">
+			<nav id="nav-mnu-lg">
+				<ul id="menu-lg" class="menu">
+					<li><i class="fa fa-home" aria-hidden="true"></i><a <?php echo $accueilON;?> href="index.php?page=accueil">Accueil</a></li>
+					<li class="drop"><i class="fa fa-book" aria-hidden="true"></i><a href="#">Catalogue<i class="caret material-icons">arrow_drop_down</i></a>
+					<ul id="sous-menu">
+						<li><a <?php echo $catalogueDeAaZON;?> href="index.php?page=catalogue_de_a_a_z">De A à Z</a></li>
+						<li><a <?php echo $catalogueParGenreON;?> href="index.php?page=catalogue_par_genre">Par genre</a></li>
+						<li><a <?php echo $rechercheON;?> href="index.php?page=recherche">Recherche avancée</a></li>
+					</ul>
+				</li>
+				<li><i class="fa fa-book" aria-hidden="true"></i><a <?php echo $nouveautesON;?> href="index.php?page=nouveautes">Nouveautés</a></li>
+				<li><i class="fa fa-user" aria-hidden="true"></i><a <?php echo $aboutON;?> href="index.php?page=about">A propos</a></li>
+				<li><i class="fa fa-envelope" aria-hidden="true"></i><a <?php echo $contactON;?> href="index.php?page=contact">Contact</a></li>
+				<li><i class="fa fa-user" aria-hidden="true"></i><a <?php echo $contactON;?> href="index.php?page=membre">Connexion</a></li>
+			</ul>
+		</nav>
+		<!-- /*MENU MOBILES*/ -->
+		<nav>
+			<ul id="menu-xs" class="menu">
+				<a href="javascript:void(0)"  id="closebtn" class="closebtn">&times;</a>
+				<div class="logoMenuSwipe"></div>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a <?php echo $accueilON;?> href="index.php?page=accueil">Accueil</a></li>
+				<li class="drop"><i class="fa fa-book" aria-hidden="true"></i><a href="#">Catalogue<i id="btn-sous-menu" class="caret material-icons">arrow_drop_down</i></a>
+				<ul id="sous-menu">
+					<li><a <?php echo $catalogueDeAaZON;?> href="index.php?page=catalogue_de_a_a_z">De A à Z</a></li>
+					<li><a <?php echo $catalogueParGenreON;?> href="index.php?page=catalogue_par_genre">Par genre</a></li>
+					<li><a <?php echo $rechercheON;?> href="index.php?page=recherche">Recherche avancée</a></li>
+				</ul>
+			</li>		
+			<li id="li-sous-menu-mobile">
+				<ul id="ul-sous-menu-mobile">
+					<li><a <?php echo $catalogueDeAaZON;?> href="index.php?page=catalogue_de_a_a_z">De A à Z</a></li>
+					<li><a <?php echo $catalogueParGenreON;?> href="index.php?page=catalogue_par_genre">Par genre</a></li>
+					<li><a <?php echo $rechercheON;?> href="index.php?page=recherche">Recherche avancée</a></li>
+				</ul>
+			</li>
+			<li><i class="fa fa-book" aria-hidden="true"></i><a <?php echo $nouveautesON;?> href="index.php?page=nouveautes">Nouveautés</a></li>
+			<li><i class="fa fa-user" aria-hidden="true"></i><a <?php echo $aboutON;?> href="index.php?page=about">A propos</a></li>
+			<li><i class="fa fa-envelope" aria-hidden="true"></i><a <?php echo $contactON;?> href="index.php?page=contact">Contact</a></li>
+			<li><i class="fa fa-user" aria-hidden="true"></i><a <?php echo $contactON;?> href="index.php?page=membre">Connexion</a></li>
+			</ul>
+		</nav>
+		</div>
+	</div>
+</header>
+{% endblock %}

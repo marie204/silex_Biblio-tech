@@ -1,0 +1,35 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h6>Navigation</h6>
+				<ul class="nav">
+					<li><a href="index.php?page=accueil">Accueil</a></li>
+					<li><a href="index.php?page=nouveautes">Nouveautés</a></li>
+					<li><a href="index.php?page=about">A propos</a></li>
+					<li><a href="index.php?page=contact">Contact</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3">
+				<h6>Catalogue</h6>
+				<ul class="nav">
+					<li><a href="index.php?page=catalogue_de_a_a_z">De A à Z</a></li>
+					<li><a href="index.php?page=catalogue_par_genre">Par genre</a></li>
+					<li><a href="index.php?page=recherche_avancee">Recherche avancée</a></li>
+					<li>
+						<a href="index.php?page=login">Administrateur</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<div class="search">
+					<form class="frmFooter" name="frmHeader"><i class="fa fa-search" aria-hidden="true"></i><input id="inputSearchFooter" type="search" name="search" placeholder="Recherche rapide"></form>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>a
+{% endblock %}
