@@ -1,0 +1,229 @@
+/*ICONES RESEAUX SOCIAUX*/
+@media screen and (max-width:768px){
+    .reseaux {
+        display: none;
+    }
+}
+/*HEADER / LOGO / NAVIGATION*/
+ @media screen and (max-width:768px){
+    #nav-mnu-lg {
+        display: none;         
+    }
+    #menu-xs {
+        display: block;         
+    }
+}
+ @media screen and (max-width:768px){
+    header {
+        height:4em; 
+    }
+    .logo {
+        display: none;
+    }
+    .navbar {
+        display: block;
+        width: 100% !important; 
+        background: transparent !important; 
+        height:4em; 
+        margin-top:-1px;
+    }
+    .navbar-brand {
+        height:4em !important;
+        color: #fff !important;
+        margin-top:4px;
+    }
+}
+@media screen and (max-width:768px){
+     .openbtn {
+        position: absolute;
+        display: block!important;
+        top: 9px;
+        right: 10px;
+        font-size:30px;
+        color: #fff;
+        cursor:pointer;
+        z-index: 1000;
+    }   
+}
+@media screen and (max-width:768px){
+    .closebtn {
+        position: absolute;
+        display: block;
+        right: 20px;
+        top: 0px;
+        font-size:30px;
+        color: #333;
+        text-decoration: none!important;  
+        z-index: 2
+    }   
+    .closebtn:hover {
+        color: #333;  
+    }                          
+}
+@media screen and (max-width:768px){
+    nav {
+        position: absolute !important;
+        top:0px;
+        left: 0px;
+        z-index: 20000 !important;
+    }
+}
+@media screen and (max-width:768px){
+    .logoMenuSwipe {
+        background: url("../img/logo.png");
+        background-repeat: no-repeat;
+        background-position: 10px 10px;
+        background-size: 65%; 
+        width: 100%;
+        height: 100px;             
+    }
+}
+@media screen and (max-width:768px){
+    .menu {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        height: 40%;
+        width: 0;
+        z-index: 1000;
+        background: #FFF;
+        transition: width 0.5s;
+        overflow: hidden;
+        box-shadow: 3px 0px 3px #777;
+    }                                    
+}
+@media screen and (max-width:768px){
+    nav ul {
+        padding: 0px;
+        display: block;
+        height: 100% !important;
+    }
+}
+@media screen and (max-width:768px){
+    nav ul li { 
+        float: none;
+        border-bottom: 1px solid #ECECEC;
+    } 
+    nav ul li:hover { 
+        background: #777 !important;
+    }
+}
+@media screen and (max-width:768px){
+    nav ul li a {
+        color: #333;
+        display: block !important;
+        text-align: left;
+    }
+}
+@media screen and (max-width:768px){
+    .lienContact{
+        color: #333 !important;             
+    }
+}
+@media screen and (max-width:768px){
+    .drop:hover #sous-menu{
+        display: none;
+    }
+    #sous-menu {
+        position:inherit;
+        display: none;
+        top: 30px;
+        left: -10px;
+        border: 1px solid red;
+    }
+    #sous-menu li{
+        background: #ECECEC;
+        color: #333;
+        border: 1px solid #777;
+    }
+    #sous-menu li:last-child {
+        border-radius: 0 0 0 0; 
+    }
+    #sous-menu li a{
+        color: #000;
+    }
+    #sous-menu li a:hover{
+        color: #FFF;
+    }
+}
+/*MENU MOBILES*/
+@media screen and (max-width:768px){
+    #ul-sous-menu-mobile {
+        display: none; 
+        background: #ECECEC;                    
+    }
+    #li-sous-menu-mobile {
+        display: none; 
+        background: #ECECEC;                                  
+    }
+    #li-sous-menu-mobile:hover {
+        background: #ECECEC !important;                                      
+    }
+    #li-sous-menu-mobile a {
+        margin-left: 20px;            
+    }
+}
+    #li-sous-menu-mobile:hover {
+        background: #ECECEC !important;                                    
+    }
+    #li-sous-menu-mobile a {
+        margin-left: 20px;            
+    }
+/*LES ICONES DANS LE MENU SWIPE*/
+@media screen and (max-width:768px) {
+    .fa {
+        display:block !important;
+        float: left;
+        margin-right: 8px;
+        margin-top: 4px;       
+    }     
+    .caret {/* Petite flêche sous-menu*/
+        display:block !important; 
+        float: right;
+        margin-top: -3px;
+        margin-left: 3px;
+        right: 10px;  
+    }           
+}
+/**************************************************COLONNES***********************************************/
+@media screen and (max-width:768px) {
+    #aside {
+        margin-left: 0px;        
+        margin-right: 0px;   
+    }
+}
+/**************************************************CONTACT***********************************************/
+@media screen and (max-width:768px) {
+    textarea {
+        width:85vw !important;
+    }
+    input[type="text"] {
+        width:85vw !important;
+    }
+    .titreContact {
+        font-size: 1.8em;
+    }
+
+}
+/********************************************CATALOGUE***************************************************/
+
+
+/*********************************************PIED DE PAGE************************************************/
+@media screen and (max-width:768px) {
+    footer {
+        height: 60vh !important;
+        width: 100%;
+        padding: 10px 0 0px 15px;
+    }
+    footer ul{
+        border-bottom: 1px solid #777; 
+        padding: 0 0 10px 0;
+    }
+    .nav {
+        margin-bottom: 15px !important;
+    } 
+    /*SEARCH FOOTER ICON*/
+    .fa-search {
+        top:0px;       
+    }
+}

@@ -19,7 +19,7 @@ $app->get('/about', function () use ($app){
 });
 
 $app->get('/accueil', function () use ($app){
-    return 'ok2';
+    return $app['twig']->render('accueil.html.twig', array());
 });
 
 $app->get('/catalogue_de_a_a_z', function () use ($app){
