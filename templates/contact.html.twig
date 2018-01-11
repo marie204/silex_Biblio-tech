@@ -1,0 +1,68 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 order-sm-1">
+      <h3 class="titreContact">Un message pour nous?</h3>
+      <form name="frm_contact" div="frm_contact" action="" method="post">
+        <div class="form-row">
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInput">Nom complet</label>
+            <input type="text" class="form-control mb-2 mb-sm-0" id="inlineFormInput" placeholder="Votre nom complet">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInput">Adresse</label>
+            <input type="text" class="form-control mb-2 mb-sm-0" id="inlineFormInput" placeholder="Votre adresse">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInput">Ville</label>
+            <input type="text" class="form-control mb-2 mb-sm-0" id="inlineFormInput" placeholder="Votre ville">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInput">Code postal</label>
+            <input type="text" class="form-control mb-2 mb-sm-0" id="inlineFormInput" placeholder="Votre code postal">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">Téléphone</label>
+            <div class="input-group mb-2 mb-sm-0">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Votre téléphone">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">E-mail</label>
+            <div class="input-group mb-2 mb-sm-0">
+              <div class="input-group-addon">@</div>
+              <input type="email" class="form-control" id="inlineFormInputGroup" placeholder="Votre E-mail">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInput">Commentaire</label>
+            <textarea placeholder="Votre commentaire" class="form-control" id="FormControlTextarea1" rows="3"></textarea>
+            <button type="button" class="btn btn-secondary">Annuler</button>
+            <button type="button" class="btn btn-primary">Envoyer</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-3">
+      <?php include 'view/colonneGauche.php'; ?>
+    </div>
+    <div class="col-lg-3 order-sm-12">
+      <?php include 'view/colonneDroite.php'; ?>
+    </div>
+  </div>
+</div>
+{% endblock %}

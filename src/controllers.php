@@ -14,13 +14,37 @@ $app->get('/', function () use ($app) {
 ->bind('homepage')
 ;
 
-$app->get('/bonjour', function () use ($app){
+$app->get('/about', function () use ($app){
     return 'ok';
-
 });
 
+$app->get('/accueil', function () use ($app){
+    return $app['twig']->render('accueil.html.twig', array());
+});
 
+$app->get('/catalogue_de_a_a_z', function () use ($app){
+    return 'ok3';
+});
 
+$app->get('/catalogue_par_genre', function () use ($app){
+    return 'ok4';
+});
+
+$app->get('/contact', function () use ($app){
+    return 'ok5';
+});
+
+$app->get('/login', function () use ($app){
+    return 'ok6';
+});
+
+$app->get('/nouveautes', function () use ($app){
+    return 'ok7';
+});
+
+$app->get('/admin', function () use ($app){
+    return 'ok8';
+});
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
