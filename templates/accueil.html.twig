@@ -1,0 +1,17 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 order-sm-1">
+      Içi insérer le code de Terry
+    </div> 
+    <div class="col-lg-3">
+      <?php include 'view/colonneGauche.php'; ?>
+    </div>  
+    <div class="col-lg-3 order-sm-12">
+      <?php include 'view/colonneDroite.php'; ?>
+    </div>
+  </div>
+</div>
+{% endblock %}
