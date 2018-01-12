@@ -26,7 +26,7 @@ $conn = array(
     'password' => '',
     'dbname' => 'bibliotech',
 );
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/EntityManager"), $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration(array("/EntityManager"), $isDevMode);
 $app['em'] =  EntityManager::create($conn, $config);
 
 return $app;
