@@ -6,10 +6,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-//Request::setTrustedProxies(array('127.0.0.1'));
-
 $app->get('/', function () use ($app) {
-    return $app['twig']->render('index.html.twig', array());
+    return $app['twig']->render('accueil.html.twig', array());
 })
 ->bind('homepage')
 ;
@@ -22,24 +20,31 @@ $app->get('/accueil', function () use ($app){
     return $app['twig']->render('accueil.html.twig', array());
 });
 
-$app->get('/catalogue_de_a_a_z', function () use ($app){
-    return 'ok3';
+$app->get('/catalogue_a_z', function () use ($app){
+    return $app['twig']->render('catalogue_a_z.html.twig', array());
 });
 
-$app->get('/catalogue_par_genre', function () use ($app){
-    return 'ok4';
+$app->get('/catalogue_genre', function () use ($app){
+    return $app['twig']->render('catalogue_genre.html.twig', array());
+});
+
+$app->get('/recherche', function () use ($app){
+    return $app['twig']->render('recherche.html.twig', array());
 });
 
 $app->get('/contact', function () use ($app){
-    return 'ok5';
+    return $app['twig']->render('contact.html.twig', array());
 });
 
 $app->get('/login', function () use ($app){
-    return 'ok6';
+    return $app['twig']->render('login.html.twig', array());
+});
+$app->get('/apropos', function () use ($app){
+    return $app['twig']->render('login.html.twig', array());
 });
 
 $app->get('/nouveautes', function () use ($app){
-    return 'ok7';
+    return $app['twig']->render('nouveautes.html.twig', array());
 });
 
 $app->get('/admin', function () use ($app){
