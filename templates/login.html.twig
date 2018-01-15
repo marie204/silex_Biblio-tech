@@ -1,7 +1,7 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-<form action="./login" method="post">
+<form action="./log-server" method="post">
 <table class="table text-center">
 	<tr>
 		<td>Login</td>
@@ -13,12 +13,11 @@
 		<td>Mot de passe</td>
 	</tr>
 	<tr>
-		<td><input type="text" name="mdp" required></td>
+		<td><input type="password" name="mdp" required></td>
 	</tr>
 	<tr>
 		<td><input type="submit"></td>
 	</tr>
 </table>
 </form>
-{{ app.request.post('log') }}
 {% endblock %}

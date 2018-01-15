@@ -40,7 +40,9 @@ $app->match('/login', function (Request $request) use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
 $app->match('/log-server', function(Request $request) use ($app){
-    return $app['twig']->render('log.server.html.twig', array());
+    return $app['twig']->render('log.server.html.twig', array(
+        'login' => $_POST['log'],
+        'mdp' => $_POST['mdp']));
 });
 
 $app->get('/apropos', function () use ($app){
