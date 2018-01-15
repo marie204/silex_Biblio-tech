@@ -39,11 +39,9 @@ $app->get('/contact', function () use ($app){
 $app->match('/login', function (Request $request) use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
-
-/*
 $app->match('/log-server', function(Request $request) use ($app){
-    return $app['twig']->render('log.server.php', array());
-});*/
+    return $app['twig']->render('log.server.html.twig', array());
+});
 
 $app->get('/apropos', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
