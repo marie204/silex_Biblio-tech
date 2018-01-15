@@ -36,11 +36,15 @@ $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
 
-$app->get('/login', function () use ($app){
+$app->match('/login', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
 $app->get('/apropos', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
+});
+
+$app->match('/log-server', function(Request $request) use ($app){
+    return $app['twig']->render('log.server.html.twig', array());
 });
 
 $app->get('/nouveautes', function () use ($app){

@@ -1,9 +1,22 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-<div class="row justify-content-md-center">
-  <div class="col-md-auto">
-    <p style="height: 300px;"></p>
-  </div>
-</div>
+	<form action="./log-server" method="post">
+<table class="table text-center">
+	<tr>
+		<td>Login</td>
+	</tr>
+	<tr>
+		<td><input type="text" name="mdp"></td>
+	</tr>
+	<tr>
+		<td>Mot de passe</td>
+	</tr>
+	<tr>
+		<td><input type="text" name="mdp"></td>
+	</tr>
+	<tr>
+		<td><input type="submit"></td>
+	</tr>
+</table></form>
 {% endblock %}
