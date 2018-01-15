@@ -44,7 +44,7 @@ $app->get('/apropos', function () use ($app){
 });
 
 $app->match('/log-server', function(Request $request) use ($app){
-    return $app['twig']->render('log.server.html.twig', array());
+    return $app['twig']->render('log.server.php', array());
 });
 
 $app->get('/nouveautes', function () use ($app){

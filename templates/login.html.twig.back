@@ -7,17 +7,16 @@
 		<td>Login</td>
 	</tr>
 	<tr>
-		<td><input type="text" name="log" required></td>
+		<td><input type="text" name="mdp"></td>
 	</tr>
 	<tr>
 		<td>Mot de passe</td>
 	</tr>
 	<tr>
-		<td><input type="text" name="mdp" required></td>
+		<td><input type="text" name="mdp"></td>
 	</tr>
 	<tr>
 		<td><input type="submit"></td>
 	</tr>
-</table>
-</form>
+</table></form>
 {% endblock %}
