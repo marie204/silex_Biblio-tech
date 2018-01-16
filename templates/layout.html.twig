@@ -1,22 +1,8 @@
 <!DOCTYPE html>
 <html>
-    {%include "header.html.twig" %}
     <head>
         <title>{% block title '' %} - My Silex Application</title>
-
         <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
-
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -25,7 +11,8 @@
         <script src="https://use.fontawesome.com/45ef15a563.js"></script>
     </head>
     <body>
-        {% block content %}{% endblock %}
-    </body>
+    {%include "header.html.twig" %}
+    {% block content %}{% endblock %}
     {%include "footer.html.twig" %}
+    </body>
 </html>
