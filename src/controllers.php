@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,7 +78,8 @@ $app->match('/login', function (Request $request) use ($app){
 $app->match('/log-server', function(Request $request) use ($app){
     return $app['twig']->render('log.server.html.twig', array(
         'login' => $_POST['log'],
-        'mdp' => $_POST['mdp']));
+        'mdp' => $_POST['mdp'],
+        ));
 });
 
 $app->get('/apropos', function () use ($app){
@@ -89,9 +91,12 @@ $app->get('/nouveautes', function () use ($app){
     return $app['twig']->render('nouveautes.html.twig', array());
 });
 
-$app->get('/admin', function () use ($app){
-    return 'ok8';
-});
+if ($_SESSION['idEntity']=='1') {
+    $app->get('/u3jjbvb163qeh9lk', function () use ($app){
+        return 'ok8';
+    });
+}
+
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
