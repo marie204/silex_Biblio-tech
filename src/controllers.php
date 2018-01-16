@@ -12,6 +12,41 @@ $app->get('/', function () use ($app) {
 ->bind('homepage')
 ;
 
+$app->get('/test', function () use ($app) {
+    if (isset($_GET['rechercher'])) {
+         $isbn = isset($_GET['isbn']) ? $_GET['isbn'] : '';
+
+         $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn;
+         $response = file_get_contents($request);
+         $results = json_decode($response);
+
+        if ($results->totalItems > 0) {
+            $book = $results->items[0];
+            $infos['isbn'] = $book->volumeInfo->industryIdentifiers[0]->identifier;
+            $infos['titre'] = $book->volumeInfo->title;
+            $infos['auteur'] = $book->volumeInfo->authors[0];
+            $infos['langue'] = $book->volumeInfo->language;
+            $infos['pages'] = $book->volumeInfo->pageCount;
+            $infos['description'] = $book->volumeInfo->description;
+            
+            return $app['twig']->render('formulaire_isbn.html.twig', array(
+                'ISBN' => "Numéro ISBN : ". $infos['isbn'],
+                'titre' => "Titre : ". $infos['titre'],
+                'auteur' => "Auteur : ". $infos['auteur'],
+                'langue' => "Langue : ". $infos['langue'],
+                'pages' => "Pages : ". $infos['pages'],
+                'description' => "Description : ". $infos['description']
+            ));
+        }
+        else {
+        return $app['twig']->render('formulaire_isbn.html.twig', array(
+          'echec' => "Livre introuvable"
+        ));
+        }
+    }
+    return $app['twig']->render('formulaire_isbn.html.twig', array());
+});
+
 $app->get('/about', function () use ($app){
     return 'ok';
 });
