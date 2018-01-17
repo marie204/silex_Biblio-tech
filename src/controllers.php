@@ -29,7 +29,6 @@ $app->get('/test', function () use ($app) {
             $infos['langue'] = $book->volumeInfo->language;
             $infos['pages'] = $book->volumeInfo->pageCount;
             $infos['description'] = $book->volumeInfo->description;
-            
             return $app['twig']->render('formulaire_isbn.html.twig', array(
                 'ISBN' => "Numéro ISBN : ". $infos['isbn'],
                 'titre' => "Titre : ". $infos['titre'],
@@ -79,6 +78,7 @@ $app->match('/log-server', function(Request $request) use ($app){
     return $app['twig']->render('log.server.html.twig', array(
         'login' => $_POST['log'],
         'mdp' => $_POST['mdp'],
+        'testy' => $_POST['test'],
         ));
 });
 

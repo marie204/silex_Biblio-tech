@@ -1,6 +1,16 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-	{{ login }}
-	{{ mdp }}
+	Page de connection! 
+	<div id='test'>	</div>
+	<script>
+	console.log('{{login}}');
+	console.log('{{mdp}}');
+	console.log('{{testy}}');
+	if ('{{testy}}' == inscription) {
+		document.getElementById('test').innerHTML = 'inscription';
+	}else{
+		document.getElementById('test').innerHTML = 'connexion';
+	}
+	</script>
 {% endblock %}
