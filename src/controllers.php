@@ -48,7 +48,7 @@ $app->get('/test', function () use ($app) {
 });
 
 $app->get('/about', function () use ($app){
-    return 'ok';
+    return 'ok2';
 });
 
 $app->get('/accueil', function () use ($app){
