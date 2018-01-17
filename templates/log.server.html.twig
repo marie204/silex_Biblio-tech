@@ -1,19 +1,24 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-	
-	<div id='test'>Page d</div>
+	<div id='test'>
+	<form action="./accueil" method="post">
+		<input type="text">
+		Mot de passe : <input type="password"> <br>
+		Confirmation mot de passe : <input type="password"><br>
+		<input type="submit">
+	</form>
+	</div>
 	<script>
 	loggin = '{{login}}';
 	mdp = '{{mdp}}';
+
 	//$('#test').html ='connection';
 	//document.getElementById('test').innerHTML = 'inscription';
 	if ('{{loggin}}' == 'inscription') {
-		testid = document.getElementById('test');
-		testid.innerHTML += '\'inscription';
-		testid.innerHTML += "<h2>FORMULAIRE D'INSCRIPTION</h2>";
+		//
 	}else{
-		document.getElementById('test').innerHTML += 'e connexion';
+		document.getElementById('test').innerHTML = 'connexion';
 	}
 	</script>
 {% endblock %}

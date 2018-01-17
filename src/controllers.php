@@ -55,7 +55,7 @@ $app->get('/about', function () use ($app){
     return 'ok';
 });
 
-$app->get('/accueil', function () use ($app){
+$app->match('/accueil', function () use ($app){
     return $app['twig']->render('accueil.html.twig', array());
 });
 
