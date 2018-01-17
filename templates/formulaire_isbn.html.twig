@@ -1,20 +1,31 @@
 {% extends "layout.html.twig" %}
-
 {% block content %}
-<form action="/test" method="GET">
-    ISBN : <br>
-    <input type="text" name="isbn" required="">
-    <input type="submit" name="rechercher" value="Rechercher">
-    <input type="submit" name="ajouter" value="Ajouter à la base de données">
-</form><br>
-
-<p>
-{{ echec }}
-{{ ISBN }}<br>
-{{ titre }}<br>
-{{ auteur }}<br>
-{{ langue }}<br>
-{{ pages }}<br>
-{{ description }}
-</p>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 order-sm-1">
+				<form action="/test" method="GET">
+					<div class="form-row">
+						<div class="col-auto">
+							<input type="text" class="form-control mb-2 mb-sm-0" id="inlineFormInput" name="isbn" placeholder="Numéro ISBN" required="">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-auto">
+							<button type="submit" class="btn btn-secondary" name="rechercher">Rechercher</button>
+							<button type="submit" class="btn btn-primary" name="ajouter">Ajouter à la base de données</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div><br>
+	<p>
+		{{ echec }}
+		{{ ISBN }}<br>
+		{{ titre }}<br>
+		{{ auteur }}<br>
+		{{ langue }}<br>
+		{{ pages }}<br>
+		{{ description }}
+	</p>
 {% endblock %}
