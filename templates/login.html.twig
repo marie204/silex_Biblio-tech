@@ -4,32 +4,24 @@
 <table class="table text-center">
 	<form action="./log-server" method="post">
 	<tr>
-		<td>Login</td>
+		<td colspan="2">Login</td>
 	</tr>
 	<tr>
-		<td><input type="text" name="log" id='logA' required></td>
+		<td colspan="2"><input type="text" name="log" required></td>
 	</tr>
 	<tr>
-		<td >Mot de passe</td>
+		<td colspan="2">Mot de passe</td>
 	</tr>
 	<tr>
-		<td><input type="password" name="mdp" id='mdpA' required></td>
+		<td colspan="2"><input type="password" name="mdp" required></td>
 	</tr>
+	
 	<tr>
-		<td><input type="submit" name='test' value='connexion'></td></tr></form><tr>
-		<td><form action="./inscription" method="post">
-			<input type="submit" name='test' value='inscription' onsubmit="recupDonnee();">
-			<input type="hidden" id="logB" name="inscriId">
-			<input type="hidden" id="mdpB" name="inscritPass">
+		<td><input type="submit" name='loggin' value='connexion'></td>
+		<td><input type="submit" name='loggin' value='inscription'>
 		</td>
 	</tr>
+</form>
 </table>
-
-<script>
-	function recupDonnee(){
-		document.getElementById('logB').value = document.getElementById('logA').value;
-		document.getElementById('mdpB').value = document.getElementById('mdpA').value;
-	}
-</script>
 
 {% endblock %}

@@ -1,15 +1,18 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-	Page de connection! 
+	Page de  
 	<div id='test'>	</div>
 	<script>
 	console.log('{{login}}');
 	console.log('{{mdp}}');
-	console.log('{{testy}}');
-	if ('{{testy}}' == inscription) {
+	console.log('{{loggin}}');
+	//$('#test').html ='connection';
+	//document.getElementById('test').innerHTML = 'inscription';
+	if ('{{loggin}}' == 'inscription') {
 		document.getElementById('test').innerHTML = 'inscription';
 	}else{
+
 		document.getElementById('test').innerHTML = 'connexion';
 	}
 	</script>
