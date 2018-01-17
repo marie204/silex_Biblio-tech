@@ -1,19 +1,19 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-	Page de  
-	<div id='test'>	</div>
+	
+	<div id='test'>Page d</div>
 	<script>
-	console.log('{{login}}');
-	console.log('{{mdp}}');
-	console.log('{{loggin}}');
+	loggin = '{{login}}';
+	mdp = '{{mdp}}';
 	//$('#test').html ='connection';
 	//document.getElementById('test').innerHTML = 'inscription';
 	if ('{{loggin}}' == 'inscription') {
-		document.getElementById('test').innerHTML = 'inscription';
+		testid = document.getElementById('test');
+		testid.innerHTML += '\'inscription';
+		testid.innerHTML += "<h2>FORMULAIRE D'INSCRIPTION</h2>";
 	}else{
-
-		document.getElementById('test').innerHTML = 'connexion';
+		document.getElementById('test').innerHTML += 'e connexion';
 	}
 	</script>
 {% endblock %}
