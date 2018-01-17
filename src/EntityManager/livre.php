@@ -1,4 +1,9 @@
 <?php
+namespace EntityManager;//Le fichier livre est dans le dossier EntityManager
+// src/EntityManager/livre.php
+
+/*use Doctrine\ORM\Annotation as ORM;*/
+
 /**
 *@Entity
 *@Table(name="livre")
@@ -8,7 +13,7 @@ class Livre
     /**
      *@Column(type="integer")
      *@GeneratedValue
-     *@li_id
+     *@Id
      */
 
     /**
@@ -55,68 +60,193 @@ class Livre
     /**
      *@Column(type="string")
      */
+    private $langue;
+
+    /**
+     *@Column(type="string")
+     */
     private $li_img;
 
-
-    public function getId()
+    /**
+     * @return mixed
+     */
+    public function getLiId()
     {
         return $this->li_id;
     }
 
-    public function getDate()
+    /**
+     * @param mixed $li_id
+     *
+     * @return self
+     */
+    public function setLiId($li_id)
+    {
+        $this->li_id = $li_id;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLiDateAjout()
     {
         return $this->li_date_ajout;
     }
 
-    public function getTitle()
+    /**
+     * @param mixed $li_date_ajout
+     *
+     * @return self
+     */
+    public function setLiDateAjout($li_date_ajout)
+    {
+        $this->li_date_ajout = $li_date_ajout;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLiTitle()
     {
         return $this->li_title;
     }
 
-    public function getAuteur()
+    /**
+     * @param mixed $li_title
+     *
+     * @return self
+     */
+    public function setLiTitle($li_title)
+    {
+        $this->li_title = $li_title;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLiAuteur()
     {
         return $this->li_auteur;
     }
 
-    public function getDesc()
+    /**
+     * @param mixed $li_auteur
+     *
+     * @return self
+     */
+    public function setLiAuteur($li_auteur)
+    {
+        $this->li_auteur = $li_auteur;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLiDesc()
     {
         return $this->li_desc;
     }
 
-    public function getIsbn()
+    /**
+     * @param mixed $li_desc
+     *
+     * @return self
+     */
+    public function setLiDesc($li_desc)
+    {
+        $this->li_desc = $li_desc;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLiIsbn()
     {
         return $this->li_isbn;
     }
 
-    public function getImg()
+    /**
+     * @param mixed $li_isbn
+     *
+     * @return self
+     */
+    public function setLiIsbn($li_isbn)
+    {
+        $this->li_isbn = $li_isbn;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLiImg()
     {
         return $this->li_img;
     }
 
-
-    public function setTitle($li_title)
+    /**
+     * @param mixed $li_img
+     *
+     * @return self
+     */
+    public function setLiImg($li_img)
     {
-        $this->title = $li_title;
+        $this->li_img = $li_img;
+
+        return $this;
     }
 
-    public function setAuteur($li_auteur)
+ /**
+     * @return mixed
+     */
+    public function getLangue()
     {
-        $this->auteur = $li_auteur;
+        return $this->langue;
     }
 
-    public function setDesc($li_desc)
+    /**
+     * @param mixed $li_img
+     *
+     * @return self
+     */
+    public function setLangue($langue)
     {
-        $this->desc = $li_desc;
+        $this->langue = $langue;
+
+        return $this;
+    }
+ /**
+     * @return mixed
+     */
+    public function getLiPages()
+    {
+        return $this->li_pages;
     }
 
-    public function setIsbn($li_isbn)
+    /**
+     * @param mixed $li_pages
+     *
+     * @return self
+     */
+    public function setLiPages($li_pages)
     {
-        $this->isbn = $li_isbn;
-    }
+        $this->li_pages = $li_pages;
 
-    public function setImg($li_img)
-    {
-        $this->img = $li_img;
+        return $this;
     }
 
 }
+
+
+   

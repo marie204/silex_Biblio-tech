@@ -25,11 +25,6 @@ $("#btn-sous-menu").click(function(){
     }
 });
 
-/*CARDS*/
-$('.flip').hover(function(){
-     $(this).find('.card').toggleClass('flipped');
-});
-
 /*HAUT DE PAGE*/
 /*Flêche pour le retour en haut*/
 $(document).ready(function(){

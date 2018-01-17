@@ -1,11 +1,11 @@
 /*ICONES RESEAUX SOCIAUX*/
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     .reseaux {
         display: none;
     }
 }
 /*HEADER / LOGO / NAVIGATION*/
- @media screen and (max-width:768px){
+ @media screen and (max-width:640px){
     #nav-mnu-lg {
         display: none;         
     }
@@ -13,7 +13,7 @@
         display: block;         
     }
 }
- @media screen and (max-width:768px){
+ @media screen and (max-width:640px){
     header {
         height:4em; 
     }
@@ -33,7 +33,7 @@
         margin-top:4px;
     }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
      .openbtn {
         position: absolute;
         display: block!important;
@@ -45,14 +45,14 @@
         z-index: 1000;
     }   
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     .closebtn {
         position: absolute;
         display: block;
         right: 20px;
         top: 0px;
         font-size:30px;
-        color: #333;
+        color: #fff;
         text-decoration: none!important;  
         z-index: 2
     }   
@@ -60,7 +60,7 @@
         color: #333;  
     }                          
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     nav {
         position: absolute !important;
         top:0px;
@@ -68,9 +68,9 @@
         z-index: 20000 !important;
     }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     .logoMenuSwipe {
-        background: url("../img/logo.png");
+        background: #030303 url("../img/logo.png");
         background-repeat: no-repeat;
         background-position: 10px 10px;
         background-size: 65%; 
@@ -78,7 +78,7 @@
         height: 100px;             
     }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     .menu {
         position: fixed;
         top: 0px;
@@ -92,14 +92,14 @@
         box-shadow: 3px 0px 3px #777;
     }                                    
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     nav ul {
         padding: 0px;
         display: block;
         height: 100% !important;
     }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     nav ul li { 
         float: none;
         border-bottom: 1px solid #ECECEC;
@@ -108,19 +108,19 @@
         background: #777 !important;
     }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     nav ul li a {
         color: #333;
         display: block !important;
         text-align: left;
     }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     .lienContact{
         color: #333 !important;             
     }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     .drop:hover #sous-menu{
         display: none;
     }
@@ -147,7 +147,7 @@
     }
 }
 /*MENU MOBILES*/
-@media screen and (max-width:768px){
+@media screen and (max-width:640px){
     #ul-sous-menu-mobile {
         display: none; 
         background: #ECECEC;                    
@@ -170,7 +170,7 @@
         margin-left: 20px;            
     }
 /*LES ICONES DANS LE MENU SWIPE*/
-@media screen and (max-width:768px) {
+@media screen and (max-width:640px) {
     .fa {
         display:block !important;
         float: left;
@@ -186,14 +186,14 @@
     }           
 }
 /**************************************************COLONNES***********************************************/
-@media screen and (max-width:768px) {
+@media screen and (max-width:640px) {
     #aside {
         margin-left: 0px;        
         margin-right: 0px;   
     }
 }
 /**************************************************CONTACT***********************************************/
-@media screen and (max-width:768px) {
+@media screen and (max-width:640px) {
     textarea {
         width:85vw !important;
     }
@@ -206,10 +206,20 @@
 
 }
 /********************************************CATALOGUE***************************************************/
-
-
+/*Fiche livre*/
+@media screen and (max-width:640px) {
+    .img {
+        width: 100%;
+        height: auto;
+    }
+    .infos {
+        display: block;
+        margin-left:0px;
+        width: 100%;
+    }
+}
 /*********************************************PIED DE PAGE************************************************/
-@media screen and (max-width:768px) {
+@media screen and (max-width:640px) {
     footer {
         height: 60vh !important;
         width: 100%;

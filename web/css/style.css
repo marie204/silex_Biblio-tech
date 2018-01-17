@@ -182,7 +182,7 @@ nav ul li a:hover{
 /*COLONNE GAUCHE / DROITE*/
 #aside {
     padding: 0px;
-    margin:5px 0 0px -15px;
+    margin:0;
     color: #333;
 }
 #aside h3 {
@@ -205,8 +205,19 @@ nav ul li a:hover{
     z-index: 4000;
 }
 /********************************************PAGE CATALOGUE**************************************************/
-/* cards.css*/
-/***********************************************PAGE CONTACT*************************************************/
+.card {
+    margin-bottom: 15px !important;
+}
+/**************************Fiche livre*************************/
+.img {
+    float: left;
+    margin-bottom: 15px;
+}
+.infos {
+    margin-left:270px;
+    width: 450px;
+}
+/*************************PAGE CONTACT*************************************************/
 .titreContact {
     color: #777;               
 }
@@ -216,27 +227,35 @@ input[type="text"]{
 }
 input[type="number"]{
     width:12rem !important;
-    margin-bottom: 10px!important;
+    margin-bottom: 10px !important;
 }
 input[type="email"]{
     width:14rem !important;
     margin-bottom: 10px !important;
 }
 textarea {      
-    width:25rem!important; 
+    width:25rem !important; 
     margin-bottom: 10px !important;
 }
 /*@*/
 .input-group-addon {
     height: 38px !important;       
 }
-/*************************************************PIED DE PAGE**********************************************/
+
+iframe {
+    margin: 0;
+    padding: 0;
+    width:540px;
+    height:460px;
+}
+
+/************************PIED DE PAGE**************************/
 footer {
-    position: relative;
+    position: absolute;
     width: 100%;
     color: #fff; 
-    margin-top: 15px;  
-    padding: 10px 0 150px 0;
+    margin-top: 15px;
+    padding: 10px 0 80px 0;
     border: 1px solid #333;
     background : #333; 
     background-image:-webkit-linear-gradient(#000, #333);
@@ -244,7 +263,6 @@ footer {
     box-shadow: 0px 0px 15px 3px #777;
 }
 footer ul {
-/*     margin-left:-15px; */
     padding: 0;
 }
 footer li {
