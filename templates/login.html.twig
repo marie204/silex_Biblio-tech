@@ -1,25 +1,35 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-<form action="./log-server" method="post">
 <table class="table text-center">
+	<form action="./log-server" method="post">
 	<tr>
-		<td colspan="2">Login</td>
+		<td>Login</td>
 	</tr>
 	<tr>
-		<td colspan="2"><input type="text" name="log" required></td>
+		<td><input type="text" name="log" id='logA' required></td>
 	</tr>
 	<tr>
-		<td colspan="2">Mot de passe</td>
+		<td >Mot de passe</td>
 	</tr>
 	<tr>
-		<td colspan="2"><input type="password" name="mdp" required></td>
+		<td><input type="password" name="mdp" id='mdpA' required></td>
 	</tr>
 	<tr>
-
-		<td><input type="submit" name='test' value='connexion '></td>
-		<td><input type="submit" name='test' value='inscription'></td>
+		<td><input type="submit" name='test' value='connexion'></td></tr></form><tr>
+		<td><form action="./inscription" method="post">
+			<input type="submit" name='test' value='inscription' onsubmit="recupDonnee();">
+			<input type="hidden" id="logB" name="inscriId">
+			<input type="hidden" id="mdpB" name="inscritPass">
+		</td>
 	</tr>
 </table>
-</form>
+
+<script>
+	function recupDonnee(){
+		document.getElementById('logB').value = document.getElementById('logA').value;
+		document.getElementById('mdpB').value = document.getElementById('mdpA').value;
+	}
+</script>
+
 {% endblock %}

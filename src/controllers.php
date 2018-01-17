@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['idEntity'])) {
+    $_SESSION['idEntity'] = '';
+}
+
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,8 +82,13 @@ $app->match('/log-server', function(Request $request) use ($app){
     return $app['twig']->render('log.server.html.twig', array(
         'login' => $_POST['log'],
         'mdp' => $_POST['mdp'],
-        'testy' => $_POST['test'],
         ));
+});
+$app->match('/inscription', function(Request $request) use ($app){
+    return $app['twig']->render('inscription.html.twig', array(
+        'login' => $_POST['inscriId'],
+        'mdp' => $_POST['inscriPass'],
+    ));
 });
 
 $app->get('/apropos', function () use ($app){
