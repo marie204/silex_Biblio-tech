@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 order-sm-1">
+      <p> Bienvenu sur notre bibliothèque en ligne!! Celle-ci vous permettra d'accéder à nos livres, avoir une description de ceux-ci et pouvoir les emprunter(après vous être créé un compte).
+        Vous avez la possibilité de rechercher des ouvrages par genre ou par ordre alphabétique.
+        N'hésitez pas à signaler vos coups de coeur afin de conseiller les autres lecteurs, une partie commentaires vous est également disponible!!
+        Bonne visite à tous.
+      </p>
+    </div> 
+    <div class="col-lg-3">
+      {% include('colonneGauche.html.twig') %}
+      mysql_query("SELECT * FROM commmentaire ORDER BY desc LIMIT 0,5");
+    </div>  
+    <div class="col-lg-3 order-sm-12">
+      {% include('colonneDroite.html.twig') %}
+    </div>
+  </div>
+</div>
+{% endblock %}
