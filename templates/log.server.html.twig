@@ -15,26 +15,8 @@
 		recupLog();
 	}else{
 		document.getElementById('test').innerHTML = 'connexion';
-		bddLog = encryptMdp(mdp);
-		document.getElementById('test').innerHTML += bddLog;
 
 	}
 	
-
-	function recupLog(log){
-		console.log(log);
-		return a;
-	}
-	function encryptMdp(mdp){
-		encryptChannel = '';
-		for (var i = 0; i < mdp.length; i++) {
-			encryptI = mdp.charAt(i);
-			encryptI = encryptI.charCodeAt(0);
-			encryptChannel += encryptI + '.';
-		}
-		console.log(encryptChannel);
-		return encryptChannel;
-	}
-
 	</script>
 {% endblock %}
