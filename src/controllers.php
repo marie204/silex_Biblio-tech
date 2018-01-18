@@ -82,7 +82,7 @@ $app->match('/login', function (Request $request) use ($app){
     ));
 });
 $app->match('/log-server', function(Request $request) use ($app){
-    if ('loggin' == 'inscription' ){
+    if ($_POST['log'] == 'inscription' ){
         return $app['twig']->render('log.server.html.twig', array(
         'login' => $_POST['log'],
         'mdp' => $_POST['mdp'],
@@ -103,7 +103,13 @@ $app->match('/log-server', function(Request $request) use ($app){
         $verifLogB = compareMdp($_POST['log'], $_POST['mdp']);
         if ($verifLogB == false){
             return $app->redirect('./login?erreur=wrongLoggin');
-        }        
+        }
+        return $app['twig']->render('log.server.html.twig', array(
+        'login' => $_POST['log'],
+        'mdp' => $_POST['mdp'],
+        'loggin' => $_POST['loggin'],
+        'sessEntite' => $_SESSION['idEntity'] ?? null,
+        ));   
     } 
     
 });
@@ -181,6 +187,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     };
     function compareMdp($log, $mdp){
         $mdp = encryptMdp($mdp);
+        return true;
     };
     function encryptMdp($mdp){
         return '.';
