@@ -1,19 +1,20 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
+<div id='monErreur'></div>
 <table class="table text-center">
 	<form action="./log-server" method="post">
 	<tr>
 		<td colspan="2">Login</td>
 	</tr>
 	<tr>
-		<td colspan="2"><input type="text" name="log" required></td>
+		<td colspan="2"><input type="text" name="log"></td>
 	</tr>
 	<tr>
 		<td colspan="2">Mot de passe</td>
 	</tr>
 	<tr>
-		<td colspan="2"><input type="password" name="mdp" required></td>
+		<td colspan="2"><input type="password" name="mdp"></td>
 	</tr>
 	
 	<tr>
@@ -22,5 +23,11 @@
 	</tr>
 </form>
 </table>
+
+<script>
+	if ('{{erreur}}') {
+		document.getElementById('monErreur').innerHTML = 'darling...';
+	}
+</script>
 
 {% endblock %}

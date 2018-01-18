@@ -1,9 +1,6 @@
 <?php
 
 session_start();
-if (!isset($_SESSION['idEntity'])) {
-    $_SESSION['idEntity'] = '';
-}
 
 
 use Symfony\Component\HttpFoundation\Request;
@@ -77,15 +74,38 @@ $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
 
+
+//#loggin
 $app->match('/login', function (Request $request) use ($app){
-    return $app['twig']->render('login.html.twig', array());
+    return $app['twig']->render('login.html.twig', array(
+        'erreur' => $_GET['erreur'] ?? null,
+    ));
 });
 $app->match('/log-server', function(Request $request) use ($app){
-    return $app['twig']->render('log.server.html.twig', array(
+    if ('loggin' == 'inscription' ){
+        return $app['twig']->render('log.server.html.twig', array(
         'login' => $_POST['log'],
         'mdp' => $_POST['mdp'],
         'loggin' => $_POST['loggin'],
+        'sessEntite' => $_SESSION['idEntity'] ?? null,
         ));
+    }else{
+        if (!isset($_POST['log'])||empty($_POST['log'])) {
+            return $app->redirect('./login?erreur=noLoggin');
+        }
+        if (!isset($_POST['mdp'])||empty($_POST['mdp'])){
+            return $app->redirect('./login?erreur=noPassa');
+        }
+        $verifLogA = verifLog($_POST['log']);
+        if ($verifLogA == false){
+            return $app->redirect('./login?erreur=wrongLoggin');
+        }
+        $verifLogB = compareMdp($_POST['log'], $_POST['mdp']);
+        if ($verifLogB == false){
+            return $app->redirect('./login?erreur=wrongLoggin');
+        }        
+    } 
+    
 });
 
 $app->get('/apropos', function () use ($app){
@@ -154,3 +174,14 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
+
+//#loggin
+    function verifLog($log){
+        return true;
+    };
+    function compareMdp($log, $mdp){
+        $mdp = encryptMdp($mdp);
+    };
+    function encryptMdp($mdp){
+        return '.';
+    };
