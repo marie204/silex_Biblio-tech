@@ -1,24 +1,28 @@
 {% extends "layout.html.twig" %}
-
 {% block content %}
 	<div id='test'>
-	<form action="./accueil" method="post">
-		<input type="text">
-		Mot de passe : <input type="password"> <br>
-		Confirmation mot de passe : <input type="password"><br>
-		<input type="submit">
-	</form>
+		<form action="./accueil" method="post">
+			<input type="text">
+			Mot de passe : <input type="password"> <br>
+			Confirmation mot de passe : <input type="password"><br>
+			<input type="submit">
+		</form>
 	</div>
 	<script>
-	loggin = '{{login}}';
+	login = '{{login}}';
 	mdp = '{{mdp}}';
-
-	//$('#test').html ='connection';
-	//document.getElementById('test').innerHTML = 'inscription';
 	if ('{{loggin}}' == 'inscription') {
-		//
+		recupLog();
 	}else{
 		document.getElementById('test').innerHTML = 'connexion';
+		bddLog = recupLog(login);
+		document.getElementById('test').innerHTML += bddLog;
+	}
+	
+
+	function recupLog(log){
+		console.log(log);
+		return 'a';
 	}
 	</script>
 {% endblock %}
