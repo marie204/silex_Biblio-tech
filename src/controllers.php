@@ -183,7 +183,21 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 
 //#loggin
     function verifLog($log){
-        return true;
+        $log = htmlspecialchars($log);
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $req = $bdd->prepare(
+    "SELECT user_pseudo  FROM utilisateur WHERE utilisateur.user_pseudo = :log;");
+    $req->execute(array('log'=>$log,));
+    $result = $req->fetchAll();
+    if ($result == null){
+        $req->closeCursor();
+        return false;
+    }
+    $req->closeCursor();
+    return true;
+
+    
     };
     function compareMdp($log, $mdp){
         $mdp = encryptMdp($mdp);
