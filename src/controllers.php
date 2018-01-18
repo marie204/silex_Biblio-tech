@@ -1,13 +1,11 @@
 <?php
-<<<<<<< HEAD
+
 session_start();
 if (!isset($_SESSION['idEntity'])) {
     $_SESSION['idEntity'] = '';
 }
 
 
-=======
->>>>>>> develop
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -99,14 +97,12 @@ $app->get('/nouveautes', function () use ($app){
     return $app['twig']->render('nouveautes.html.twig', array());
 });
 
-<<<<<<< HEAD
 if ($_SESSION['idEntity']=='1') {
     $app->get('/u3jjbvb163qeh9lk', function () use ($app){
         return 'ok8';
     });
 }
 
-=======
 $app->get('/livre', function () use ($app){
     return $app['twig']->render('livre.html.twig', array());
 }); 
@@ -141,7 +137,7 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
 $app->get('/admin', function () use ($app){
     return 'ok8';
 });
->>>>>>> develop
+
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
