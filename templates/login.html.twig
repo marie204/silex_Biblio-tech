@@ -8,13 +8,13 @@
 		<td colspan="2">Login</td>
 	</tr>
 	<tr>
-		<td colspan="2"><input type="text" name="log"></td>
+		<td colspan="2"><input class='text' id='log1' type="text" name="log"></td>
 	</tr>
 	<tr>
 		<td colspan="2">Mot de passe</td>
 	</tr>
 	<tr>
-		<td colspan="2"><input type="password" name="mdp"></td>
+		<td colspan="2"><input class='text' id='mp1' type="password" name="mdp"></td>
 	</tr>
 	
 	<tr>
@@ -25,8 +25,17 @@
 </table>
 
 <script>
-	if ('{{erreur}}') {
-		document.getElementById('monErreur').innerHTML = 'darling...';
+	if ('{{erreur}}' == 'wrongLoggin') {
+		document.getElementById('monErreur').innerHTML = 'Votre identifiant n\'est pas dans la base de donnée ou votre mot de passe ne correspond guère à votre identifiant!';
+		$('.text').css('borderColor', 'red');
+	}
+	if ('{{erreur}}' == 'noLoggin') {
+		document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigné votre identifiant!';
+		$('#log1').css('borderColor', 'red');
+	}
+	if ('{{erreur}}' == 'noPassa') {
+		document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigner votre mot de passe!';
+		$('#mp1').css('borderColor', 'red');
 	}
 </script>
 
