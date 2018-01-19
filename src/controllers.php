@@ -101,7 +101,8 @@ $app->match('/log-server', function(Request $request) use ($app){
         if ($verifLogA == false){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
-        $verifLogB = compareMdp($_POST['log'], $_POST['mdp']);
+
+        $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
         if ($verifLogB == false){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
@@ -115,9 +116,12 @@ $app->match('/inscription', function (Request $request) use ($app){
     }
     $mdp2 = encryptMdp($_POST['mdp2']);
     $log2 = htmlspecialchars($_POST['log2']);
+    $verifPesudoInscrit = verifBDD($log2);
+    if (!$verifPesudoInscrit) {
+        return $app->redirect('./log-server?erreur=name');
+    }
     inscriptionBDD($log2, $mdp2);
     return $app->redirect('./accueil');
-    //return $app['twig']->render('contact.html.twig', array());
 });
 
 $app->get('/apropos', function () use ($app){
@@ -236,3 +240,17 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         $passHachay = password_hash($mdp, PASSWORD_DEFAULT);
         return $passHachay;
     };
+
+    function verifBDD($log){
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT user_pseudo FROM utilisateur WHERE user_pseudo = :user_pseudo ");
+        $req->execute(array('user_pseudo'=>$log,));
+        $log2 = $req->fetchAll();
+        if (count($log2) == 0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
