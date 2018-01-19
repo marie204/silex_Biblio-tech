@@ -1,10 +1,10 @@
 <?php
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
 
 $app->get('/', function () use ($app) {
     return $app['twig']->render('accueil.html.twig', array());
@@ -48,7 +48,7 @@ $app->get('/test', function () use ($app) {
 });
 
 $app->get('/about', function () use ($app){
-    return 'ok2';
+    return 'ok';
 });
 
 $app->get('/accueil', function () use ($app){
@@ -81,6 +81,37 @@ $app->get('/apropos', function () use ($app){
 $app->get('/nouveautes', function () use ($app){
     return $app['twig']->render('nouveautes.html.twig', array());
 });
+
+$app->get('/livre', function () use ($app){
+    return $app['twig']->render('livre.html.twig', array());
+}); 
+
+/*Début pour ajouter un livre*/
+$app->get('/ajoutLivre', function (Request $request) use ($app){
+    $li_title = $request->get('li_title');
+    $li_auteur = $request->get('li_auteur');
+    $li_date_ajout = $request->get('li_date_ajout');
+    $li_isbn = $request->get('li_isbn');
+    $li_pages = $request->get('li_pages');
+    $langue = $request->get('langue');
+    $li_desc = $request->get('li_desc');
+
+    $livre = new Livre();
+    $livre->setLiTitle($li_title);//Entity / Classe Livre
+    $livre->setLiAuteur($li_auteur);
+    $livre->setLiDesc($li_date_ajout);
+    $livre->setLiIsbn($li_isbn);
+    $livre->setLiPages($li_pages);
+    $livre->setLangue($langue);
+    $livre->setLiDesc($li_desc);
+    /*$em = $app['orm.em'];*/
+    $em->persist($Livre);
+    $em->flush();
+    echo "Created livre with ID " . $livre->getId() . "\n";
+
+    return $app['twig']->render('ajoutLivre.html.twig', array());
+});
+/*Fin pour ajouter un livre*/
 
 $app->get('/admin', function () use ($app){
     return 'ok8';

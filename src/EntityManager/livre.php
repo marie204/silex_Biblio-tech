@@ -1,122 +1,307 @@
 <?php
 /**
-*@Entity
-*@Table(name="livre")
-*/
-class Livre
-{
-    /**
-     *@Column(type="integer")
-     *@GeneratedValue
-     *@li_id
-     */
+ * Livre entity
+ */
+
+namespace EntityManager; // Le fichier Livre est dans le dossier EntityManager
+
+use Doctrine\Mapping as ORM;
+
+/**
+ * Livre entity
+ *
+ * liste des livres
+ *
+ * @Entity
+ * @Table(name="livre")
+ */
+class Livre {
 
     /**
-     * Many books have many exemps.
-     * @ManyToMany(targetEntity="exemplaire", inversedBy="livre")
+     * id
+     *
+     * @var int
+     * @Column(name="id", type="integer")
+     * @Id
+     * @GeneratedValue(strategy="AUTO")
      */
+    private $id;
 
     /**
-     * Many books have many genres.
-     * @ManyToMany(targetEntity="gengenrelivre", inversedBy="livre")
+     * date d'ajout du livre
+     *
+     * @var date
+     * @Column(name="dateAjout", type="date")
      */
+    private $dateAjout;
 
     /**
-     * One book has many comments.
-     * @OneToMany(targetEntity="commentaire", mappedBy="livre")
+     * Titre du livre
+     *
+     * @var string
+     * @Column(name="titre", type="string", length=255)
      */
-    private $li_id;
+    private $title;
 
     /**
-     *@Column(type="date")
+     * Auteur du livre
+     *
+     * @var string
+     * @Column(name="auteur", type="string", length=255)
      */
-    private $li_date_ajout;
+    private $auteur;
 
     /**
-     *@Column(type="string")
+     * Description du livre
+     *
+     * @var string
+     * @Column(name="description", type="string", length=255)
      */
-    private $li_title;
+    private $description;
 
     /**
-     *@Column(type="string")
+     * ISBN du livre
+     *
+     * @var string
+     * @Column(name="isbn", type="string", length=255)
      */
-    private $li_auteur;
+    private $isbn;
 
     /**
-     *@Column(type="string")
+     * Langue du livre
+     *
+     * @var string
+     * @Column(name="langue", type="string", length=255)
      */
-    private $li_desc;
+    private $langue;
 
     /**
-     *@Column(type="string")
+     * Nombre de pages du livre
+     *
+     * @var int
+     * @Column(name="pages", type="integer")
      */
-    private $li_isbn;
+    private $pages;
 
     /**
-     *@Column(type="string")
+     * Image du livre
+     *
+     * @var string
+     * @Column(name="image", type="string", length=255)
      */
-    private $li_img;
+    private $image;
 
+    /**
+     * commentaire linked to this livre
+     *
+     * @OneToMany(targetEntity="EntityManager\Commentaire", mappedBy="livre")
+     */
+    private $commentaire;
 
-    public function getId()
-    {
-        return $this->li_id;
+    /**
+     * Many Livre have Many Genre
+     * @ManyToMany(targetEntity="EntityManager\Genre", inversedBy="livre")
+     * @JoinTable(name="livre_genre")
+     */
+    private $genre;
+
+    /**
+     * exemplaire linked to this livre
+     *
+     * @OneToMany(targetEntity="EntityManager\Exemplaire", mappedBy="livre")
+     */
+    private $exemplaire;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
     }
 
-    public function getDate()
-    {
-        return $this->li_date_ajout;
+    /**
+     * Set dateAjout
+     *
+     * @param date $dateAjout
+     *
+     * @return Livre
+     */
+    public function setDateAjout($dateAjout) {
+        $this->dateAjout = $dateAjout;
+        return $this;
     }
 
-    public function getTitle()
-    {
-        return $this->li_title;
+    /**
+     * Get dateAjout
+     *
+     * @return date
+     */
+    public function getDateAjout() {
+        return $this->dateAjout;
     }
 
-    public function getAuteur()
-    {
-        return $this->li_auteur;
+    /**
+     * Set Title
+     *
+     * @param string $title
+     *
+     * @return Livre
+     */
+    public function setTitle($title) {
+        $this->title = $title;
+        return $this;
     }
 
-    public function getDesc()
-    {
-        return $this->li_desc;
+    /**
+     * Get Title
+     *
+     * @return string
+     */
+    public function getTitle() {
+        return $this->title;
     }
 
-    public function getIsbn()
-    {
-        return $this->li_isbn;
+    /**
+     * Set Auteur
+     *
+     * @param string $auteur
+     *
+     * @return Livre
+     */
+    public function setAuteur($auteur) {
+        $this->auteur = $auteur;
+        return $this;
     }
 
-    public function getImg()
-    {
-        return $this->li_img;
+    /**
+     * Get Auteur
+     *
+     * @return string
+     */
+    public function getAuteur() {
+        return $this->auteur;
     }
 
-
-    public function setTitle($li_title)
-    {
-        $this->title = $li_title;
+    /**
+     * Set Description
+     *
+     * @param string $description
+     *
+     * @return Livre
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+        return $this;
     }
 
-    public function setAuteur($li_auteur)
-    {
-        $this->auteur = $li_auteur;
+    /**
+     * Get Description
+     *
+     * @return string
+     */
+    public function getDescription() {
+        return $this->description;
     }
 
-    public function setDesc($li_desc)
-    {
-        $this->desc = $li_desc;
+    /**
+     * Set ISBN
+     *
+     * @param string $isbn
+     *
+     * @return Livre
+     */
+    public function setIsbn($isbn) {
+        $this->isbn = $isbn;
+        return $this;
     }
 
-    public function setIsbn($li_isbn)
-    {
-        $this->isbn = $li_isbn;
+    /**
+     * Get ISBN
+     *
+     * @return string
+     */
+    public function getIsbn() {
+        return $this->isbn;
     }
 
-    public function setImg($li_img)
-    {
-        $this->img = $li_img;
+    /**
+     * Set Image
+     *
+     * @param string $image
+     *
+     * @return Livre
+     */
+    public function setImage($image) {
+        $this->image = $image;
+        return $this;
     }
 
+    /**
+     * Get Image
+     *
+     * @return string
+     */
+    public function getImage() {
+        return $this->image;
+    }
+
+    /**
+     * Set Langue
+     *
+     * @param string $langue
+     *
+     * @return Livre
+     */
+    public function setLangue($langue) {
+        $this->langue = $langue;
+        return $this;
+    }
+
+    /**
+     * Get Langue
+     *
+     * @return string
+     */
+    public function getLangue() {
+        return $this->langue;
+    }
+
+    /**
+     * Set Pages
+     *
+     * @param int $pages
+     *
+     * @return Livre
+     */
+    public function setPages($pages) {
+        $this->pages = $pages;
+        return $this;
+    }
+
+    /**
+     * Get Langue
+     *
+     * @return string
+     */
+    public function getPages() {
+        return $this->pages;
+    }
+
+    /**
+     * Get ArrayCollection
+     *
+     * @return ArrayCollection $genre
+     */
+    public function getGenre() {
+        return $this->genre;
+    }
+ 
+    public function __construct() {
+        $this->genre = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 }
+
+
+   
