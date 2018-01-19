@@ -1,4 +1,8 @@
 <?php
+
+session_start();
+
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -7,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
 
 $app->get('/', function () use ($app) {
-    return $app['twig']->render('accueil.html.twig', array());
+    return $app->redirect('index.php/accueil');
 })
 ->bind('homepage')
 ;
@@ -28,7 +32,6 @@ $app->get('/test', function () use ($app) {
             $infos['langue'] = $book->volumeInfo->language;
             $infos['pages'] = $book->volumeInfo->pageCount;
             $infos['description'] = $book->volumeInfo->description;
-            
             return $app['twig']->render('formulaire_isbn.html.twig', array(
                 'ISBN' => "Numéro ISBN : ". $infos['isbn'],
                 'titre' => "Titre : ". $infos['titre'],
@@ -51,7 +54,7 @@ $app->get('/about', function () use ($app){
     return 'ok';
 });
 
-$app->get('/accueil', function () use ($app){
+$app->match('/accueil', function () use ($app){
     return $app['twig']->render('accueil.html.twig', array());
 });
 
@@ -71,16 +74,70 @@ $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
 
-$app->get('/login', function () use ($app){
-    return $app['twig']->render('login.html.twig', array());
+
+//#loggin
+$app->match('/login', function (Request $request) use ($app){
+    return $app['twig']->render('login.html.twig', array(
+        'erreur' => $_GET['erreur'] ?? null,
+    ));
 });
+$app->match('/log-server', function(Request $request) use ($app){
+    if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
+        return $app['twig']->render('log.server.html.twig', array(
+        'login' => $_POST['log'] ??null,
+        'mdp' => $_POST['mdp'] ??null,
+        'loggin' => $_POST['loggin'] ?? null,
+        'erreur' => $_GET['erreur'] ?? null,
+        'sessEntite' => $_SESSION['idEntity'] ?? null,
+        ));
+    }else{
+        if (!isset($_POST['log'])||empty($_POST['log'])) {
+            return $app->redirect('./login?erreur=noLoggin');
+        }
+        if (!isset($_POST['mdp'])||empty($_POST['mdp'])){
+            return $app->redirect('./login?erreur=noPassa');
+        }
+        $verifLogA = verifLog($_POST['log']);
+        if ($verifLogA == false){
+            return $app->redirect('./login?erreur=wrongLoggin');
+        }
+
+        $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
+        if ($verifLogB == false){
+            return $app->redirect('./login?erreur=wrongLoggin');
+        }
+        return $app->redirect('./accueil'); 
+    }
+});
+
+$app->match('/inscription', function (Request $request) use ($app){
+    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) ){
+        return $app->redirect('./log-server?erreur=mdplog');
+    }
+    $mdp2 = encryptMdp($_POST['mdp2']);
+    $log2 = htmlspecialchars($_POST['log2']);
+    $verifPesudoInscrit = verifBDD($log2);
+    if (!$verifPesudoInscrit) {
+        return $app->redirect('./log-server?erreur=name');
+    }
+    inscriptionBDD($log2, $mdp2);
+    return $app->redirect('./accueil');
+});
+
 $app->get('/apropos', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
 
+
 $app->get('/nouveautes', function () use ($app){
     return $app['twig']->render('nouveautes.html.twig', array());
 });
+
+if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
+    $app->get('/u3jjbvb163qeh9lk', function () use ($app){
+        return 'ok8';
+    });
+}
 
 $app->get('/livre', function () use ($app){
     return $app['twig']->render('livre.html.twig', array());
@@ -117,6 +174,7 @@ $app->get('/admin', function () use ($app){
     return 'ok8';
 });
 
+
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
@@ -129,6 +187,70 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         'errors/'.substr($code, 0, 1).'xx.html.twig',
         'errors/default.html.twig',
     );
-
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
+
+
+//#loggin
+    function verifLog($log){
+        $log = htmlspecialchars($log);
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $req = $bdd->prepare(
+    "SELECT user_pseudo  FROM utilisateur WHERE utilisateur.user_pseudo = :log;");
+    $req->execute(array('log'=>$log,));
+    $result = $req->fetchAll();
+    if ($result == null){
+        $req->closeCursor();
+        return false;
+    }
+    $req->closeCursor();
+    return true;
+    };
+
+    function inscriptionBDD($log, $mdp){ 
+        $log = htmlspecialchars($log);
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "INSERT INTO `utilisateur` (`user_pseudo`, `user_mdp`, `id_statut`) VALUES
+(:user_pseudo, :user_mdp, 2);");
+    $req->execute(array('user_pseudo'=>$log,
+                        'user_mdp'=>$mdp,));
+    $req->closeCursor();
+    return 'done';
+}
+
+    function compareMdp($log, $mdp){
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT user_mdp FROM utilisateur WHERE user_pseudo = :user_pseudo ");
+        $req->execute(array('user_pseudo'=>$log,));
+        $mdp2 = $req->fetchAll();
+
+        $hash = $mdp2[0]["user_mdp"];
+        
+        $mdpCompare = password_verify($mdp, $hash);
+        $req->closeCursor();
+        return $mdpCompare;
+    };
+
+    function encryptMdp($mdp){
+        $passHachay = password_hash($mdp, PASSWORD_DEFAULT);
+        return $passHachay;
+    };
+
+    function verifBDD($log){
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT user_pseudo FROM utilisateur WHERE user_pseudo = :user_pseudo ");
+        $req->execute(array('user_pseudo'=>$log,));
+        $log2 = $req->fetchAll();
+        if (count($log2) == 0) {
+            return true;
+        }else{
+            return false;
+        }
+    }

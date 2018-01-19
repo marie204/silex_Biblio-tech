@@ -1,0 +1,60 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+	<div id="erreur"></div>
+	<div id='test'>
+		<form action="./inscription" method="post" onsubmit="return verifMdp();"> 
+			<table class='table'>
+				<tr>
+					<td>login</td>
+					<td><input type="text" value="{{login}}" name="log2" id="log2"></td>
+				</tr>
+				<tr>
+					<td>Mot de passe :</td>
+					<td><input type="password" value="{{mdp}}" id="mdp2" name="mdp2"> <br></td>
+				</tr>
+				<tr>
+					<td>Confirmation mot de passe :</td>
+					<td><input type="password" id="mdp2redoo"><br></td>
+				</tr>
+				<tr><td colspan="2"><input type="submit"></td></tr>
+			</table>
+			<br>
+			 
+			 
+			
+		</form>
+	</div>
+	<script>
+	login = '{{login}}';
+	mdp = '{{mdp}}';
+	if ('{{erreur}}' == 'name') {
+		document.getElementById('erreur').innerHTML = 'Votre loggin\' a déjà été attribué! ';
+	}
+	if ('{{erreur}}' == 'mdplog') {
+		document.getElementById('erreur').innerHTML = 'Vous avez réussi à ne rien mettre comme mot de passe ou loggin\'. Merci de signaler ce bug à un webmaster '
+	}
+
+
+	function verifMdp(){
+		if (document.getElementById('log2').value.length == 0) {
+			$('#log2').css('borderColor', 'red');
+			return false;
+		}
+		if (document.getElementById('mdp2redoo').value == document.getElementById('mdp2').value) {
+			return true;
+		}else{
+			document.getElementById('mdp2redoo').value = '';
+			$('#mdp2redoo').css('borderColor', 'red');
+			return false;
+		}
+	}
+
+	/*if ('{{loggin}}' == 'inscription') {
+		recupLog();
+	}else{
+		document.getElementById('test').innerHTML = 'connexion';
+
+	}*/
+	
+	</script>
+{% endblock %}

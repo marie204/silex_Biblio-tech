@@ -1,9 +1,42 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-<div class="row justify-content-md-center">
-  <div class="col-md-auto">
-    <p style="height: 300px;"></p>
-  </div>
-</div>
+<div id='monErreur'></div>
+<table class="table text-center">
+	<form action="./log-server" method="post">
+	<tr>
+		<td colspan="2">Login</td>
+	</tr>
+	<tr>
+		<td colspan="2"><input class='text' id='log1' type="text" name="log"></td>
+	</tr>
+	<tr>
+		<td colspan="2">Mot de passe</td>
+	</tr>
+	<tr>
+		<td colspan="2"><input class='text' id='mp1' type="password" name="mdp"></td>
+	</tr>
+	
+	<tr>
+		<td><input type="submit" name='loggin' value='connexion'></td>
+		<td><input type="submit" name='loggin' value='inscription'></td>
+	</tr>
+</form>
+</table>
+
+<script>
+	if ('{{erreur}}' == 'wrongLoggin') {
+		document.getElementById('monErreur').innerHTML = 'Votre identifiant n\'est pas dans la base de donnée ou votre mot de passe ne correspond guère à votre identifiant!';
+		$('.text').css('borderColor', 'red');
+	}
+	if ('{{erreur}}' == 'noLoggin') {
+		document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigné votre identifiant!';
+		$('#log1').css('borderColor', 'red');
+	}
+	if ('{{erreur}}' == 'noPassa') {
+		document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigner votre mot de passe!';
+		$('#mp1').css('borderColor', 'red');
+	}
+</script>
+
 {% endblock %}
