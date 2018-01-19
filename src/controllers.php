@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
 
 $app->get('/', function () use ($app) {
-    return $app['twig']->render('accueil.html.twig', array());
+    return $app->redirect('index.php/accueil');
 })
 ->bind('homepage')
 ;
@@ -181,6 +181,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
 
+
 //#loggin
     function verifLog($log){
         $log = htmlspecialchars($log);
@@ -196,13 +197,13 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     }
     $req->closeCursor();
     return true;
-
-    
     };
+
     function compareMdp($log, $mdp){
         $mdp = encryptMdp($mdp);
         return true;
     };
+
     function encryptMdp($mdp){
         return '.';
     };
