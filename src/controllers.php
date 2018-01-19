@@ -82,11 +82,12 @@ $app->match('/login', function (Request $request) use ($app){
     ));
 });
 $app->match('/log-server', function(Request $request) use ($app){
-    if ($_POST['log'] == 'inscription' ){
+    if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
         return $app['twig']->render('log.server.html.twig', array(
-        'login' => $_POST['log'],
-        'mdp' => $_POST['mdp'],
-        'loggin' => $_POST['loggin'],
+        'login' => $_POST['log'] ??null,
+        'mdp' => $_POST['mdp'] ??null,
+        'loggin' => $_POST['loggin'] ?? null,
+        'erreur' => $_GET['erreur'] ?? null,
         'sessEntite' => $_SESSION['idEntity'] ?? null,
         ));
     }else{
@@ -104,14 +105,19 @@ $app->match('/log-server', function(Request $request) use ($app){
         if ($verifLogB == false){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
-        return $app['twig']->render('log.server.html.twig', array(
-        'login' => $_POST['log'],
-        'mdp' => $_POST['mdp'],
-        'loggin' => $_POST['loggin'],
-        'sessEntite' => $_SESSION['idEntity'] ?? null,
-        ));   
-    } 
-    
+        return $app->redirect('./accueil'); 
+    }
+});
+
+$app->match('/inscription', function (Request $request) use ($app){
+    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) ){
+        return $app->redirect('./log-server?erreur=mdplog');
+    }
+    $mdp2 = encryptMdp($_POST['mdp2']);
+    $log2 = htmlspecialchars($_POST['log2']);
+    inscriptionBDD($log2, $mdp2);
+    return $app->redirect('./accueil');
+    //return $app['twig']->render('contact.html.twig', array());
 });
 
 $app->get('/apropos', function () use ($app){
@@ -123,7 +129,7 @@ $app->get('/nouveautes', function () use ($app){
     return $app['twig']->render('nouveautes.html.twig', array());
 });
 
-if ($_SESSION['idEntity']=='1') {
+if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
     $app->get('/u3jjbvb163qeh9lk', function () use ($app){
         return 'ok8';
     });
@@ -199,11 +205,39 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     return true;
     };
 
+    function inscriptionBDD($log, $mdp){ 
+        $log = htmlspecialchars($log);
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "INSERT INTO `utilisateur` (`user_pseudo`, `user_mdp`, `id_statut`) VALUES
+(:user_pseudo, :user_mdp, 2);");
+    $req->execute(array('user_pseudo'=>$log,
+                        'user_mdp'=>$mdp, 
+
+    ));
+    $req->closeCursor();
+    return 'done';
+}
+
     function compareMdp($log, $mdp){
-        $mdp = encryptMdp($mdp);
-        return true;
+        //$mdp = encryptMdp($mdp);
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT user_mdp FROM utilisateur WHERE user_pseudo = :user_pseudo ");
+        $req->execute(array('user_pseudo'=>$log,));
+        $mdp2 = $req->fetchAll();
+        //$mdp2 = $mdp2["user_mdp"];
+
+        $hash = $mdp2[0]["user_mdp"];
+        
+        $mdpCompare = password_verify($mdp, $hash);
+        $req->closeCursor();
+        return $mdpCompare;
     };
 
     function encryptMdp($mdp){
-        return '.';
+        $passHachay = password_hash($mdp, PASSWORD_DEFAULT);
+        return $passHachay;
     };

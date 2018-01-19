@@ -1,22 +1,37 @@
 {% extends "layout.html.twig" %}
 {% block content %}
 	<div id='test'>
-		<form action="./accueil" method="post">
-			<input type="text">
-			Mot de passe : <input type="password"> <br>
-			Confirmation mot de passe : <input type="password"><br>
-			<input type="submit">
+		<form action="./inscription" method="post"> 
+			<table class='table'>
+				<tr>
+					<td>login</td>
+					<td><input type="text" value="{{login}}" name="log2"></td>
+				</tr>
+				<tr>
+					<td>Mot de passe :</td>
+					<td><input type="password" value="{{mdp}}" name="mdp2"> <br></td>
+				</tr>
+				<tr>
+					<td>Confirmation mot de passe :</td>
+					<td><input type="password"><br></td>
+				</tr>
+				<tr><td colspan="2"><input type="submit"></td></tr>
+			</table>
+			<br>
+			 
+			 
+			
 		</form>
 	</div>
 	<script>
 	login = '{{login}}';
 	mdp = '{{mdp}}';
-	if ('{{loggin}}' == 'inscription') {
+	/*if ('{{loggin}}' == 'inscription') {
 		recupLog();
 	}else{
 		document.getElementById('test').innerHTML = 'connexion';
 
-	}
+	}*/
 	
 	</script>
 {% endblock %}
