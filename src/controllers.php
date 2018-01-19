@@ -197,7 +197,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $req = $bdd->prepare(
-    "SELECT user_pseudo  FROM utilisateur WHERE utilisateur.user_pseudo = :log;");
+    "SELECT pseudo  FROM utilisateur WHERE utilisateur.pseudo = :log;");
     $req->execute(array('log'=>$log,));
     $result = $req->fetchAll();
     if ($result == null){
@@ -213,7 +213,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
-        "INSERT INTO `utilisateur` (`user_pseudo`, `user_mdp`, `id_statut`) VALUES
+        "INSERT INTO `utilisateur` (`pseudo`, `password`, `statut_id`) VALUES
 (:user_pseudo, :user_mdp, 2);");
     $req->execute(array('user_pseudo'=>$log,
                         'user_mdp'=>$mdp,));
@@ -225,11 +225,11 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
-        "SELECT user_mdp FROM utilisateur WHERE user_pseudo = :user_pseudo ");
-        $req->execute(array('user_pseudo'=>$log,));
+        "SELECT password FROM utilisateur WHERE pseudo = :pseudo ");
+        $req->execute(array('pseudo'=>$log,));
         $mdp2 = $req->fetchAll();
 
-        $hash = $mdp2[0]["user_mdp"];
+        $hash = $mdp2[0]["password"];
         
         $mdpCompare = password_verify($mdp, $hash);
         $req->closeCursor();
@@ -245,8 +245,8 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
-        "SELECT user_pseudo FROM utilisateur WHERE user_pseudo = :user_pseudo ");
-        $req->execute(array('user_pseudo'=>$log,));
+        "SELECT pseudo FROM utilisateur WHERE pseudo = :pseudo ");
+        $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
         if (count($log2) == 0) {
             return true;
