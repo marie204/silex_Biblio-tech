@@ -1,251 +1,306 @@
 <?php
-namespace EntityManager;//Le fichier livre est dans le dossier EntityManager
-// src/EntityManager/livre.php
+/**
+ * Livre entity
+ */
 
-/*use Doctrine\ORM\Annotation as ORM;*/
+namespace EntityManager; // Le fichier Livre est dans le dossier EntityManager
+
+use Doctrine\Mapping as ORM;
 
 /**
-*@Entity
-*@Table(name="livre")
-*/
-class Livre
-{
-    /**
-     *@Column(type="integer")
-     *@GeneratedValue
-     *@Id
-     */
+ * Livre entity
+ *
+ * liste des livres
+ *
+ * @Entity
+ * @Table(name="livre")
+ */
+class Livre {
 
     /**
-     * Many books have many exemps.
-     * @ManyToMany(targetEntity="exemplaire", inversedBy="livre")
+     * id
+     *
+     * @var int
+     * @Column(name="id", type="integer")
+     * @Id
+     * @GeneratedValue(strategy="AUTO")
      */
+    private $id;
 
     /**
-     * Many books have many genres.
-     * @ManyToMany(targetEntity="gengenrelivre", inversedBy="livre")
+     * date d'ajout du livre
+     *
+     * @var date
+     * @Column(name="dateAjout", type="date")
      */
+    private $dateAjout;
 
     /**
-     * One book has many comments.
-     * @OneToMany(targetEntity="commentaire", mappedBy="livre")
+     * Titre du livre
+     *
+     * @var string
+     * @Column(name="titre", type="string", length=255)
      */
-    private $li_id;
+    private $title;
 
     /**
-     *@Column(type="date")
+     * Auteur du livre
+     *
+     * @var string
+     * @Column(name="auteur", type="string", length=255)
      */
-    private $li_date_ajout;
+    private $auteur;
 
     /**
-     *@Column(type="string")
+     * Description du livre
+     *
+     * @var string
+     * @Column(name="description", type="string", length=255)
      */
-    private $li_title;
+    private $description;
 
     /**
-     *@Column(type="string")
+     * ISBN du livre
+     *
+     * @var string
+     * @Column(name="isbn", type="string", length=255)
      */
-    private $li_auteur;
+    private $isbn;
 
     /**
-     *@Column(type="string")
-     */
-    private $li_desc;
-
-    /**
-     *@Column(type="string")
-     */
-    private $li_isbn;
-
-    /**
-     *@Column(type="string")
+     * Langue du livre
+     *
+     * @var string
+     * @Column(name="langue", type="string", length=255)
      */
     private $langue;
 
     /**
-     *@Column(type="string")
+     * Nombre de pages du livre
+     *
+     * @var int
+     * @Column(name="pages", type="integer")
      */
-    private $li_img;
+    private $pages;
 
     /**
-     * @return mixed
+     * Image du livre
+     *
+     * @var string
+     * @Column(name="image", type="string", length=255)
      */
-    public function getLiId()
-    {
-        return $this->li_id;
+    private $image;
+
+    /**
+     * commentaire linked to this livre
+     *
+     * @OneToMany(targetEntity="EntityManager\Commentaire", mappedBy="livre")
+     */
+    private $commentaire;
+
+    /**
+     * Many Livre have Many Genre
+     * @ManyToMany(targetEntity="EntityManager\Genre", inversedBy="livre")
+     * @JoinTable(name="livre_genre")
+     */
+    private $genre;
+
+    /**
+     * exemplaire linked to this livre
+     *
+     * @OneToMany(targetEntity="EntityManager\Exemplaire", mappedBy="livre")
+     */
+    private $exemplaire;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
     }
 
     /**
-     * @param mixed $li_id
+     * Set dateAjout
      *
-     * @return self
+     * @param date $dateAjout
+     *
+     * @return Livre
      */
-    public function setLiId($li_id)
-    {
-        $this->li_id = $li_id;
-
+    public function setDateAjout($dateAjout) {
+        $this->dateAjout = $dateAjout;
         return $this;
     }
 
     /**
-     * @return mixed
+     * Get dateAjout
+     *
+     * @return date
      */
-    public function getLiDateAjout()
-    {
-        return $this->li_date_ajout;
+    public function getDateAjout() {
+        return $this->dateAjout;
     }
 
     /**
-     * @param mixed $li_date_ajout
+     * Set Title
      *
-     * @return self
+     * @param string $title
+     *
+     * @return Livre
      */
-    public function setLiDateAjout($li_date_ajout)
-    {
-        $this->li_date_ajout = $li_date_ajout;
-
+    public function setTitle($title) {
+        $this->title = $title;
         return $this;
     }
 
     /**
-     * @return mixed
+     * Get Title
+     *
+     * @return string
      */
-    public function getLiTitle()
-    {
-        return $this->li_title;
+    public function getTitle() {
+        return $this->title;
     }
 
     /**
-     * @param mixed $li_title
+     * Set Auteur
      *
-     * @return self
+     * @param string $auteur
+     *
+     * @return Livre
      */
-    public function setLiTitle($li_title)
-    {
-        $this->li_title = $li_title;
-
+    public function setAuteur($auteur) {
+        $this->auteur = $auteur;
         return $this;
     }
 
     /**
-     * @return mixed
+     * Get Auteur
+     *
+     * @return string
      */
-    public function getLiAuteur()
-    {
-        return $this->li_auteur;
+    public function getAuteur() {
+        return $this->auteur;
     }
 
     /**
-     * @param mixed $li_auteur
+     * Set Description
      *
-     * @return self
+     * @param string $description
+     *
+     * @return Livre
      */
-    public function setLiAuteur($li_auteur)
-    {
-        $this->li_auteur = $li_auteur;
-
+    public function setDescription($description) {
+        $this->description = $description;
         return $this;
     }
 
     /**
-     * @return mixed
+     * Get Description
+     *
+     * @return string
      */
-    public function getLiDesc()
-    {
-        return $this->li_desc;
+    public function getDescription() {
+        return $this->description;
     }
 
     /**
-     * @param mixed $li_desc
+     * Set ISBN
      *
-     * @return self
+     * @param string $isbn
+     *
+     * @return Livre
      */
-    public function setLiDesc($li_desc)
-    {
-        $this->li_desc = $li_desc;
-
+    public function setIsbn($isbn) {
+        $this->isbn = $isbn;
         return $this;
     }
 
     /**
-     * @return mixed
+     * Get ISBN
+     *
+     * @return string
      */
-    public function getLiIsbn()
-    {
-        return $this->li_isbn;
+    public function getIsbn() {
+        return $this->isbn;
     }
 
     /**
-     * @param mixed $li_isbn
+     * Set Image
      *
-     * @return self
+     * @param string $image
+     *
+     * @return Livre
      */
-    public function setLiIsbn($li_isbn)
-    {
-        $this->li_isbn = $li_isbn;
-
+    public function setImage($image) {
+        $this->image = $image;
         return $this;
     }
 
     /**
-     * @return mixed
+     * Get Image
+     *
+     * @return string
      */
-    public function getLiImg()
-    {
-        return $this->li_img;
+    public function getImage() {
+        return $this->image;
     }
 
     /**
-     * @param mixed $li_img
+     * Set Langue
      *
-     * @return self
+     * @param string $langue
+     *
+     * @return Livre
      */
-    public function setLiImg($li_img)
-    {
-        $this->li_img = $li_img;
-
+    public function setLangue($langue) {
+        $this->langue = $langue;
         return $this;
     }
 
- /**
-     * @return mixed
+    /**
+     * Get Langue
+     *
+     * @return string
      */
-    public function getLangue()
-    {
+    public function getLangue() {
         return $this->langue;
     }
 
     /**
-     * @param mixed $li_img
+     * Set Pages
      *
-     * @return self
+     * @param int $pages
+     *
+     * @return Livre
      */
-    public function setLangue($langue)
-    {
-        $this->langue = $langue;
-
+    public function setPages($pages) {
+        $this->pages = $pages;
         return $this;
-    }
- /**
-     * @return mixed
-     */
-    public function getLiPages()
-    {
-        return $this->li_pages;
     }
 
     /**
-     * @param mixed $li_pages
+     * Get Langue
      *
-     * @return self
+     * @return string
      */
-    public function setLiPages($li_pages)
-    {
-        $this->li_pages = $li_pages;
-
-        return $this;
+    public function getPages() {
+        return $this->pages;
     }
 
+    /**
+     * Get ArrayCollection
+     *
+     * @return ArrayCollection $genre
+     */
+    public function getGenre() {
+        return $this->genre;
+    }
+ 
+    public function __construct() {
+        $this->genre = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 }
 
 
