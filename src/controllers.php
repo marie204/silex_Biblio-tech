@@ -183,7 +183,6 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         'errors/'.substr($code, 0, 1).'xx.html.twig',
         'errors/default.html.twig',
     );
-
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
 
@@ -213,22 +212,18 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         "INSERT INTO `utilisateur` (`user_pseudo`, `user_mdp`, `id_statut`) VALUES
 (:user_pseudo, :user_mdp, 2);");
     $req->execute(array('user_pseudo'=>$log,
-                        'user_mdp'=>$mdp, 
-
-    ));
+                        'user_mdp'=>$mdp,));
     $req->closeCursor();
     return 'done';
 }
 
     function compareMdp($log, $mdp){
-        //$mdp = encryptMdp($mdp);
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
         "SELECT user_mdp FROM utilisateur WHERE user_pseudo = :user_pseudo ");
         $req->execute(array('user_pseudo'=>$log,));
         $mdp2 = $req->fetchAll();
-        //$mdp2 = $mdp2["user_mdp"];
 
         $hash = $mdp2[0]["user_mdp"];
         
