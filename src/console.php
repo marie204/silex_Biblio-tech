@@ -38,7 +38,6 @@ $console
 ('membre');");
         $req->execute();
         $req->closeCursor();
-
     });
 
 
