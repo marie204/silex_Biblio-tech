@@ -90,7 +90,7 @@ $app->match('/log-server', function(Request $request) use ($app){
         if ($verifLogB == false){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
-        return $app->redirect('./accueil'); 
+        return $app->redirect('./accueil');     
     }
 });
 $app->match('/inscription', function (Request $request) use ($app){
