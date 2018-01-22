@@ -1,0 +1,20 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<form action="/test" method="GET">
+    ISBN : <br>
+    <input type="text" name="isbn" required="">
+    <input type="submit" name="rechercher" value="Rechercher">
+    <input type="submit" name="ajouter" value="Ajouter à la base de données">
+</form><br>
+
+<p>
+{{ echec }}
+{{ ISBN }}<br>
+{{ titre }}<br>
+{{ auteur }}<br>
+{{ langue }}<br>
+{{ pages }}<br>
+{{ description }}
+</p>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<div class="global indent">
+    <!--content-->
+    <div class="container">
+            <div class="row">
+                <article class="col-lg-12 col-md-12 col-sm-12 contactBox">
+                    <figure class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2647.0329832703155!2d0.08661661488034995!3d48.43670673825956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e20c829005b69d%3A0xbb00e816ee46c064!2sstarTech+Normandy!5e0!3m2!1sfr!2sfr!4v1516350158563"  allowfullscreen></iframe>
+                    </figure>
+                </article>
+            </div>
+        </div>
+        <section class="formBox">
+            <div class="container">
+                <div class="row">
+                    <article class="col-lg-4 col-md-4 col-sm-4">
+                        <h3>Coordonnées</h3>
+                        <div class="info">
+                            <h4>Addresse :</h4>
+                            <p>31 Boulevard de Strasbourg, 61000 Alençon</p>
+                            <h4 class="info">Téléphone:</h4>
+                            <p>02 33 80 87 50</p>
+                        </div>
+                    </article>
+                    <article class="col-lg-8 col-md-8 col-sm-8">
+                        <h3>Un message pour nous ?</h3>
+                        <form id="contact-form">
+                            <div class="success-message">envoyé avec succès.</div>
+                            <div class="holder">
+                                <div class="form-div-1 clearfix">
+                                    <label class="name">
+                                        <input type="text" data-constraints="@Required @JustLetters" id="regula-generated-226666">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                        <span class="error-message">*Cette E-mail n'est pas valide.</span>
+                                    <span class="_placeholder">Nom:</span></label>
+                                </div>
+                                <div class="form-div-2 clearfix">
+                                    <label class="email">
+                                        <input type="text" data-constraints="@Required @Email" id="regula-generated-175473">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                        <span class="error-message">*Cette E-mail n'est pas valide.</span>
+                                    <span class="_placeholder">E-mail:</span></label>
+                                </div>
+                                <div class="form-div-3 clearfix">
+                                    <label class="phone notRequired">
+                                        <input type="text" data-constraints="@JustNumbers" id="regula-generated-249712">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                        <span class="error-message">*Ce téléphone n'est pas valide</span>
+                                    <span class="_placeholder">Téléphone:</span></label>
+                                </div>
+                            </div>
+                            <div class="form-div-4 clearfix">
+                                <label class="message">
+                                    <textarea data-constraints="@Required @Length(min=20,max=999999)" id="regula-generated-757192"></textarea>
+                                    <span class="empty-message">*Ce champ est requis.</span>
+                                    <span class="error-message">*Le message est rop court.</span>
+                                <span class="_placeholder">Message:</span></label>
+                            </div>
+                            <div class="btns">
+                                <a href="#" data-type="submit" class="btn-default btn1">Envoyer</a>
+                            </div>  
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </section>
+</div>
+{% endblock %}
