@@ -3,6 +3,9 @@
 
 /* *[class*=col] {
 	border: 1px solid red;
+} 
+ *[class*=row] {
+    border: 1px solid blue;
 } */
 
 body {
@@ -871,9 +874,18 @@ footer .nav {
 .blogBox {
     margin-bottom: 54px;
 }
-
-
+/*--------Connexion----------------*/
+/*Erreur dans le login ou le mot de passe*/
+#monErreur {
+    margin-bottom:10px;
+    color: red;   
+}
 /*-----btn-----*/
+
+.btns {
+    margin: -100px 0 10px 0 !important;
+    border: 1px solid transparent !important;
+}
 
 .btn-default.btn1 {
     display: inline-block;

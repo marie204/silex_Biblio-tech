@@ -1,9 +1,54 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-<div class="row justify-content-md-center">
-  <div class="col-md-auto">
-    <p style="height: 300px;"></p>
-  </div>
+<div class="global indent">
+    <!--content-->
+        <section class="formBox">
+            <div class="container">
+                <div class="row">
+                    <article class="col-lg-12 col-md-12 col-sm-12">
+                        <h3>Connectez-vous</h3>
+						<div id='monErreur'></div>
+                        <form id="contact-form" action="./log-server" method="post">
+                            <div class="success-message">envoyé avec succès.</div>
+                            <div class="holder">
+                                <div class="form-div-1 clearfix">
+                                    <label class="name">
+                                        <input class='text' id='log1' type="text" name="log">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                    <span class="_placeholder">Nom d'utilisateur:</span></label>
+                                </div>
+                            </div>
+                                <div class="form-div-2 clearfix">
+                                    <label class="email">
+                                        <input class='text' id='mp1' type="password" name="mdp">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                    <span class="_placeholder">Mot de passe:</span></label>
+                                </div>
+                            </div>
+                            <div class="btns">
+								<input class="btn-default btn1" type="submit" name='loggin' value='connexion'>
+								<input class="btn-default btn1" type="submit" name='loggin' value='inscription'>
+								<p></p>
+                            </div>  
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </section>
 </div>
+<script>
+	if ('{{erreur}}' == 'wrongLoggin') {
+		document.getElementById('monErreur').innerHTML = 'Votre identifiant n\'est pas dans la base de donnée ou votre mot de passe ne correspond guère à votre identifiant!';
+		$('.text').css('borderColor', 'red');
+	}
+	if ('{{erreur}}' == 'noLoggin') {
+		document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigné votre identifiant!';
+		$('#log1').css('borderColor', 'red');
+	}
+	if ('{{erreur}}' == 'noPassa') {
+		document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigner votre mot de passe!';
+		$('#mp1').css('borderColor', 'red');
+	}
+</script>
 {% endblock %}
