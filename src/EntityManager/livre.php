@@ -54,8 +54,8 @@ class Livre {
     /**
      * Description du livre
      *
-     * @var string
-     * @Column(name="description", type="string", length=255)
+     * @var text
+     * @Column(name="description", type="text")
      */
     private $description;
 
@@ -63,7 +63,7 @@ class Livre {
      * ISBN du livre
      *
      * @var string
-     * @Column(name="isbn", type="string", length=255)
+     * @Column(name="isbn", type="string", length=20)
      */
     private $isbn;
 
@@ -281,9 +281,9 @@ class Livre {
     }
 
     /**
-     * Get Langue
+     * Get Pages
      *
-     * @return string
+     * @return int
      */
     public function getPages() {
         return $this->pages;

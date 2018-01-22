@@ -1,47 +1,63 @@
 {% extends "layout.html.twig" %}
 {% block content %}
-<form action="./test" method="GET">
-    ISBN : <br>
-    <input type="text" name="isbn" required="">
-    <input type="submit" name="rechercher" value="Rechercher">
-    <input type="submit" name="ajouter" value="Ajouter à la base de données">
-</form><br>
-
 <p>
-{{ echec }}
-{{ ISBN }}<br>
-{{ titre }}<br>
-{{ auteur }}<br>
-{{ langue }}<br>
-{{ pages }}<br>
-{{ description }}
+{% if envoyer is defined %}{{ envoyer }}{% endif %}
+{% if echec is defined %}{{ echec }}{% endif %}
+{% if echec2 is defined %}{{ echec2 }}{% endif %}
 </p>
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6 order-sm-1">
-				<form action="/test" method="GET">
-					<div class="form-row">
-						<div class="col-auto">
-							<input type="text" class="form-control mb-2 mb-sm-0" id="inlineFormInput" name="isbn" placeholder="Numéro ISBN" required="">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="col-auto">
-							<button type="submit" class="btn btn-secondary" name="rechercher">Rechercher</button>
-							<button type="submit" class="btn btn-primary" name="ajouter">Ajouter à la base de données</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div><br>
-	<p>
-		{{ echec }}
-		{{ ISBN }}<br>
-		{{ titre }}<br>
-		{{ auteur }}<br>
-		{{ langue }}<br>
-		{{ pages }}<br>
-		{{ description }}
-	</p>
+<form action="./test" method="post" enctype="multipart/form-data" class="col s12">
+	<div class="row">
+        <div class="input-field col s12 m6 l6">
+            <input placeholder="Recherche par ISBN" name="rechercheisbn" type="text" class="validate" required value="">
+            <button type="submit" class="btn btn-secondary" name="rechercher">Rechercher</button>
+        </div>
+    </div>
+</form>
+<form action="./test" method="post" name="frm" id="frm" enctype="multipart/form-data" class="col s12">
+          <div class="row">
+          	<div class="input-field col s12 m6 l6">
+              <input placeholder="ISBN" id="isbn" name="isbn" type="text" class="validate" required value="{% if ISBN is defined %}{{ ISBN }}{% endif %}">
+              <label for="isbn">ISBN *</label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+              <input placeholder="Langue" id="langue" name="langue" type="text" class="validate" required value="{% if langue is defined %}{{ langue }}{% endif %}">
+              <label for="langue">Langue *</label>
+            </div>
+          </div>
+          <div class="row">
+          	<div class="input-field col s12 m6 l6">
+              <input placeholder="Titre" id="title" name="title" type="text" class="validate" required value="{% if titre is defined %}{{ titre }}{% endif %}">
+              <label for="title">Titre *</label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+              <input placeholder="Nombre de pages" id="pages" name="pages" type="text" class="validate" required value="{% if pages is defined %}{{ pages }}{% endif %}">
+              <label for="pages">Nombre de pages *</label>
+            </div>
+          </div>
+          <div class="row">
+          	<div class="input-field col s12 m6 l6">
+              <input placeholder="Auteur(e)" id="auteur" name="auteur" type="text" class="validate" required value="{% if auteur is defined %}{{ auteur }}{% endif %}">
+              <label for="auteur">Auteur(e) *</label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+              <input placeholder="Nombre d'exemplaires" id="exemplaire" name="exemplaire" type="text" class="validate" required>
+              <label for="auteur">Nombre d'exemplaires *</label>
+            </div>
+          </div>
+          <div class="row">
+          	<div class="input-field col s12 m12 l12">
+              <textarea placeholder="Description" id="description" name="description" class="materialize-textarea validate" required>{% if description is defined %}{{ description }}{% endif %}</textarea>
+              <label for="description">Description *</label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+              <input placeholder="Date ajout" id="dateAjout" name="dateAjout" type="date" class="datepicker" required value="">
+              <label for="dateAjout">Date ajout *</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m6 l8">
+              <button class="btn btn-block blue btnFiche" id="envoyer" name="envoyer" type="submit">Créer la fiche livre<i class="material-icons right">send</i></button>
+            </div>
+          </div>
+      </form>
 {% endblock %}

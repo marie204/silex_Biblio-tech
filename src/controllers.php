@@ -1,26 +1,23 @@
 <?php
-
-session_start();
-
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
+use EntityManager\Exemplaire;
 
 $app->get('/', function () use ($app) {
-    return $app->redirect('index.php/accueil');
+    return $app['twig']->render('accueil.html.twig', array());
 })
 ->bind('homepage')
 ;
 
-$app->get('/test', function () use ($app) {
-    if (isset($_GET['rechercher'])) {
-         $isbn = isset($_GET['isbn']) ? $_GET['isbn'] : '';
+$app->match('/test', function () use ($app) {
+    if (isset($_POST['rechercher'])) {
+         $rechercheisbn = isset($_POST['rechercheisbn']) ? $_POST['rechercheisbn'] : '';
 
-         $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn;
+         $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $rechercheisbn;
          $response = file_get_contents($request);
          $results = json_decode($response);
 
@@ -32,20 +29,58 @@ $app->get('/test', function () use ($app) {
             $infos['langue'] = $book->volumeInfo->language;
             $infos['pages'] = $book->volumeInfo->pageCount;
             $infos['description'] = $book->volumeInfo->description;
+            
             return $app['twig']->render('formulaire_isbn.html.twig', array(
-                'ISBN' => "Numéro ISBN : ". $infos['isbn'],
-                'titre' => "Titre : ". $infos['titre'],
-                'auteur' => "Auteur : ". $infos['auteur'],
-                'langue' => "Langue : ". $infos['langue'],
-                'pages' => "Pages : ". $infos['pages'],
-                'description' => "Description : ". $infos['description']
+                'ISBN' => $infos['isbn'],
+                'titre' => $infos['titre'],
+                'auteur' => $infos['auteur'],
+                'langue' => $infos['langue'],
+                'pages' => $infos['pages'],
+                'description' => $infos['description']
             ));
         }
         else {
-        return $app['twig']->render('formulaire_isbn.html.twig', array(
-          'echec' => "Livre introuvable"
-        ));
+            return $app['twig']->render('formulaire_isbn.html.twig', array(
+              'echec' => "Livre introuvable"
+            ));
         }
+    }
+    
+    if (isset($_POST['envoyer'])) {
+        $title = isset($_POST['title']) ? $_POST['title'] : '';
+        $auteur = isset($_POST['auteur']) ? $_POST['auteur'] : '';
+        $dateAjout = isset($_POST['dateAjout']) ? $_POST['dateAjout'] : '';
+        $isbn = isset($_POST['isbn']) ? $_POST['isbn'] : '';
+        $pages = isset($_POST['pages']) ? $_POST['pages'] : '';
+        $langue = isset($_POST['langue']) ? $_POST['langue'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $nbexemplaire = isset($_POST['exemplaire']) ? $_POST['exemplaire'] : '';
+
+        $livre = new Livre();
+        $livre->setTitle($title);
+        $livre->setAuteur($auteur);
+        $livre->setDateAjout(new \DateTime($dateAjout));
+        $livre->setIsbn($isbn);
+        $livre->setPages($pages);
+        $livre->setLangue($langue);
+        $livre->setDescription($description);
+        $livre->setImage('');
+
+        $exemplaire = new Exemplaire();
+        $exemplaire->setEtat($nbexemplaire);
+
+        $app['em']->persist($livre);
+        $app['em']->persist($exemplaire);
+        $app['em']->flush();
+
+        return $app['twig']->render('formulaire_isbn.html.twig', array(
+            'envoyer' => "Le livre ".$livre->getTitle()." à été ajouté"
+        ));
+    }
+    else {
+        return $app['twig']->render('formulaire_isbn.html.twig', array(
+            'echec2' => "Le livre n'a pas été ajouté"
+        ));
     }
     return $app['twig']->render('formulaire_isbn.html.twig', array());
 });
@@ -54,7 +89,7 @@ $app->get('/about', function () use ($app){
     return 'ok';
 });
 
-$app->match('/accueil', function () use ($app){
+$app->get('/accueil', function () use ($app){
     return $app['twig']->render('accueil.html.twig', array());
 });
 
@@ -74,70 +109,16 @@ $app->get('/contact', function () use ($app){
     //return $app['twig']->render('contact.html.twig', array());
 });
 
-
-//#loggin
-$app->match('/login', function (Request $request) use ($app){
-    return $app['twig']->render('login.html.twig', array(
-        'erreur' => $_GET['erreur'] ?? null,
-    ));
+$app->get('/login', function () use ($app){
+    return $app['twig']->render('login.html.twig', array());
 });
-$app->match('/log-server', function(Request $request) use ($app){
-    if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
-        return $app['twig']->render('log.server.html.twig', array(
-        'login' => $_POST['log'] ??null,
-        'mdp' => $_POST['mdp'] ??null,
-        'loggin' => $_POST['loggin'] ?? null,
-        'erreur' => $_GET['erreur'] ?? null,
-        'sessEntite' => $_SESSION['idEntity'] ?? null,
-        ));
-    }else{
-        if (!isset($_POST['log'])||empty($_POST['log'])) {
-            return $app->redirect('./login?erreur=noLoggin');
-        }
-        if (!isset($_POST['mdp'])||empty($_POST['mdp'])){
-            return $app->redirect('./login?erreur=noPassa');
-        }
-        $verifLogA = verifLog($_POST['log']);
-        if ($verifLogA == false){
-            return $app->redirect('./login?erreur=wrongLoggin');
-        }
-
-        $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
-        if ($verifLogB == false){
-            return $app->redirect('./login?erreur=wrongLoggin');
-        }
-        return $app->redirect('./accueil'); 
-    }
-});
-
-$app->match('/inscription', function (Request $request) use ($app){
-    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) ){
-        return $app->redirect('./log-server?erreur=mdplog');
-    }
-    $mdp2 = encryptMdp($_POST['mdp2']);
-    $log2 = htmlspecialchars($_POST['log2']);
-    $verifPesudoInscrit = verifBDD($log2);
-    if (!$verifPesudoInscrit) {
-        return $app->redirect('./log-server?erreur=name');
-    }
-    inscriptionBDD($log2, $mdp2);
-    return $app->redirect('./accueil');
-});
-
 $app->get('/apropos', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
 
-
 $app->get('/nouveautes', function () use ($app){
     return $app['twig']->render('nouveautes.html.twig', array());
 });
-
-if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
-    $app->get('/u3jjbvb163qeh9lk', function () use ($app){
-        return 'ok8';
-    });
-}
 
 $app->get('/livre', function () use ($app){
     return $app['twig']->render('livre.html.twig', array());
@@ -174,7 +155,6 @@ $app->get('/admin', function () use ($app){
     return 'ok8';
 });
 
-
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
@@ -187,6 +167,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         'errors/'.substr($code, 0, 1).'xx.html.twig',
         'errors/default.html.twig',
     );
+
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
 

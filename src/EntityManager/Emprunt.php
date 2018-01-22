@@ -63,7 +63,15 @@ class Emprunt {
      *
      * @OneToMany(targetEntity="EntityManager\Exemplaire", mappedBy="emprunt")
      */
-    private $exemplaire; 
+    private $exemplaire;
+
+    /**
+     * Valider emprunt
+     *
+     * @var string
+     * @Column(name="valider", type="string", length=255)
+     */
+    private $valider; 
 
     /**
      * Get id
@@ -153,5 +161,26 @@ class Emprunt {
      */
     public function getUtilisateur() {
         return $this->utilisateur;
+    }
+
+    /**
+     * Set Valider
+     *
+     * @param string $valider
+     *
+     * @return Emprunt
+     */
+    public function setValider($valider) {
+        $this->valider = $valider;
+        return $this;
+    }
+
+    /**
+     * Get Valider
+     *
+     * @return string
+     */
+    public function getValider() {
+        return $this->valider;
     }
 }
