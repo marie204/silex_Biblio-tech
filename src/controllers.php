@@ -249,8 +249,10 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
         if (count($log2) == 0) {
+            $req->closeCursor();
             return true;
         }else{
+            $req->closeCursor();
             return false;
         }
     }
