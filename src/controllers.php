@@ -9,7 +9,7 @@ use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le doss
 use EntityManager\Exemplaire;
 
 $app->get('/', function () use ($app) {
-    if (strpos($_SERVER['PHP_SELF'], 'index.php/')) {
+    if (strpos($_SERVER['PHP_SELF'], 'index')) {
         return $app->redirect('./accueil');
     }else{
         return $app->redirect('index.php/accueil');
@@ -17,8 +17,6 @@ $app->get('/', function () use ($app) {
 })
 ->bind('homepage')
 ;
-
-
 
 $app->match('/test', function () use ($app) {
     if (isset($_POST['rechercher'])) {
