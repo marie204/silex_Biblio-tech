@@ -9,7 +9,7 @@ use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le doss
 use EntityManager\Exemplaire;
 
 $app->get('/', function () use ($app) {
-    if (strpos($_SERVER['PHP_SELF'], 'index')) {
+    if (strpos($_SERVER['PHP_SELF'], 'index_dev.php')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
         return $app->redirect('./accueil');
     }else{
         return $app->redirect('index.php/accueil');
@@ -153,11 +153,17 @@ $app->match('/log-server', function(Request $request) use ($app){
 });
 
 $app->match('/inscription', function (Request $request) use ($app){
-    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) ){
-        return $app->redirect('./log-server?erreur=mdplog');
+    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar']) ){
+        //return $app->redirect('./log-server?erreur=mdplog');
+        dump($_POST['mailMar']);
     }
     $mdp2 = encryptMdp($_POST['mdp2']);
     $log2 = htmlspecialchars($_POST['log2']);
+    $mail = htmlspecialchars($_POST['mailMar']);
+    $verifMail = verifMail($mail);
+    if (!$verifMail) {
+        return $app->redirect('./log-server?erreur=mail');
+    }
     $verifPesudoInscrit = verifBDD($log2);
     if (!$verifPesudoInscrit) {
         return $app->redirect('./log-server?erreur=name');
@@ -319,6 +325,13 @@ installStatut();
             };
         }
     }
+    function verifMail($mail){
+        if (!strpos($mail, '@')){
+            return false;
+        }
+        return true;
+    }
+
     function ouvertureSession($log){
         //$_SESSION['log'] = $log;
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));

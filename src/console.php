@@ -34,12 +34,9 @@ $console
     	$bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     	$bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
-        "INSERT INTO `statut` (`intitule`) VALUES
-('membre');");
+        "INSERT INTO `statut` (`intitule`) VALUES ('membre');");
         $req->execute();
         $req->closeCursor();
     });
-
-
 
 return $console;
