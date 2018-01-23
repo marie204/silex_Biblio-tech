@@ -1,5 +1,7 @@
 <?php
 
+
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -77,7 +79,7 @@ $app->get('/recherche', function () use ($app){
 });
 
 $app->get('/contact', function () use ($app){
-    return $app['twig']->render('contact.html.twig', array());
+    //return $app['twig']->render('contact.html.twig', array());
 });
 
 
@@ -200,7 +202,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
 
-
+installStatut();
 //#loggin
     function verifLog($log){
         $log = htmlspecialchars($log);
@@ -252,6 +254,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     };
 
     function verifBDD($log){
+
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
@@ -266,6 +269,33 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
             return false;
         }
     }
+    function installStatut(){
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT count(id) i FROM statut");
+        $req->execute();
+        $log2 = $req->fetchAll();
+        if ($log2[0]['i'] == 0) {
+            dump($log2[0]['i']);
+            $req->closeCursor();
+            for ($i=0; $i < 2 ; $i++) {
+                $stature = 'membre';
+                if ($i == 0) {
+                    $stature = 'admin';
+                }
+                $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                $req = $bdd->prepare(
+                    "INSERT INTO `statut` (`intitule`) VALUES
+                (:stature);");
+                $req->execute(array(
+                        'stature'=>$stature,));
+                $req->closeCursor();
+            };
+        }
+    }
+=======
     function ouvertureSession($log){
         //$_SESSION['log'] = $log;
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
