@@ -115,7 +115,7 @@ $app->match('/log-server', function(Request $request) use ($app){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
         ouvertureSession($_POST['log']);
-        //return $app->redirect('./accueil'); 
+        return $app->redirect('./accueil'); 
     }
 });
 
