@@ -9,10 +9,16 @@ use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le doss
 use EntityManager\Exemplaire;
 
 $app->get('/', function () use ($app) {
-    return $app['twig']->render('accueil.html.twig', array());
+    if (strpos($_SERVER['PHP_SELF'], 'index.php/')) {
+        return $app->redirect('./accueil');
+    }else{
+        return $app->redirect('index.php/accueil');
+    }
 })
 ->bind('homepage')
 ;
+
+
 
 $app->match('/test', function () use ($app) {
     if (isset($_POST['rechercher'])) {
@@ -110,17 +116,14 @@ $app->get('/contact', function () use ($app){
     //return $app['twig']->render('contact.html.twig', array());
 });
 
-<<<<<<< HEAD
 
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
     
     return $app['twig']->render('login.html.twig', array(
         'erreur' => $_GET['erreur'] ?? null, ));
-
-    
-   
 });
+
 $app->match('/log-server', function(Request $request) use ($app){
     if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
         return $app['twig']->render('log.server.html.twig', array(
@@ -163,6 +166,7 @@ $app->match('/inscription', function (Request $request) use ($app){
     }
     inscriptionBDD($log2, $mdp2);
     return $app->redirect('./accueil');
+});
 $app->get('/login', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
@@ -194,7 +198,6 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
     $li_pages = $request->get('li_pages');
     $langue = $request->get('langue');
     $li_desc = $request->get('li_desc');
-
     $livre = new Livre();
     $livre->setLiTitle($li_title);//Entity / Classe Livre
     $livre->setLiAuteur($li_auteur);
@@ -207,20 +210,15 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
     $em->persist($Livre);
     $em->flush();
     echo "Created livre with ID " . $livre->getId() . "\n";
-
     return $app['twig']->render('ajoutLivre.html.twig', array());
 });
 /*Fin pour ajouter un livre*/
 
-$app->get('/admin', function () use ($app){
-    return 'ok8';
-});
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
     }
-
     // 404.html, or 40x.html, or 4xx.html, or error.html
     $templates = array(
         'errors/'.$code.'.html.twig',
@@ -228,7 +226,6 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         'errors/'.substr($code, 0, 1).'xx.html.twig',
         'errors/default.html.twig',
     );
-
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
 
@@ -284,7 +281,6 @@ installStatut();
     };
 
     function verifBDD($log){
-
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
@@ -325,7 +321,6 @@ installStatut();
             };
         }
     }
-=======
     function ouvertureSession($log){
         //$_SESSION['log'] = $log;
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -335,9 +330,4 @@ installStatut();
         $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
         //$_SESSION['idEntity'] = $log2[0]["statut_id"];
-
-        /*$app['session']->set('log', array('username' => $log));
-        $app['session']->set('idEntity', array('idEntity' => $log2[0]["statut_id"]));
-*/
-
     }
