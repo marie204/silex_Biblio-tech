@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Session\Session;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
-/*session_start();*/
 
 $app->get('/', function () use ($app) {
     if (strpos($_SERVER['PHP_SELF'], 'index.php/')) {
@@ -84,9 +83,12 @@ $app->get('/contact', function () use ($app){
 
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
+    
     return $app['twig']->render('login.html.twig', array(
-        'erreur' => $_GET['erreur'] ?? null,
-    ));
+        'erreur' => $_GET['erreur'] ?? null, ));
+
+    
+   
 });
 $app->match('/log-server', function(Request $request) use ($app){
     if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
@@ -133,7 +135,7 @@ $app->match('/inscription', function (Request $request) use ($app){
 });
 
 $app->get('/apropos', function () use ($app){
-    return 'ok';
+    return '.'.$_SESSION['log'];
 });
 
 
@@ -265,14 +267,17 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         }
     }
     function ouvertureSession($log){
-        $_SESSION['log'] = $log;
+        //$_SESSION['log'] = $log;
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
         "SELECT statut_id FROM utilisateur WHERE pseudo = :pseudo ");
         $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
-        $_SESSION['idEntity'] = $log2[0]["statut_id"];
+        //$_SESSION['idEntity'] = $log2[0]["statut_id"];
 
+        /*$app['session']->set('log', array('username' => $log));
+        $app['session']->set('idEntity', array('idEntity' => $log2[0]["statut_id"]));
+*/
 
     }
