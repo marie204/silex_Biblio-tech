@@ -1,7 +1,4 @@
 <?php
-
-
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -9,26 +6,19 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Session\Session;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
+use EntityManager\Exemplaire;
 
 $app->get('/', function () use ($app) {
-    if (strpos($_SERVER['PHP_SELF'], 'index.php/')) {
-        return $app->redirect('./accueil');
-    }else{
-        return $app->redirect('index.php/accueil');
-    }
+    return $app['twig']->render('accueil.html.twig', array());
 })
 ->bind('homepage')
 ;
-$app->get('/index.php/accueil', function () use ($app) {
-    return $app->redirect('./accueil');
 
-});
+$app->match('/test', function () use ($app) {
+    if (isset($_POST['rechercher'])) {
+         $rechercheisbn = isset($_POST['rechercheisbn']) ? $_POST['rechercheisbn'] : '';
 
-$app->get('/test', function () use ($app) {
-    if (isset($_GET['rechercher'])) {
-         $isbn = isset($_GET['isbn']) ? $_GET['isbn'] : '';
-
-         $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn;
+         $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $rechercheisbn;
          $response = file_get_contents($request);
          $results = json_decode($response);
 
@@ -40,20 +30,58 @@ $app->get('/test', function () use ($app) {
             $infos['langue'] = $book->volumeInfo->language;
             $infos['pages'] = $book->volumeInfo->pageCount;
             $infos['description'] = $book->volumeInfo->description;
+            
             return $app['twig']->render('formulaire_isbn.html.twig', array(
-                'ISBN' => "Numéro ISBN : ". $infos['isbn'],
-                'titre' => "Titre : ". $infos['titre'],
-                'auteur' => "Auteur : ". $infos['auteur'],
-                'langue' => "Langue : ". $infos['langue'],
-                'pages' => "Pages : ". $infos['pages'],
-                'description' => "Description : ". $infos['description']
+                'ISBN' => $infos['isbn'],
+                'titre' => $infos['titre'],
+                'auteur' => $infos['auteur'],
+                'langue' => $infos['langue'],
+                'pages' => $infos['pages'],
+                'description' => $infos['description']
             ));
         }
         else {
-        return $app['twig']->render('formulaire_isbn.html.twig', array(
-          'echec' => "Livre introuvable"
-        ));
+            return $app['twig']->render('formulaire_isbn.html.twig', array(
+              'echec' => "Livre introuvable"
+            ));
         }
+    }
+    
+    if (isset($_POST['envoyer'])) {
+        $title = isset($_POST['title']) ? $_POST['title'] : '';
+        $auteur = isset($_POST['auteur']) ? $_POST['auteur'] : '';
+        $dateAjout = isset($_POST['dateAjout']) ? $_POST['dateAjout'] : '';
+        $isbn = isset($_POST['isbn']) ? $_POST['isbn'] : '';
+        $pages = isset($_POST['pages']) ? $_POST['pages'] : '';
+        $langue = isset($_POST['langue']) ? $_POST['langue'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $nbexemplaire = isset($_POST['exemplaire']) ? $_POST['exemplaire'] : '';
+
+        $livre = new Livre();
+        $livre->setTitle($title);
+        $livre->setAuteur($auteur);
+        $livre->setDateAjout(new \DateTime($dateAjout));
+        $livre->setIsbn($isbn);
+        $livre->setPages($pages);
+        $livre->setLangue($langue);
+        $livre->setDescription($description);
+        $livre->setImage('');
+
+        $exemplaire = new Exemplaire();
+        $exemplaire->setEtat($nbexemplaire);
+
+        $app['em']->persist($livre);
+        $app['em']->persist($exemplaire);
+        $app['em']->flush();
+
+        return $app['twig']->render('formulaire_isbn.html.twig', array(
+            'envoyer' => "Le livre ".$livre->getTitle()." à été ajouté"
+        ));
+    }
+    else {
+        return $app['twig']->render('formulaire_isbn.html.twig', array(
+            'echec2' => "Le livre n'a pas été ajouté"
+        ));
     }
     return $app['twig']->render('formulaire_isbn.html.twig', array());
 });
@@ -82,6 +110,7 @@ $app->get('/contact', function () use ($app){
     //return $app['twig']->render('contact.html.twig', array());
 });
 
+<<<<<<< HEAD
 
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
@@ -134,12 +163,13 @@ $app->match('/inscription', function (Request $request) use ($app){
     }
     inscriptionBDD($log2, $mdp2);
     return $app->redirect('./accueil');
+$app->get('/login', function () use ($app){
+    return $app['twig']->render('login.html.twig', array());
 });
-
 $app->get('/apropos', function () use ($app){
     return '.'.$_SESSION['log'];
+    return $app['twig']->render('login.html.twig', array());
 });
-
 
 $app->get('/nouveautes', function () use ($app){
     return $app['twig']->render('nouveautes.html.twig', array());
@@ -166,7 +196,7 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
     $li_desc = $request->get('li_desc');
 
     $livre = new Livre();
-    $livre->setLiTitle($li_title);  //Entity / Classe Livre
+    $livre->setLiTitle($li_title);//Entity / Classe Livre
     $livre->setLiAuteur($li_auteur);
     $livre->setLiDesc($li_date_ajout);
     $livre->setLiIsbn($li_isbn);
@@ -186,7 +216,6 @@ $app->get('/admin', function () use ($app){
     return 'ok8';
 });
 
-
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
@@ -199,6 +228,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
         'errors/'.substr($code, 0, 1).'xx.html.twig',
         'errors/default.html.twig',
     );
+
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
 
