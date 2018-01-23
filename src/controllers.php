@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 
 
 use Symfony\Component\HttpFoundation\Request;
@@ -8,13 +7,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Session\Session;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
 
 $app->get('/', function () use ($app) {
-    return $app->redirect('index.php/accueil');
+    if (strpos($_SERVER['PHP_SELF'], 'index.php/')) {
+        return $app->redirect('./accueil');
+    }else{
+        return $app->redirect('index.php/accueil');
+    }
 })
 ->bind('homepage')
 ;
+$app->get('/index.php/accueil', function () use ($app) {
+    return $app->redirect('./accueil');
+
+});
 
 $app->get('/test', function () use ($app) {
     if (isset($_GET['rechercher'])) {
@@ -106,7 +114,8 @@ $app->match('/log-server', function(Request $request) use ($app){
         if ($verifLogB == false){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
-        return $app->redirect('./accueil'); 
+        ouvertureSession($_POST['log']);
+        //return $app->redirect('./accueil'); 
     }
 });
 
@@ -125,7 +134,7 @@ $app->match('/inscription', function (Request $request) use ($app){
 });
 
 $app->get('/apropos', function () use ($app){
-    return $app['twig']->render('login.html.twig', array());
+    return 'ok';
 });
 
 
@@ -154,7 +163,7 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
     $li_desc = $request->get('li_desc');
 
     $livre = new Livre();
-    $livre->setLiTitle($li_title);//Entity / Classe Livre
+    $livre->setLiTitle($li_title);  //Entity / Classe Livre
     $livre->setLiAuteur($li_auteur);
     $livre->setLiDesc($li_date_ajout);
     $livre->setLiIsbn($li_isbn);
@@ -282,4 +291,17 @@ installStatut();
                 $req->closeCursor();
             };
         }
+    }
+=======
+    function ouvertureSession($log){
+        $_SESSION['log'] = $log;
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT statut_id FROM utilisateur WHERE pseudo = :pseudo ");
+        $req->execute(array('pseudo'=>$log,));
+        $log2 = $req->fetchAll();
+        $_SESSION['idEntity'] = $log2[0]["statut_id"];
+
+
     }
