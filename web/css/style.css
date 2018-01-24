@@ -54,7 +54,10 @@ h1.navbar-brand_ {
 h1.navbar-brand_ a {
     display: inline-block;
 }
-
+/*Pseudo des critiques*/
+.thumbnail h2 {
+    color: #333;
+}
 h2 {
     margin: 0 0 30px 0;
     text-transform: uppercase;
