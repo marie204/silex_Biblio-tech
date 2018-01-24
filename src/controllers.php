@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
 $app->get('/', function () use ($app) {
-    return $app->redirect('index.php/accueil');
+    return $app->redirect('accueil');
 })
 ->bind('homepage')
 ;
