@@ -110,7 +110,8 @@ $app->get('/catalogue_genre', function () use ($app){
 });
 
 $app->get('/recherche', function () use ($app){
-    return $app['twig']->render('recherche.html.twig', array());
+    return $app->redirect('./test');
+    //return $app['twig']->render('recherche.html.twig', array());
 });
 
 $app->get('/contact', function () use ($app){
