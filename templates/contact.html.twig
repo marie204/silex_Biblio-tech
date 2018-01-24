@@ -26,41 +26,40 @@
                     </article>
                     <article class="col-lg-8 col-md-8 col-sm-8">
                         <h3>Un message pour nous ?</h3>
-                        <form id="contact-form">
-                            <div class="success-message">envoyé avec succès.</div>
+                        <form id="contact-form" action="#" method="post">
+                            <div class="success-message">Envoyé avec succès.</div>
                             <div class="holder">
                                 <div class="form-div-1 clearfix">
                                     <label class="name">
-                                        <input type="text" data-constraints="@Required @JustLetters" id="regula-generated-226666">
-                                        <span class="empty-message">*Ce champ est requis.</span>
-                                        <span class="error-message">*Cette E-mail n'est pas valide.</span>
-                                    <span class="_placeholder">Nom:</span></label>
+                                        <input placeholder="Votre nom *" type="text" name="nom" id="nom">
+                                        <span id="erreurNom"></span>
+                                    </label>
                                 </div>
                                 <div class="form-div-2 clearfix">
                                     <label class="email">
-                                        <input type="text" data-constraints="@Required @Email" id="regula-generated-175473">
-                                        <span class="empty-message">*Ce champ est requis.</span>
-                                        <span class="error-message">*Cette E-mail n'est pas valide.</span>
-                                    <span class="_placeholder">E-mail:</span></label>
+                                        <input placeholder="Votre E-Mail *" type="text" name="email" id="email">
+                                        <span id="erreurMail"></span>
+                                        <span id="erreurMailNonValide"></span>
+                                   </label>
                                 </div>
                                 <div class="form-div-3 clearfix">
                                     <label class="phone notRequired">
-                                        <input type="text" data-constraints="@JustNumbers" id="regula-generated-249712">
-                                        <span class="empty-message">*Ce champ est requis.</span>
-                                        <span class="error-message">*Ce téléphone n'est pas valide</span>
-                                    <span class="_placeholder">Téléphone:</span></label>
+                                        <input placeholder="Votre téléphone *" type="text" name="tel" id="tel">
+                                        <span id="erreurTel"></span>
+                                        <span id="erreurTelNonValide"></span>
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-div-4 clearfix">
                                 <label class="message">
-                                    <textarea data-constraints="@Required @Length(min=20,max=999999)" id="regula-generated-757192"></textarea>
-                                    <span class="empty-message">*Ce champ est requis.</span>
-                                    <span class="error-message">*Le message est rop court.</span>
-                                <span class="_placeholder">Message:</span></label>
+                                    <textarea placeholder="Votre message *" name="message" id="message"></textarea>
+                                    <span id="erreurMessage"></span>
+                                    <span id="erreurMessageNonValide"></span>
+                                </label>
                             </div>
                             <div class="btns">
-                                <a href="#" data-type="submit" class="btn-default btn1">Envoyer</a>
-                            </div>  
+                                <button type="submit" name="envoyer" id="envoyer" class="btn-default btn1">Envoyer</button>
+                            </div>
                         </form>
                     </article>
                 </div>

@@ -1,0 +1,140 @@
+/* ----------- Basic style ------------- */
+html, body {
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+	background-color: rgb(230, 230, 230);
+}
+#main_bloc {
+	width: 850px;
+	min-height:700px;
+	margin: 20px auto;
+	text-align:center;
+    background: none repeat scroll 0% 0% rgb(255, 255, 255);
+    box-shadow: 10px 10px 0px 2px rgb(137, 137, 137);
+	overflow:hidden;
+}
+
+#title {
+	display:inline-block;
+	margin: 80px auto;
+	font-size: 50px;
+	letter-spacing: 2px;
+}
+input[type=submit] { 
+	font-size: .8em !important; 
+	}
+#footer 
+{ width:100%; 
+    padding: 10px 0; 
+    margin:45px 0 0 0; 
+    text-align:center; 
+    background: #f2f2f2; 
+    height:150px; 
+    border-top:2px solid #bab9b9;
+}
+
+a {
+	text-decoration:none;
+	color:#00c3e6;
+	}
+	
+a:hover 
+{ text-decoration:underline; 
+}
+
+a img { 
+    border:none; 
+}
+label, #status { 
+    font-weight:bold; 
+}
+/*------------ Do not display the bar before upload ------ */
+
+#bar_blank, #hidden_iframe {  
+    display: none; 
+    margin: 20px auto;}
+
+/*------------ The bar to fill ---------------*/			
+
+.bar_content {
+    display:inline-block; 
+}
+
+.progress-bar {
+	background-color: #1a1a1a;
+	height: 25px;
+	padding: 5px;
+	width: 90%;
+	min-width:250px;
+	overflow:hidden;
+	 margin: 20px auto;		
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+	-webkit-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+	box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;           
+}
+
+.progress-bar span {
+	float:left;
+	display: inline-block;
+	height: 100%;
+	background-color: #777;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	-webkit-transition: width .4s ease-in-out;
+	-moz-transition: width 1.4s ease-in-out;
+	-ms-transition: width 1.4s ease-in-out;
+	-o-transition: width 1.4s ease-in-out;
+	transition: width 1.4s ease-in-out;		
+}
+
+/*----------- The color of the progress bar ----------------*/			
+.blue span { background-color: #34e359;  }
+
+/*----------- The stripes (for any browser) ----------------*/		
+
+.stripes span {
+	-webkit-background-size: 30px 30px;
+	-moz-background-size: 30px 30px;
+	background-size: 30px 30px;			
+	background-image: -webkit-gradient(linear, left top, right bottom,
+						color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent),
+						color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)),
+						color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent),
+						to(transparent));
+	background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+						transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+						transparent 75%, transparent);
+	background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+						transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+						transparent 75%, transparent);
+	background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+						transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+						transparent 75%, transparent);
+	background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+						transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+						transparent 75%, transparent);
+	background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+						transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+						transparent 75%, transparent);            
+
+	-webkit-animation: animate-stripes 3s linear infinite;
+	-moz-animation: animate-stripes 3s linear infinite;       		
+}
+
+@-webkit-keyframes animate-stripes {
+	0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
+
+@-moz-keyframes animate-stripes {
+	0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
+
+/*---------------------------*/

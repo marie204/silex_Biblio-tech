@@ -106,6 +106,7 @@ $app->match('/inscription', function (Request $request) use ($app){
     inscriptionBDD($log2, $mdp2);
     return $app->redirect('./accueil');
 });
+
 $app->get('/apropos', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
@@ -117,6 +118,23 @@ if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
         return 'ok8';
     });
 }
+/*DEBUT ADMINISTRATION*/
+$app->get('/listeLivres', function () use ($app){
+    return $app['twig']->render('admin/listeLivres.html.twig', array());
+});
+$app->get('/ajoutLivre', function () use ($app){
+    return $app['twig']->render('admin/ajoutLivre.html.twig', array());
+});
+$app->get('/ajoutGenre', function () use ($app){
+    return $app['twig']->render('admin/ajoutGenre.html.twig', array());
+});
+$app->get('/listeEmprunts', function () use ($app){
+    return $app['twig']->render('admin/listeEmprunts.html.twig', array());
+});
+$app->get('/ajoutEmprunts', function () use ($app){
+    return $app['twig']->render('admin/ajoutEmprunt.html.twig', array());
+});
+/*FIN ADMINISTRATION*/
 $app->get('/livre', function () use ($app){
     return $app['twig']->render('livre.html.twig', array());
 }); 
