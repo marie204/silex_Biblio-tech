@@ -10,7 +10,7 @@
 				</tr>
 				<tr>
 					<td>Email</td>
-					<td><input type="Email" name="mailMar"></td>
+					<td><input type="Email" id="mail" name="mailMar"></td>
 				</tr>
 				<tr>
 					<td>Mot de passe :</td>
@@ -43,6 +43,10 @@
 
 
 	function verifMdp(){
+		if (document.getElementById('mail').value.length == 0) {
+			$('#mail').css('borderColor', 'red');
+			return false;
+		}
 		if (document.getElementById('log2').value.length == 0) {
 			$('#log2').css('borderColor', 'red');
 			return false;
