@@ -168,14 +168,14 @@ $app->match('/inscription', function (Request $request) use ($app){
     if (!$verifPesudoInscrit) {
         return $app->redirect('./log-server?erreur=name');
     }
-    inscriptionBDD($log2, $mdp2);
+    inscriptionBDD($log2, $mdp2, $mail);
     return $app->redirect('./accueil');
 });
 $app->get('/login', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
 $app->get('/apropos', function () use ($app){
-    return '.'.$_SESSION['log'];
+    //return '.'.$_SESSION['log'];
     return $app['twig']->render('login.html.twig', array());
 });
 
@@ -251,15 +251,16 @@ installStatut();
     return true;
     };
 
-    function inscriptionBDD($log, $mdp){ 
+    function inscriptionBDD($log, $mdp, $mail){ 
         $log = htmlspecialchars($log);
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
-        "INSERT INTO `utilisateur` (`pseudo`, `password`, `statut_id`) VALUES
-(:user_pseudo, :user_mdp, 2);");
+        "INSERT INTO `utilisateur` (`pseudo`, `password`, `statut_id`, `email`) VALUES
+(:user_pseudo, :user_mdp, 2, :mail);");
     $req->execute(array('user_pseudo'=>$log,
-                        'user_mdp'=>$mdp,));
+                        'user_mdp'=>$mdp,
+                        'mail'=>$mail));
     $req->closeCursor();
     return 'done';
 }
@@ -271,9 +272,7 @@ installStatut();
         "SELECT password FROM utilisateur WHERE pseudo = :pseudo ");
         $req->execute(array('pseudo'=>$log,));
         $mdp2 = $req->fetchAll();
-
         $hash = $mdp2[0]["password"];
-        
         $mdpCompare = password_verify($mdp, $hash);
         $req->closeCursor();
         return $mdpCompare;
@@ -329,16 +328,26 @@ installStatut();
         if (!strpos($mail, '@')){
             return false;
         }
-        return true;
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT email  FROM utilisateur WHERE utilisateur.email = :email;");
+        $req->execute(array('email'=>$mail,));
+        $result = $req->fetchAll();
+        if ($result == null){
+            $req->closeCursor();
+            return true;
+        }
+        $req->closeCursor();
+        return false;
+        //return true;
     }
 
     function ouvertureSession($log){
-        //$_SESSION['log'] = $log;
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
         "SELECT statut_id FROM utilisateur WHERE pseudo = :pseudo ");
         $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
-        //$_SESSION['idEntity'] = $log2[0]["statut_id"];
     }

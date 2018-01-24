@@ -37,6 +37,9 @@
 	if ('{{erreur}}' == 'mdplog') {
 		document.getElementById('erreur').innerHTML = 'Vous avez réussi à ne rien mettre comme mot de passe ou loggin\'. Merci de signaler ce bug à un webmaster '
 	}
+	if ('{{erreur}}' == 'mail') {
+		document.getElementById('erreur').innerHTML = 'Votre mail a déjà été attribué ou n\' pas valide! ';
+	}
 
 
 	function verifMdp(){
