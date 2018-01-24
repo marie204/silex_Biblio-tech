@@ -147,7 +147,7 @@ $app->match('/log-server', function(Request $request) use ($app){
         if ($verifLogB == false){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
-        ouvertureSession($_POST['log']);
+        ouvertureSession($_POST['log'], $app);
         return $app->redirect('./accueil'); 
     }
 });
@@ -342,12 +342,20 @@ installStatut();
         return false;
         //return true;
     }
+    function fermetureSession($app){
+        $app['session']->clear();
+    }
 
-    function ouvertureSession($log){
+    function ouvertureSession($log, $app){
+        $log = htmlspecialchars($log);
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
         "SELECT statut_id FROM utilisateur WHERE pseudo = :pseudo ");
         $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
+        $statut = $log2[0]['statut_id'];
+        $app['session']->set('user', array('loggin' => $log, 
+                                           'statut' => $statut, 
+                                            ));
     }
