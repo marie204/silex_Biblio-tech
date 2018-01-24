@@ -20,7 +20,7 @@
         <img class="img-fluid card-img-top" src="" alt="Card image cap">
         <div class="card-body">
           <h4 class="card-title">{{ livre.title }}</h4>
-          <p class="card-text">{{ livre.description }}</p>
+          <p class="card-text">{{ livre.description|slice(0, 125) }}...</p>
           <a href="./livre" class="btn btn-primary">En savoir plus</a>
         </div>
       </div>
