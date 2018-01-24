@@ -72,46 +72,6 @@ $app->match('/login', function (Request $request) use ($app){
         'erreur' => $_GET['erreur'] ?? null,
     ));
 });
-$app->match('/log-server', function(Request $request) use ($app){
-    if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
-        return $app['twig']->render('log.server.html.twig', array(
-        'login' => $_POST['log'] ??null,
-        'mdp' => $_POST['mdp'] ??null,
-        'loggin' => $_POST['loggin'] ?? null,
-        'erreur' => $_GET['erreur'] ?? null,
-        'sessEntite' => $_SESSION['idEntity'] ?? null,
-        ));
-    }else{
-        if (!isset($_POST['log'])||empty($_POST['log'])) {
-            return $app->redirect('./login?erreur=noLoggin');
-        }
-        if (!isset($_POST['mdp'])||empty($_POST['mdp'])){
-            return $app->redirect('./login?erreur=noPassa');
-        }
-        $verifLogA = verifLog($_POST['log']);
-        if ($verifLogA == false){
-            return $app->redirect('./login?erreur=wrongLoggin');
-        }
-        $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
-        if ($verifLogB == false){
-            return $app->redirect('./login?erreur=wrongLoggin');
-        }
-        return $app->redirect('./accueil');     
-    }
-});
-$app->match('/inscription', function (Request $request) use ($app){
-    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) ){
-        return $app->redirect('./log-server?erreur=mdplog');
-    }
-    $mdp2 = encryptMdp($_POST['mdp2']);
-    $log2 = htmlspecialchars($_POST['log2']);
-    $verifPesudoInscrit = verifBDD($log2);
-    if (!$verifPesudoInscrit) {
-        return $app->redirect('./log-server?erreur=name');
-    }
-    inscriptionBDD($log2, $mdp2);
-    return $app->redirect('./accueil');
-});
 
 $app->match('/test', function () use ($app) {
     if (isset($_POST['rechercher'])) {
@@ -189,10 +149,6 @@ $app->get('/about', function () use ($app){
     return 'ok';
 });
 
-$app->match('/accueil', function () use ($app){
-    return $app['twig']->render('accueil.html.twig', array());
-});
-
 $app->get('/catalogue_a_z', function () use ($app){
     return $app['twig']->render('catalogue_a_z.html.twig', array());
 });
@@ -265,9 +221,6 @@ $app->match('/inscription', function (Request $request) use ($app){
     }
     inscriptionBDD($log2, $mdp2, $mail);
     return $app->redirect('./accueil');
-});
-$app->get('/login', function () use ($app){
-    return $app['twig']->render('login.html.twig', array());
 });
 $app->get('/apropos', function () use ($app){
     //return '.'.$_SESSION['log'];
