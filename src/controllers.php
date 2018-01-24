@@ -340,7 +340,6 @@ installStatut();
         }
         $req->closeCursor();
         return false;
-        //return true;
     }
     function fermetureSession($app){
         $app['session']->clear();
