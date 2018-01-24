@@ -13,7 +13,19 @@
           <a href="./livre" class="btn btn-primary">En savoir plus</a>
         </div>
       </div>
-    </div><!-- col --> 
+    </div><!-- col -->
+    {% for livre in livres %}
+    <div class="col-sm-3">
+      <div class="card">
+        <img class="img-fluid card-img-top" src="" alt="Card image cap">
+        <div class="card-body">
+          <h4 class="card-title">{{ livre.title }}</h4>
+          <p class="card-text">{{ livre.description }}</p>
+          <a href="./livre" class="btn btn-primary">En savoir plus</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %} 
     </div><!-- row -->
   </div><!-- container -->
 </section>

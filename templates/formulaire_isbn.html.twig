@@ -3,10 +3,9 @@
 <p>
 {% if envoyer is defined %}{{ envoyer }}{% endif %}
 {% if echec is defined %}{{ echec }}{% endif %}
-{% if echec2 is defined %}{{ echec2 }}{% endif %}
 </p>
 <form action="./test" method="post" enctype="multipart/form-data" class="col s12">
-	<div class="row">
+  <div class="row">
         <div class="input-field col s12 m6 l6">
             <input placeholder="Recherche par ISBN" name="rechercheisbn" type="text" class="validate" required value="">
             <button type="submit" class="btn btn-secondary" name="rechercher">Rechercher</button>
@@ -15,7 +14,7 @@
 </form>
 <form action="./test" method="post" name="frm" id="frm" enctype="multipart/form-data" class="col s12">
           <div class="row">
-          	<div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l6">
               <input placeholder="ISBN" id="isbn" name="isbn" type="text" class="validate" required value="{% if ISBN is defined %}{{ ISBN }}{% endif %}">
               <label for="isbn">ISBN *</label>
             </div>
@@ -25,7 +24,7 @@
             </div>
           </div>
           <div class="row">
-          	<div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l6">
               <input placeholder="Titre" id="title" name="title" type="text" class="validate" required value="{% if titre is defined %}{{ titre }}{% endif %}">
               <label for="title">Titre *</label>
             </div>
@@ -35,7 +34,7 @@
             </div>
           </div>
           <div class="row">
-          	<div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l6">
               <input placeholder="Auteur(e)" id="auteur" name="auteur" type="text" class="validate" required value="{% if auteur is defined %}{{ auteur }}{% endif %}">
               <label for="auteur">Auteur(e) *</label>
             </div>
@@ -45,13 +44,13 @@
             </div>
           </div>
           <div class="row">
-          	<div class="input-field col s12 m12 l12">
+            <div class="input-field col s12 m12 l12">
               <textarea placeholder="Description" id="description" name="description" class="materialize-textarea validate" required>{% if description is defined %}{{ description }}{% endif %}</textarea>
               <label for="description">Description *</label>
             </div>
             <div class="input-field col s12 m6 l6">
-              <input placeholder="Date ajout" id="dateAjout" name="dateAjout" type="date" class="datepicker" required value="">
-              <label for="dateAjout">Date ajout *</label>
+              <input id="dateAjout" name="dateAjout" type="date" required value="">
+              <label for="dateAjout">Date ajout *</label><br>
             </div>
           </div>
           <div class="row">

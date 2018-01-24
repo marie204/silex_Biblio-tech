@@ -1,4 +1,7 @@
 <?php
+
+
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +20,9 @@ $app->get('/', function () use ($app) {
 })
 ->bind('homepage')
 ;
+$app->get('/index.php/accueil', function () use ($app) {
+    return $app->redirect('./accueil');
+});
 
 
 
@@ -76,17 +82,14 @@ $app->match('/test', function () use ($app) {
         $exemplaire = new Exemplaire();
         $exemplaire->setEtat($nbexemplaire);
 
+        $exemplaire->setLivre($livre);
+
         $app['em']->persist($livre);
         $app['em']->persist($exemplaire);
         $app['em']->flush();
 
         return $app['twig']->render('formulaire_isbn.html.twig', array(
             'envoyer' => "Le livre ".$livre->getTitle()." à été ajouté"
-        ));
-    }
-    else {
-        return $app['twig']->render('formulaire_isbn.html.twig', array(
-            'echec2' => "Le livre n'a pas été ajouté"
         ));
     }
     return $app['twig']->render('formulaire_isbn.html.twig', array());
@@ -101,7 +104,11 @@ $app->match('/accueil', function () use ($app){
 });
 
 $app->get('/catalogue_a_z', function () use ($app){
-    return $app['twig']->render('catalogue_a_z.html.twig', array());
+    $repository = $app['em']->getRepository(Livre::class);
+    $livres = $repository->findAll();
+    return $app['twig']->render('catalogue_a_z.html.twig', array(
+      'livres' => $livres
+    ));
 });
 
 $app->get('/catalogue_genre', function () use ($app){
@@ -170,9 +177,52 @@ $app->match('/inscription', function (Request $request) use ($app){
 $app->get('/login', function () use ($app){
     return $app['twig']->render('login.html.twig', array());
 });
+$app->match('/log-server', function(Request $request) use ($app){
+    if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
+        return $app['twig']->render('log.server.html.twig', array(
+        'login' => $_POST['log'] ??null,
+        'mdp' => $_POST['mdp'] ??null,
+        'loggin' => $_POST['loggin'] ?? null,
+        'erreur' => $_GET['erreur'] ?? null,
+        'sessEntite' => $_SESSION['idEntity'] ?? null,
+        ));
+    }else{
+        if (!isset($_POST['log'])||empty($_POST['log'])) {
+            return $app->redirect('./login?erreur=noLoggin');
+        }
+        if (!isset($_POST['mdp'])||empty($_POST['mdp'])){
+            return $app->redirect('./login?erreur=noPassa');
+        }
+        $verifLogA = verifLog($_POST['log']);
+        if ($verifLogA == false){
+            return $app->redirect('./login?erreur=wrongLoggin');
+        }
+
+        $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
+        if ($verifLogB == false){
+            return $app->redirect('./login?erreur=wrongLoggin');
+        }
+        ouvertureSession($_POST['log']);
+        return $app->redirect('./accueil'); 
+    }
+});
+
+$app->match('/inscription', function (Request $request) use ($app){
+    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) ){
+        return $app->redirect('./log-server?erreur=mdplog');
+    }
+    $mdp2 = encryptMdp($_POST['mdp2']);
+    $log2 = htmlspecialchars($_POST['log2']);
+    $verifPesudoInscrit = verifBDD($log2);
+    if (!$verifPesudoInscrit) {
+        return $app->redirect('./log-server?erreur=name');
+    }
+    inscriptionBDD($log2, $mdp2);
+    return $app->redirect('./accueil');
+});
+
 $app->get('/apropos', function () use ($app){
-    return '.'.$_SESSION['log'];
-    return $app['twig']->render('login.html.twig', array());
+    return 'ok';
 });
 
 $app->get('/nouveautes', function () use ($app){
@@ -199,7 +249,7 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
     $langue = $request->get('langue');
     $li_desc = $request->get('li_desc');
     $livre = new Livre();
-    $livre->setLiTitle($li_title);//Entity / Classe Livre
+    $livre->setLiTitle($li_title);  //Entity / Classe Livre
     $livre->setLiAuteur($li_auteur);
     $livre->setLiDesc($li_date_ajout);
     $livre->setLiIsbn($li_isbn);
@@ -321,13 +371,16 @@ installStatut();
             };
         }
     }
+
     function ouvertureSession($log){
-        //$_SESSION['log'] = $log;
+        $_SESSION['log'] = $log;
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
         "SELECT statut_id FROM utilisateur WHERE pseudo = :pseudo ");
         $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
-        //$_SESSION['idEntity'] = $log2[0]["statut_id"];
+        $_SESSION['idEntity'] = $log2[0]["statut_id"];
+
+
     }
