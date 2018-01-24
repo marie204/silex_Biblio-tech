@@ -1,0 +1,83 @@
+{% extends "alayout.html.twig" %}
+{% block content %}
+  <div class="container">
+  <div class="row">
+    <div class="col s12 m12 l6">
+      <h4>Ajouter un livre</h4>
+      <div class="row">
+        <form action="" method="post" name="frm" id="frm" enctype="multipart/form-data" class="col s12">
+          <div class="row">
+            <div class="input-field col s12 m6 l6">
+              <input placeholder="Titre" id="titre" name="titre" type="text" class="validate" required value="">
+              <label for="titre">Titre *</label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+              <input placeholder="Auteur" id="auteur" name="auteur" type="text" class="validate" required value="">
+              <label for="contact">Auteur *</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m4 l3">
+              <input placeholder="ISBN" id="isbn" name="isbn" type="text" class="validate" required value="">
+              <label for="isbn">ISBN *</label>
+            </div>
+            <div class="input-field col s12 m4 l3">
+              <input placeholder="Langue" id="langue" name="langue" type="text" class="validate" required value="">
+              <label for="langue">Langue *</label>
+            </div>
+            <div class="input-field col s12 m4 l3">
+              <input placeholder="Nombre de pages" id="pages" name="pages" type="text" class="validate" required value="">
+              <label for="pages">Nombre de pages *</label>
+            </div>
+            <div class="input-field col s12 m4 l3">
+              <select placeholder="Choisissez un genre" id="genre" name="genre">
+                <option value="" disabled selected>Choisissez un genre</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </select>
+              <label for="pages">Genre *</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12 l12">
+              <textarea placeholder="Description" id="description" name="description" class="materialize-textarea validate" required></textarea>
+              <label for="description">Description *</label>
+            </div>
+          </div>
+          <!--DEBUT POUR AJOUTER UNE PHOTO-->
+          <div class="row">
+            <div id="ajout_photo" class="file-field input-field col s12 m12 l12">
+              <span>Photo</span>
+              <center>
+              <span class="valign">
+                <i class="photo medium i_photo material-icons waves-effect waves-light">add_a_photo
+                <input type="file" name="fichier" id="fichier">
+                </i>
+              </span>
+              </center>
+            </div>
+          </div>
+          <!--FIN POUR AJOUTER UNE PHOTO-->
+          <!-- DEBUT APERCU DE LA MINIATURE -->
+          <div class="row">
+            <div id="image_preview" class="col s12 m6 l8">
+              <div class="thumbnail hidden"> <!--Pour la class thumbnail dans ajoutlivre.func.js et hidden -->
+                <img src="" alt="" class="taille_miniature">
+                <!-- Pour afficher les infos détaillées
+                <p class="nom_photo"></p>
+                <p class="poids"></p>-->
+                <i id="close" class="material-icons circle btn-floating btn-small waves-effect waves-light red delete_comment">close</i>
+              </div>
+            </div>
+          </div>
+        <!-- FIN APERCU DE LA MINIATURE -->
+        <div class="row">
+          <div class="input-field col s12 m6 l8">
+            <button class="btn btn-block blue" id="envoyer" name="envoyer" type="submit">Créer la fiche livre<i class="send material-icons right">send</i></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% endblock %}

@@ -1,0 +1,29 @@
+{% block content %}
+<div class="navbar">
+<nav class="blue">
+    <div class="container">
+        <a href="#" class="brand-logo left"></a>
+        <!-- DEBUT ICONE MENU HAMBURGER -->
+        <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+        <!-- FIN ICONE MENU HAMBURGER -->
+        <!-- DEBUT MENU -->
+        <ul class="ulMenu right hide-on-med-and-down" id="menu">
+            <li><a href="./listeLivres"><i class="material-icons left">view_list</i>Liste des livres</a></li>
+            <li><a href="./ajoutLivre"><i class="material-icons left">add</i>Ajouter un livre</a></li>
+            <li><a href="./listeEmprunts"><i class="material-icons left">view_list</i>Liste des emprunts</a></li>
+            <li><a href="./ajoutEmprunts"><i class="material-icons left">add</i>Ajouter un emprunts</a></li>
+        </ul>
+        <!-- FIN MENU -->
+        
+        <!-- DEBUT MENU HAMBURGER -->
+        <ul class="side-nav" id="mobile-menu">
+            <li><i class="material-icons icone_menu">view_list</i><a href="./listeLivres">Liste des livres</a>
+            <li><i class="material-icons icone_menu">add</i><a href="./ajoutLivre">Ajouter un livre</a></li>
+            <li><a href="./listeEmprunts"><i class="material-icons left">view_list</i>Liste des emprunts</a></li>
+            <li><a href="./ajoutEmprunts"><i class="material-icons left">add</i>Ajouter un emprunts</a></li>
+    </ul>
+    <!-- FIN MENU HAMBURGER -->
+</div>
+</div>
+</nav>
+{% endblock %}

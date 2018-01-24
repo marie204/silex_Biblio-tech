@@ -1,0 +1,24 @@
+<ul class="pagination">
+				<li class="<?php if ($pageCourrante == '1'){ echo "disabled";}?>"><a href="?numeroPage=<?php if ($pageCourrante !='1'){ echo $pageCourrante-1;}else { echo $pageCourrante;}?>">&laquo;</a></li>
+				<?php
+				for($i=1;$i<=$nbPage;$i++)
+				{
+					if($i==$pageCourrante)
+					{
+					?>
+					<li class="active"><a href="?numeroPage=<?php echo $i ?>"><?php echo $i ?></a></li>
+					<?php
+					}//Si ce n'est pas la page actuelle on enlève la classe active
+					else
+					{
+					?>
+					<li><a href="?numeroPage=<?php echo $i ?>"><?php echo $i ?></a></li>	
+					<?php
+					}
+				?>
+				<li></li>
+				<?php
+				}
+				?>
+				<li class="<?php if ($pageCourrante == $nbPage){ echo "disabled";}?>"><a href="?numeroPage=<?php if ($pageCourrante !=$nbPage){ echo $pageCourrante+1;}else { echo $pageCourrante;}?>">&raquo;</a></li>
+			</ul>

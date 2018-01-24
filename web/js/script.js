@@ -1,45 +1,67 @@
-/*MENU SWIPE*/
-/*Ouverture*/
-$('#openbtn').click(function(){
-	$('#menu-xs').css('width', '80%')
+/*Caroussel page accueil*/
+$('.carousel').carousel({
+interval: 2000
+})
+/*Page contact*/
+$(function(){
+	$("#envoyer").click(function(){
+	valid=true;
+	/*NOM*/
+	if ($("#nom").val() =="" ) {
+	$("#nom").css("border","2px solid red");
+	$("#erreurNom").html("Vous devez saisir votre nom");
+	valid=false;
+	}
+	else {
+	$("#erreurNom").html("");
+	$("#nom").css("border","2px solid lightgreen")
+	}
+	/*E-MAIL*/
+	if ($("#email").val() =="" ) {
+	$("#email").css("border","2px solid red");
+	$("#erreurMail").html("Vous devez saisir votre mail");
+	valid=false;
+	}
+	else if
+	(!$("#email").val().match(/^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})/i)) {
+	$("#email").css("border","2px solid red");
+	$("#erreurMail").html("");
+	$("#erreurMailNonValide").html("Votre mail n'est pas valide");
+	valid=false;
+	}
+	else {
+	$("#erreurMail").html("");
+	$("#erreurMailNonValide").html("");
+	$("#email").css("border","2px solid lightgreen");
+	}
+	/*TELEPHONE*/
+	if ($("#tel").val() =="" ) {
+	$("#tel").css("border","2px solid red");
+	$("#erreurTel").html("Vous devez saisir votre téléphone");
+	valid=false;
+	}
+	else if
+	(!$("#tel").val().match(/^[0-9]{10}/i)) {
+	$("#tel").css("border","2px solid red");
+	$("#erreurTel").html("");
+	$("#erreurTelNonValide").html("Le téléphone n'est pas valide");
+	valid=false;
+	}
+	else {
+	$("#erreurTel").html("");
+	$("#erreurTelNonValide").html("");
+	$("#tel").css("border","2px solid lightgreen");
+	}
+	/*MESSAGE*/
+	if ($("#message").val() =="" ) {
+	$("#message").css("border","2px solid red");
+	$("#erreurMessage").html("Vous devez saisir votre message");
+	valid=false;
+	}
+	else {
+	$("#erreurMessage").html("");
+	$("#message").css("border","2px solid lightgreen");
+	}
+return valid;
 });
-/*Fermeture*/
-$('#closebtn').click(function(){
-	$('#menu-xs').css('width', '0%')
-});
-
-/*Sous-menu*/
-$("#btn-sous-menu").click(function(){
-    var sous_menu = $('#ul-sous-menu-mobile');
-    var btn_sous_menu = $('#btn-sous-menu');
-    var li = $('#li-sous-menu-mobile')
-    li.slideToggle(100);
-    sous_menu.css('display','block');
-    if (sous_menu.css('display','none') || (sous_menu.css('display',''))) {
-        btn_sous_menu.html("arrow_drop_up");
-        sous_menu.css('display','block');
-    }
-    else {
-        btn_sous_menu.html("arrow_drop_down");
-        sous_menu.css('display','none');
-    }
-});
-
-/*HAUT DE PAGE*/
-/*Flêche pour le retour en haut*/
-$(document).ready(function(){
-// Condition d'affichage du bouton
-    $(window).scroll(function(){
-        if ($(this).scrollTop() > 150){
-            $('.haut').fadeIn();
-        }
-        else{
-            $('.haut').fadeOut();
-        }
-});
-    // Evenement au clic
-    $('.haut').click(function(){
-        $('html, body').animate({scrollTop : 1},500);
-        return false;
-    });
 });

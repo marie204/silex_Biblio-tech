@@ -1,0 +1,22 @@
+{% extends "alayout.html.twig" %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m12 l3">
+        <h4>Ajouter un genre</h4>
+        <div class="row">
+          <form action="" method="post" name="frm" id="frm" class="col s12">
+            <div class="row">
+              <div class="input-field col s12 m3 l3">
+                <input placeholder="Genre" id="genre" name="genre" type="text" class="validate" required value="">
+                <label for="titre">Genre *</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m6 l8">
+                <button class="btn btn-block blue" id="ajoutGenre" name="envoyer" type="submit">Créer le genre<i class="send material-icons right">send</i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+{% endblock %}
