@@ -1,239 +1,509 @@
-/*ICONES RESEAUX SOCIAUX*/
-@media screen and (max-width:640px){
-    .reseaux {
-        display: none;
+@media screen and (max-width:767px) {
+    body {
+        position: relative;
     }
-}
-/*HEADER / LOGO / NAVIGATION*/
- @media screen and (max-width:640px){
-    #nav-mnu-lg {
-        display: none;         
-    }
-    #menu-xs {
-        display: block;         
-    }
-}
- @media screen and (max-width:640px){
     header {
-        height:4em; 
-    }
-    .logo {
-        display: none;
-    }
-    .navbar {
-        display: block;
-        width: 100% !important; 
-        background: transparent !important; 
-        height:4em; 
-        margin-top:-1px;
-    }
-    .navbar-brand {
-        height:4em !important;
-        color: #fff !important;
-        margin-top:4px;
+        height: 80px;
+        padding-top: 10px;
     }
 }
-@media screen and (max-width:640px){
-     .openbtn {
+/*bouton burger*/
+@media screen and (max-width:767px) {
+    .openbtn {
+        display: block;   
         position: absolute;
-        display: block!important;
-        top: 9px;
         right: 10px;
-        font-size:30px;
-        color: #fff;
-        cursor:pointer;
-        z-index: 1000;
-    }   
-}
-@media screen and (max-width:640px){
+        top: 0px;
+        font-size: 1.5em;
+        z-index:10;
+    }
+    .openbtn:hover {
+        cursor: pointer;
+    }
     .closebtn {
+        display: none;   
         position: absolute;
-        display: block;
-        right: 20px;
-        top: 0px;
-        font-size:30px;
-        color: #fff;
-        text-decoration: none!important;  
-        z-index: 2
-    }   
+        right: 10px;
+        bottom: 10px;
+        font-size: 1.5em;
+    }
     .closebtn:hover {
-        color: #333;  
-    }                          
-}
-@media screen and (max-width:640px){
-    nav {
-        position: absolute !important;
-        top:0px;
-        left: 0px;
-        z-index: 20000 !important;
-    }
-}
-@media screen and (max-width:640px){
-    .logoMenuSwipe {
-        background: #030303 url("../img/logo.png");
-        background-repeat: no-repeat;
-        background-position: 10px 10px;
-        background-size: 65%; 
-        width: 100%;
-        height: 100px;             
-    }
-}
-@media screen and (max-width:640px){
-    .menu {
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        height: 40%;
-        width: 0;
-        z-index: 1000;
-        background: #FFF;
-        transition: width 0.5s;
-        overflow: hidden;
-        box-shadow: 3px 0px 3px #777;
-    }                                    
-}
-@media screen and (max-width:640px){
-    nav ul {
-        padding: 0px;
-        display: block;
-        height: 100% !important;
-    }
-}
-@media screen and (max-width:640px){
-    nav ul li { 
-        float: none;
-        border-bottom: 1px solid #ECECEC;
-    } 
-    nav ul li:hover { 
-        background: #777 !important;
-    }
-}
-@media screen and (max-width:640px){
-    nav ul li a {
-        color: #333;
-        display: block !important;
-        text-align: left;
-    }
-}
-@media screen and (max-width:640px){
-    .lienContact{
-        color: #333 !important;             
-    }
-}
-@media screen and (max-width:640px){
-    .drop:hover #sous-menu{
-        display: none;
-    }
-    #sous-menu {
-        position:inherit;
-        display: none;
-        top: 30px;
-        left: -10px;
-        border: 1px solid red;
-    }
-    #sous-menu li{
-        background: #ECECEC;
-        color: #333;
-        border: 1px solid #777;
-    }
-    #sous-menu li:last-child {
-        border-radius: 0 0 0 0; 
-    }
-    #sous-menu li a{
-        color: #000;
-    }
-    #sous-menu li a:hover{
-        color: #FFF;
-    }
-}
-/*MENU MOBILES*/
-@media screen and (max-width:640px){
-    #ul-sous-menu-mobile {
-        display: none; 
-        background: #ECECEC;                    
-    }
-    #li-sous-menu-mobile {
-        display: none; 
-        background: #ECECEC;                                  
-    }
-    #li-sous-menu-mobile:hover {
-        background: #ECECEC !important;                                      
-    }
-    #li-sous-menu-mobile a {
-        margin-left: 20px;            
-    }
-}
-    #li-sous-menu-mobile:hover {
-        background: #ECECEC !important;                                    
-    }
-    #li-sous-menu-mobile a {
-        margin-left: 20px;            
-    }
-/*LES ICONES DANS LE MENU SWIPE*/
-@media screen and (max-width:640px) {
-    .fa {
-        display:block !important;
-        float: left;
-        margin-right: 8px;
-        margin-top: 4px;       
-    }     
-    .caret {/* Petite flêche sous-menu*/
-        display:block !important; 
-        float: right;
-        margin-top: -3px;
-        margin-left: 3px;
-        right: 10px;  
-    }           
-}
-/**************************************************COLONNES***********************************************/
-@media screen and (max-width:640px) {
-    #aside {
-        margin-left: 0px;        
-        margin-right: 0px;   
-    }
-}
-/**************************************************CONTACT***********************************************/
-@media screen and (max-width:640px) {
-    textarea {
-        width:85vw !important;
-    }
-    input[type="text"] {
-        width:85vw !important;
-    }
-    .titreContact {
-        font-size: 1.8em;
+        cursor: pointer;
     }
 
-}
-/********************************************CATALOGUE***************************************************/
-/*Fiche livre*/
-@media screen and (max-width:640px) {
-    .img {
-        width: 100%;
-        height: auto;
+    /*Navigation*/
+    nav {
+        display: block !important;     
     }
-    .infos {
+    nav#navbar {        
+        position: absolute; 
+        border: 1px solid red;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        background:#333745;
+
+    }
+    nav#navbar ul {
+        height: 50%;
+
+            display: flex;
+    }
+    nav#navbar ul li {
+        border: 1px solid red;  
+
+            display: flex;
+            flex-direction: column;
+    flex: 1;
+    }   
+    nav#navbar ul li a{
+        border: 1px solid red;           
         display: block;
-        margin-left:0px;
-        width: 100%;
+
+            flex: 1;
+    }   
+}
+/*Footer*/
+@media screen and (max-width:767px) {
+    footer ul {
+        margin-bottom: 15px !important;
     }
 }
-/*********************************************PIED DE PAGE************************************************/
-@media screen and (max-width:640px) {
-    footer {
-        height: 60vh !important;
+/*Réseaux sociaux*/
+@media screen and (max-width:767px) {
+	.rs {
+		margin-top: 50px;
+	}
+}
+
+/*Recherche rapide dans le footer*/
+@media screen and (max-width:767px) {
+	#inputSearchFooter {
+		z-index: 20000;
+	}
+	.fa-search {
+		z-index: 20001;
+	}
+}
+
+/*---767PX--------------------------------------------------------------------------------------------------------------------*/
+@media(max-width:767px) {
+    .menuBox {
+        float: none;
+        text-align: center;
+    }
+
+    .bienvenue article {
+        text-align: center;
+    }
+
+    h1.navbar-brand_ {
+        float: none;
         width: 100%;
-        padding: 10px 0 0px 15px;
+        margin-bottom: 0px;
+        text-align: center;
     }
-    footer ul{
-        border-bottom: 1px solid #777; 
-        padding: 0 0 10px 0;
+
+    h2 {
+        font-size: 30px;
+        line-height: 30px;
     }
-    .nav {
-        margin-bottom: 15px !important;
-    } 
-    /*SEARCH FOOTER ICON*/
-    .fa-search {
-        top:0px;       
+
+    h3 {
+        font-size: 25px;
+        line-height: 25px;
+    }
+
+    .map iframe {
+        height: 370px;
+    }
+
+    .banner_list li {
+        padding: 73px 43px 70px 44px;
+    }
+
+    .banner_list li .title {
+        font-size: 25px;
+        line-height: 1em;
+    }
+
+    .banner_list li {
+        width: 50% !important;
+    }
+
+    .bnBox article h2 {
+        font-size: 26px;
+        line-height: 30px;
+    }
+
+    .bnBox article .caption p {
+        font-size: 14px;
+    }
+
+    .bnBox article {
+        margin-bottom: 35px;
+        overflow: hidden;
+    }
+
+    .pad1Box article {
+        margin-bottom: 50px;
+    }
+
+    .foo_menu {
+        display: none;
+    }
+
+    .bnBox article .caption {
+        padding-left: 0;
+    }
+
+    .commercialBox article .title1 {
+        font-size: 80px;
+        line-height: 90px;
+    }
+
+    .bracketBox {
+        display: block;
+        float: none !important;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .manBox {
+        display: block;
+        float: none !important;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .sloganBox {
+        min-height: 360px;
+    }
+
+    .sloganBox {
+        padding: 180px 0 0 0;
+        text-align: center;
+    }
+
+    .sloganBox .title1 {
+        font-size: 40px;
+        line-height: 25px;
+    }
+
+    .sloganBox .title2 {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .sloganBox {
+        padding: 40px 0 120px 0;
+    }
+
+    .sloganBox .title1 {
+        margin-left: 0;
+        font-size: 140px;
+        line-height: 140px;
+    }
+
+    .sloganBox .title2 {
+        margin-bottom: 40px;
+    }
+
+    .sloganBox .title3 {
+        font-size: 27px;
+        line-height: 29px;
+    }
+
+    .sloganBox .title4 {
+        font-size: 20px;
+        line-height: 25px;
+    }
+
+    .hundredBox {
+        margin-bottom: 60px;
+    }
+
+    .box1 {
+        float: none;
+        position: relative;
+        width: 100%;
+        padding: 20px 20px 0 50px;
+        text-align: left;
+    }
+
+    figure {
+        float: none;
+        margin: 0;
+    }
+
+    figure img {
+        width: 100%;
+    }
+
+    .lnk {
+        top: 20px;
+        right: 30px;
+    }
+
+    .classesBox {
+        padding-bottom: 0;
+    }
+
+    .helpBox article {
+        padding-bottom: 40px;
+    }
+
+    .circleBox1 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .circleBox1 figure {
+        display: inline-block;
+    }
+
+    .unlockBox {
+        padding-top: 30px;
+    }
+
+    .class-box {
+        float: left;
+        width: 50%;
+    }
+
+    .plumbBox figure {
+        margin-bottom: 20px;
+    }
+
+    #newsletter {
+        float: none;
+    }
+
+    #newsletter label {
+        width: 100%;
+    }
+
+    #search {
+        display: inline-block;
+        float: none;
+    }
+
+    #search input {
+        width: 200px;
+    }
+
+    header .container > div {
+        padding-bottom: 0;
+    }
+
+    .programsBox article {
+        display: block;
+        width: 100%;
+        margin-bottom: 35px;
+        overflow: hidden;
+    }
+
+    .circleBox ul li {
+        width: 160px;
+        height: 160px;
+    }
+
+    .dateBox {
+        margin-top: 70px;
+    }
+
+    .about-box {
+        margin-bottom: 50px;
+    }
+
+    .services-box {
+        float: left;
+    }
+
+    .form-div-1,
+    .form-div-2,
+    .form-div-3 {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+    }
+
+    #contact-form label {
+        min-height: 57px;
+    }
+
+    .map iframe {
+        height: 300px;
+    }
+
+    .info {
+        margin-bottom: 50px;
+    }
+
+    .info-box {
+        width: 100%;
+    }
+
+    .iconBlock {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .list-romb-box {
+        text-align: center;
+    }
+
+    .logosBox {
+        margin-top: 50px;
+    }
+
+    .logosBox ul li {
+        width: 50%;
+    }
+
+    .logosBox ul li:last-child {
+        border-right: 1px solid #dcdddd;
+    }
+
+    .trainers-box {
+        padding-top: 60px;
+    }
+
+    .plumbBox {
+        float: left;
+        width: 60%;
+    }
+
+    .locationsBox {
+        float: left;
+        width: 40%;
+    }
+
+    .locationsBox > img {
+        width: 100%;
+    }
+
+    .picBox {
+        float: left;
+        width: 50%;
+        margin-right: 0;
+    }
+
+    .table1 {
+        margin-bottom: 50px;
+    }
+
+    .error-box {
+        padding-bottom: 30px;
+    }
+
+    .thumb-pad5 .thumbnail .caption {
+        overflow: visible;
+    }
+
+    .thumb-pad5 {
+        padding-bottom: 40px;
+    }
+
+    .favorites-box {
+        padding-bottom: 68px;
+    }
+
+    .history-box {
+        margin-bottom: 30px;
+    }
+
+    .list5Box {
+        overflow: hidden;
+    }
+
+    .list5Box .bracket-list {
+        display: block;
+        float: none;
+    }
+
+    .blogBox {
+        padding-bottom: 0;
+    }
+
+    .bsBox {
+        margin-bottom: 50px;
+    }
+
+    .serv-box {
+        margin-bottom: 50px;
+    }
+
+    .date-box {
+        margin-bottom: 50px;
+    }
+
+    .video-box1 {
+        margin-bottom: 50px;
+    }
+
+    .info-cont article {
+        margin-bottom: 50px;
+    }
+
+    .thumb-pad1 .thumbnail {
+        margin-bottom: 70px;
+    }
+
+    .list_carousel1 #foo1 > li figure div {
+        top: 60px;
+    }
+
+    .list_carousel1 #foo1 > li figure div .title {
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .list_carousel1 #foo1 > li figure div p {
+        font-size: 12px;
+    }
+
+    .fishingBox {
+        margin-top: 50px;
+    }
+
+    .menuBox.marg {
+        margin-bottom: 0;
+    }
+
+    .huntingBox .thumb-pad1 {
+        padding-bottom: 0;
+    }
+
+    .newBox {
+        margin-top: 35px;
+    }
+
+    .bienvenue {
+        margin-top: 0;
+    }
+
+    .foo-btn {
+        top: auto;
+        bottom: -24px;
+        left: 50%;
+        width: 30px;
+        margin-left: -15px;
+        text-align: center;
+    }
+
+    .foo-btn .prev {
+        left: 50%;
+        margin-left: -20px;
+    }
+
+    .foo-btn .next {
+        right: 50%;
+        margin-right: -20px;
+    }
+
+    .carouselBox {
+        padding: 20px 0 65px 0;
     }
 }

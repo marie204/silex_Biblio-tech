@@ -1,0 +1,112 @@
+{% extends "alayout.html.twig" %}
+{% block content %}
+<div class="container">
+<div class="row">
+	<div class="col s12 m12 l12">
+		<p>Extraction nb enregistrements</p>
+	</div>
+	</div><!-- row -->
+	<div class="row">
+		<div class="col l12">
+			<!-- ENTETES DES COLONNES -->
+			<div class="lh col l2 hide-on-med-and-down"><h6>Photo</h6></div>
+			<div class="lh col l2 hide-on-med-and-down"><h6>Titre</h6></div>
+			<div class="lh col l2 hide-on-med-and-down"><h6>Date d'ajout</h6></div>
+			<div class="lh col l5 hide-on-med-and-down"><h6>Description</h6></div>
+			<div class="lh col l1 hide-on-med-and-down"><h6>ISBN</h6></div>
+			<!-- AFFICHAGE DES DONNEES -->
+			<div class="col l2 hide-on-med-and-down">
+				<img class="responsive-img" src="img/img_livres/img.jpg">
+			</div>
+			<div class="col l2 hide-on-med-and-down">
+				Extraction titre 
+			</div>
+			<div class="col l2 hide-on-med-and-down">
+				Extraction date
+			</div>
+			<div class="col l5 hide-on-med-and-down">
+				Extraction description
+			</div>
+			<div class="col l1 hide-on-med-and-down">
+				Extraction ISBN
+			</div>
+			<!-- SEPARATEUR -->
+			<div class="lh col l12 hide-on-med-and-down"></div>
+			<!-- BOUTONS -->
+			<div class="col l12 hide-on-med-and-down">
+				<!--Bouton pour la visualisation-->
+				<a href="index.php?page=ficheLivre&id=<?php echo $donnees['li_id'] ; ?>" class="btn-floating btn-small waves-effect waves-light green see_comment"><i
+					class="btnList material-icons">visibility</i>
+				</a>
+				<!--Bouton pour la modification-->
+				<a href="index.php?page=modifLivre&id=<?php echo $donnees['li_id']; ?>" class="btn-floating btn-small waves-effect waves-light blue modal-trigger">
+					<i class="btnList material-icons">mode_edit</i>
+				</a>
+				<!--Bouton pour la suppression-->
+				<a href="#<?= $donnees['li_id'];?>" class="btn-floating btn-small waves-effect waves-light red delete_comment modal-trigger">
+					<i class="btnList material-icons">delete</i>
+				</a>
+				<!--Fin pour la suppression-->
+			</div>
+			</div><!-- col -->
+			</div><!-- row -->
+			<!--DEBUT FENETRE MODAL POUR LA SUPPRESSION-->
+			<div class="modal" id="<?= $donnees['li_id'];?>">
+				<div class="modal-content">
+					<h4>SUPPRESSION...</h4>
+					<p>Voulez-vous vraiment supprimer la fiche livre <strong><?= $donnees['li_title']; ?></strong> ?</p>
+					<hr/>
+				</div>
+				<div class="modal-footer">
+					<a href="index.php?page=suppLivre&id=<?php echo $donnees['li_id'] ; ?>&title=<?php echo $donnees['li_title'] ; ?>" class=" modal-action waves-effect waves-green btn-flat">OUI</a>
+					<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">NON</a>
+				</div>
+			</div>
+			<!--FIN FENETRE MODAL POUR LA SUPPRESSION-->
+			<!-- DEBUT PARTIE MOBILES ET TABLETTES -->
+			</style>
+			<div class="col s12 m12 hide-large">Photo</div>
+			<div class="col s12 m12 hide-large">
+				<img class="responsive-img" src="img/img_livres/<?php echo htmlspecialchars($donnees['li_img']);?>" alt="Photo">Extraction de la photo
+			</div>
+			<div class="col s6 m6 hide-large">Titre</div>
+			<div class="col s6 m6 hide-large">
+				Extraction titre
+			</div>
+			<div class="lh-mobiles col s12 m12 hide-large"></div>
+			<div class="col s6 m6 hide-large">Date d'ajout</div>
+			<div class="col s6 m6 hide-large">
+				Extraction
+			</div>
+			<div class="lh-mobiles col s12 m12 hide-large"></div>
+			<div class="col s12 m12 hide-large">Description</div>
+			<div class="lh-mobiles col s12 m12 hide-large"></div>
+			<div class="col s12 m12 hide-large">
+				Extraction description
+			</div>
+			<div class="lh-mobiles col s12 m12 hide-large"></div>
+			<div class="col s6 m6 hide-large">ISBN</div>
+			<div class="col s6 m6 hide-large">
+				Extraction ISBN
+			</div>
+			<div class="lh-mobiles col s12 m12 hide-large"></div>
+			<div class="col s12 m12 hide-large">
+				<a href="index.php?page=ficheLivre&id=<?php echo $donnees['li_id'] ; ?>" class="btn-floating btn-small waves-effect waves-light green see_comment"><i 
+				class="btnList material-icons">visibility</i>
+				</a>
+				<a href="index.php?page=modifLivre&id=<?php echo $donnees['li_id'] ; ?>" class="btn-floating btn-small waves-effect waves-light blue modal-trigger"><i
+				class="btnList material-icons">mode_edit</i>
+				</a>
+				<!--Début pour la suppression-->
+				<a href="#<?= $donnees['li_id'];?>"  class="btn-floating btn-small waves-effect waves-light red delete_comment modal-trigger">
+				<i class="btnList material-icons">delete</i>
+				</a>
+			</div>
+			<!-- BARRE DE NAVIGATION MOBILES, TABLETTES ET GRANDS ECRANS-->
+			<div class="row">
+				<div class="col s12 m12 l12">
+						Inclusion de la pagination
+				</div>
+			</div>
+	</div>
+{% endblock %}

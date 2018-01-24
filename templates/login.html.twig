@@ -1,29 +1,42 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-<div id='monErreur'></div>
-<table class="table text-center">
-	<form action="./log-server" method="post">
-	<tr>
-		<td colspan="2">Login</td>
-	</tr>
-	<tr>
-		<td colspan="2"><input class='text' id='log1' type="text" name="log"></td>
-	</tr>
-	<tr>
-		<td colspan="2">Mot de passe</td>
-	</tr>
-	<tr>
-		<td colspan="2"><input class='text' id='mp1' type="password" name="mdp"></td>
-	</tr>
-	
-	<tr>
-		<td><input type="submit" name='loggin' value='connexion'></td>
-		<td><input type="submit" name='loggin' value='inscription'></td>
-	</tr>
-</form>
-</table>
-
+<div class="global indent">
+    <!--content-->
+        <section class="formBox">
+            <div class="container">
+                <div class="row">
+                    <article class="col-lg-12 col-md-12 col-sm-12">
+                        <h3>Connectez-vous</h3>
+						<div id='monErreur'></div>
+                        <form id="contact-form" action="./log-server" method="post">
+                            <div class="success-message">envoyé avec succès.</div>
+                            <div class="holder">
+                                <div class="form-div-1 clearfix">
+                                    <label class="name">
+                                        <input placeholder="Nom d'utilisateur" class='text' id='log1' type="text" name="log">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                    </label>
+                                </div>
+                            </div>
+                                <div class="form-div-2 clearfix">
+                                    <label class="email">
+                                        <input placeholder="Mot de passe" class='text' id='mp1' type="password" name="mdp">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="btns">
+								<input class="btn-default btn1" type="submit" name='loggin' value='connexion'>
+								<input class="btn-default btn1" type="submit" name='loggin' value='inscription'>
+								<p></p>
+                            </div>  
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </section>
+</div>
 <script>
 	if ('{{erreur}}' == 'wrongLoggin') {
 		document.getElementById('monErreur').innerHTML = 'Votre identifiant n\'est pas dans la base de donnée ou votre mot de passe ne correspond guère à votre identifiant!';
@@ -38,5 +51,4 @@
 		$('#mp1').css('borderColor', 'red');
 	}
 </script>
-
 {% endblock %}

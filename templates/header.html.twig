@@ -1,56 +1,34 @@
 <header>
-	<div class="container headerContent">
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-			<a class="navbar-brand" href="./accueil">BIBLIO-TECH</a>
-			<span id="openbtn" class="openbtn">&#9776;</span>
-		</nav>
-		<div class="row justify-content-between">
-			<div class="logo"></div>
-			<div class="reseaux col-12-justify-content-end">
-				<a href="http://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x caret" aria-hidden="true"></i></a>
-				<a href="http://viadeo.com/" target="_blank"><i class="fa fa-viadeo fa-2x caret" aria-hidden="true"></i></a>
-				<a href="http://facebook.com/" target="_blank"><i class="fa fa-facebook fa-2x caret" aria-hidden="true"></i></a>
-				<a href="http://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x caret" aria-hidden="true"></i></a>
-				<a href="http://linkedin.com/" target="_blank"><i class="fa fa-linkedin fa-2x caret" aria-hidden="true"></i></a>
-			</div>
-		</div>
-		<div class="row">
-			<nav id="nav-mnu-lg">
-				<ul id="menu-lg" class="menu">
-					<li><i class="fa fa-home" aria-hidden="true"></i><a  href= "./accueil" <?php echo $accueilON;?> Accueil</a></li>
-					<li class="drop"><i class="fa fa-book" aria-hidden="true"></i><a href="#">Catalogue<i class="caret material-icons">arrow_drop_down</i></a>
-					<ul id="sous-menu">
-						<li><a href="./catalogue_a_z" <?php echo $catalogueDeAaZON;?> De A à Z</a></li>
-						<li><a <?php href='./catalogue_genre' echo $catalogueParGenreON;?>Par genre</a></li>
-						<li><a href='./recherche' <?php echo $rechercheON;?>Recherche avancée</a></li>
-					</ul>
-				</li>
-				<li><i class="fa fa-book" aria-hidden="true"></i><a href='./nouveautes' <?php echo $nouveautesON;?> Nouveautés</a></li>
-				<li><i class="fa fa-user" aria-hidden="true"></i><a <?php echo $aboutON; href='./apropos' ?> A propos</a></li>
-				<li><i class="fa fa-envelope" aria-hidden="true"></i><a href='./contact' <?php echo $contactON;?> Contact</a></li>
-				<li><i class="fa fa-user" aria-hidden="true"></i><a href='./login' <?php echo $contactON;?> Connexion</a></li>
-			</ul>
-		</nav>
-		<!-- /*MENU MOBILES*/ -->
-		<nav>
-			<ul id="menu-xs" class="menu">
-				<a href="javascript:void(0)"  id="closebtn" class="closebtn">&times;</a>
-				<div class="logoMenuSwipe"></div>
-				<li><i class="fa fa-home" aria-hidden="true"></i><a <?php echo $accueilON; href="./accueil">Accueil</a></li>
-				<li class="drop"><i class="fa fa-book" aria-hidden="true"></i><a href="#">Catalogue<i id="btn-sous-menu" class="caret material-icons">arrow_drop_down</i></a>	
-				<li id="li-sous-menu-mobile">
-					<ul id="ul-sous-menu-mobile">
-						<li><a href="./catalogue_a_z">De A à Z</a></li>
-						<li><a href="./catalogue_genre">Par genre</a></li>
-						<li><a href="./recherche">Recherche avancée</a></li>
-					</ul>
-				</li>
-			<li><i class="fa fa-book" aria-hidden="true"></i><a href="./nouveautes">Nouveautés</a></li>
-			<li><i class="fa fa-user" aria-hidden="true"></i><a <?php echo href="./about">A propos</a></li>
-			<li><i class="fa fa-envelope" aria-hidden="true"></i><a <?php href="./contact">Contact</a></li>
-			<li><i class="fa fa-user" aria-hidden="true"></i><a <?php href="./membre">Connexion</a></li>
-			</ul>
-		</nav>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <article class="col-lg-12 col-md-12 col-sm-12">
+                <span class="openbtn" onclick="openNav()">&#9776;</span>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <h1 class="navbar-brand navbar-brand_"><a href="./accueil"><img src="../img/logo.png" alt="Logo du site biblio-tech"></a></h1>
+                <div class="menuBox clearfix">
+                    <nav class="navbar" id="navbar" role="navigation">
+                        <ul class="nav">
+                            <li><a href="./accueil">Accueil</a></li>
+                            <li class="sl">
+                                <ul class="sous">
+                                    <li><a href="#">Catalogue<i class="caret fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <ul class="sous">
+                                        <li><a href="./catalogue_a_z">De A à Z</a></li>
+                                        <li><a href="./catalogue_genre">Par genre</a></li>
+                                        <li><a href="./recherche">Recherche avancée</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                            <li><a href="./nouveautes">Nouveautés</a></li>
+                            <li><a href="./about">A propos </a>
+                        </li>
+                            <li><a href="./contact">Contact</a></li>
+                            <li><a href="./login">Connexion</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </article>
+        </div>
+    </div>
 </header>
