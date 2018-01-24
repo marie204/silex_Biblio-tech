@@ -30,8 +30,8 @@ class Exemplaire {
     /**
      * Etat
      *
-     * @var string
-     * @Column(name="etat", type="string", length=255)
+     * @var int
+     * @Column(name="etat", type="integer")
      */
     private $etat;
 

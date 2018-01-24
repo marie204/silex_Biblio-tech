@@ -44,6 +44,14 @@ class Utilisateur {
     private $password;
 
     /**
+     * Email de l'utilisateur
+     *
+     * @var string
+     * @Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
      * commentaire linked to this utilisateur
      *
      * @OneToMany(targetEntity="EntityManager\Commentaire", mappedBy="utilisateur")
@@ -113,6 +121,27 @@ class Utilisateur {
      */
     public function getPassword() {
         return $this->password;
+    }
+
+    /**
+     * Set Email
+     *
+     * @param string $email
+     *
+     * @return Utilisateur
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * Get Email
+     *
+     * @return string
+     */
+    public function getEmail() {
+        return $this->email;
     }
 
     /**
