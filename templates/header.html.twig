@@ -24,8 +24,11 @@
                             <li><a href="./about">A propos </a>
                         </li>
                             <li><a href="./contact">Contact</a></li>
-                            
+                            {% if loggin  == '' %}
                             <li><a href="./login">Connexion</a></li>
+                            {% else %}
+                            <li><a href="./deconnextion">Deconnexion</a></li>
+                            {% endif %}
                             
                         </ul>
                     </nav>

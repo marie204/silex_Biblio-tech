@@ -89,6 +89,12 @@ $app->match('/test', function () use ($app) {
     return $app['twig']->render('formulaire_isbn.html.twig', array());
 });
 
+$app->get('/deconnextion', function () use ($app){
+    fermetureSession($app);
+    return $app->redirect('./accueil');
+});
+
+
 $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
