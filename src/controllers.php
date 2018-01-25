@@ -132,32 +132,29 @@ $app->match('/login', function (Request $request) use ($app){
 });
 
 $app->match('/log-server', function(Request $request) use ($app){
-    if (!isset($_POST['loggin']) || $_POST['loggin'] == 'inscription' ){
+    if (!isset($_POST['login0']) || $_POST['login0'] == 'inscription' ){
         return $app['twig']->render('log.server.html.twig', array(
         'login' => $_POST['log'] ??null,
         'mdp' => $_POST['mdp'] ??null,
-        'loggin' => $_POST['loggin'] ?? null,
+        'login' => $_POST['login'] ?? null,
         'erreur' => $_GET['erreur'] ?? null,
         'sessEntite' => $_SESSION['idEntity'] ?? null,
         ));
     }else{
         if (!isset($_POST['log'])||empty($_POST['log'])) {
-            return $app->redirect('./login?erreur=noLoggin');
+            return $app->redirect('./login?erreur=noLogin');
         }
-        if (!isset($_POST['mdp'])||empty($_POST['mdp'])){
+        if (!isset($_POST['mdp'])||empty($_POST['mdp']||strlen($_POST['mdp'])<8)){
             return $app->redirect('./login?erreur=noPassa');
         }
         $verifLogA = verifLog($_POST['log']);
         if ($verifLogA == false){
-            return $app->redirect('./login?erreur=wrongLoggin');
-        }
-        if (strlen($_POST['mdp'])<8) {
-            return $app->redirect('./login?erreur=noPassa');
+            return $app->redirect('./login?erreur=wrongLogin');
         }
 
         $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
         if ($verifLogB == false){
-            return $app->redirect('./login?erreur=wrongLoggin');
+            return $app->redirect('./login?erreur=wrongLogin');
         }
         ouvertureSession($_POST['log'], $app);
         return $app->redirect('./accueil'); 
@@ -166,8 +163,7 @@ $app->match('/log-server', function(Request $request) use ($app){
 
 $app->match('/inscription', function (Request $request) use ($app){
     if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar']) ){
-        //return $app->redirect('./log-server?erreur=mdplog');
-        dump($_POST['mailMar']);
+        return $app->redirect('./log-server?erreur=mdplog');
     }
     $mdp2 = encryptMdp($_POST['mdp2']);
     $log2 = htmlspecialchars($_POST['log2']);
@@ -380,7 +376,7 @@ installStatut();
         $req->execute(array('pseudo'=>$log,));
         $log2 = $req->fetchAll();
         $statut = $log2[0]['statut_id'];
-        $app['session']->set('user', array('loggin' => $log, 
+        $app['session']->set('user', array('login' => $log, 
                                            'statut' => $statut, 
                                             ));
     }
