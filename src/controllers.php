@@ -36,6 +36,9 @@ $app->match('/test', function () use ($app) {
             $infos['langue'] = $book->volumeInfo->language;
             $infos['pages'] = $book->volumeInfo->pageCount;
             $infos['description'] = $book->volumeInfo->description;
+            if( isset($book->volumeInfo->imageLinks) ){
+                $infos['image'] = str_replace('&zoom=1', '&zoom=2', $book->volumeInfo->imageLinks->thumbnail);
+            }
             
             return $app['twig']->render('formulaire_isbn.html.twig', array(
                 'ISBN' => $infos['isbn'],
@@ -43,7 +46,8 @@ $app->match('/test', function () use ($app) {
                 'auteur' => $infos['auteur'],
                 'langue' => $infos['langue'],
                 'pages' => $infos['pages'],
-                'description' => $infos['description']
+                'description' => $infos['description'],
+                'image' => $infos['image']
             ));
         }
         else {
@@ -62,6 +66,7 @@ $app->match('/test', function () use ($app) {
         $langue = isset($_POST['langue']) ? $_POST['langue'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $nbexemplaire = isset($_POST['exemplaire']) ? $_POST['exemplaire'] : '';
+        $image = isset($_POST['image']) ? $_POST['image'] : '';
 
         $livre = new Livre();
         $livre->setTitle($title);
@@ -71,7 +76,7 @@ $app->match('/test', function () use ($app) {
         $livre->setPages($pages);
         $livre->setLangue($langue);
         $livre->setDescription($description);
-        $livre->setImage('');
+        $livre->setImage($image);
 
         $exemplaire = new Exemplaire();
         $exemplaire->setEtat($nbexemplaire);
@@ -109,10 +114,6 @@ $app->get('/catalogue_a_z', function () use ($app){
     return $app['twig']->render('catalogue_a_z.html.twig', array(
       'livres' => $livres
     ));
-});
-
-$app->get('/catalogue_genre', function () use ($app){
-    return $app['twig']->render('catalogue_genre.html.twig', array());
 });
 
 $app->get('/recherche', function () use ($app){
