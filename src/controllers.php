@@ -375,6 +375,20 @@ installStatut();
         $app['session']->clear();
     }
 
+    function recupLastCom($app){
+        $a = $app['session']->get('user')['login'];
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT commentaire.id, commentaire.date, description FROM commentaire, utilisateur WHERE commentaire.utilisateur_id = utilisateur.id AND pseudo = :pseudo ORDER BY commentaire.id DESC LIMIT 0,1");
+        $req->execute(array('pseudo'=>$a,));
+        $lastCom = $req->fetchAll();
+        $lastCom = [$lastCom[0]['id'], $lastCom[0]['date'], $lastCom[0]['description']];
+        return $lastCom;
+
+
+    }
+
     function ouvertureSession($log, $app){
         $log = htmlspecialchars($log);
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
