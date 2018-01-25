@@ -151,6 +151,9 @@ $app->match('/log-server', function(Request $request) use ($app){
         if ($verifLogA == false){
             return $app->redirect('./login?erreur=wrongLoggin');
         }
+        if (strlen($_POST['mdp'])<8) {
+            return $app->redirect('./login?erreur=noPassa');
+        }
 
         $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
         if ($verifLogB == false){
