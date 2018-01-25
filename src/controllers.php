@@ -124,9 +124,18 @@ $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
 
+$app->get('/profil', function () use ($app){
+    if ($app['session']->get('user') == null) {
+        return $app['twig']->render('404.html.twig', array());
+    }
+    return $app['twig']->render('profil.html.twig', array());
+});
+
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
-    
+    if ($app['session']->get('user') !== null) {
+        return $app['twig']->render('404.html.twig', array());
+    }
     return $app['twig']->render('login.html.twig', array(
         'erreur' => $_GET['erreur'] ?? null, ));
 });
@@ -138,7 +147,6 @@ $app->match('/log-server', function(Request $request) use ($app){
         'mdp' => $_POST['mdp'] ??null,
         'login' => $_POST['login'] ?? null,
         'erreur' => $_GET['erreur'] ?? null,
-        'sessEntite' => $_SESSION['idEntity'] ?? null,
         ));
     }else{
         if (!isset($_POST['log'])||empty($_POST['log'])) {
