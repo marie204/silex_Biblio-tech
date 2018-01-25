@@ -289,7 +289,7 @@ $app->get('/livre', function () use ($app){
 }); 
 
 /*Début pour ajouter un livre*/
-$app->get('/ajoutLivre', function (Request $request) use ($app){
+/*$app->get('/ajoutLivre', function (Request $request) use ($app){
     $li_title = $request->get('li_title');
     $li_auteur = $request->get('li_auteur');
     $li_date_ajout = $request->get('li_date_ajout');
@@ -304,13 +304,13 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
     $livre->setLiIsbn($li_isbn);
     $livre->setLiPages($li_pages);
     $livre->setLangue($langue);
-    $livre->setLiDesc($li_desc);
+    $livre->setLiDesc($li_desc);*/
     /*$em = $app['orm.em'];*/
-    $em->persist($Livre);
+/*    $em->persist($Livre);
     $em->flush();
     echo "Created livre with ID " . $livre->getId() . "\n";
     return $app['twig']->render('ajoutLivre.html.twig', array());
-});
+});*/
 /*Fin pour ajouter un livre*/
 
 

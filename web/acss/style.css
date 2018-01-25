@@ -219,6 +219,12 @@ img {
     margin-top: 0px;
 }
 
+.date {
+    margin-top:-20px !important;
+}
+.btnEmprunt {
+    margin-top:-150px !important;
+}
 /****************************************** DEBUT SOUS-MENU MOBILE ************************************/
 #sousMenu-mobile{
 	display: none;
