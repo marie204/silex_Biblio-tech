@@ -16,13 +16,14 @@ $app->register(new Silex\Provider\SessionServiceProvider());
 $app['twig'] = $app->extend('twig', function ($twig, $app) {
     // add custom globals, filters, tags, ...
 
- if ($app['session']->get('loggin') !== null) {
-	$app['global.loggin'] = $app['session']->get('loggin');
+ if (null !== $app['session']->get('user')) {
+	$app['global.loggin'] = $app['session']->get('user')['loggin'];
 }
 else{
+	$a = $app['session']->get('user');
 	$app['global.loggin'] = '';
 }
-
+	$twig->addGlobal('loggin', $app['global.loggin']);
     return $twig;
 });
 

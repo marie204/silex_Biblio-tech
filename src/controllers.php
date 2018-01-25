@@ -89,6 +89,12 @@ $app->match('/test', function () use ($app) {
     return $app['twig']->render('formulaire_isbn.html.twig', array());
 });
 
+$app->get('/deconnextion', function () use ($app){
+    fermetureSession($app);
+    return $app->redirect('./accueil');
+});
+
+
 $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
@@ -110,7 +116,8 @@ $app->get('/catalogue_genre', function () use ($app){
 });
 
 $app->get('/recherche', function () use ($app){
-    return $app['twig']->render('recherche.html.twig', array());
+    return $app->redirect('./test');
+    //return $app['twig']->render('recherche.html.twig', array());
 });
 
 $app->get('/contact', function () use ($app){
