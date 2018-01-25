@@ -32,13 +32,13 @@
 	login = '{{login}}';
 	mdp = '{{mdp}}';
 	if ('{{erreur}}' == 'name') {
-		document.getElementById('erreur').innerHTML = 'Votre loggin\' a déjà été attribué! ';
+		errorUser('Votre loggin\' a déjà été attribué! ');
 	}
 	if ('{{erreur}}' == 'mdplog') {
-		document.getElementById('erreur').innerHTML = 'Vous avez réussi à ne rien mettre comme mot de passe ou loggin\'. Merci de signaler ce bug à un webmaster '
+		errorUser('Vous avez réussi à ne rien mettre comme mot de passe ou loggin\'. Vous êtes fortiche, vous!');
 	}
 	if ('{{erreur}}' == 'mail') {
-		document.getElementById('erreur').innerHTML = 'Votre mail a déjà été attribué ou n\' pas valide! ';
+		errorUser('Votre mail a déjà été attribué ou n\' est pas valide! ');
 	}
 
 
@@ -51,13 +51,20 @@
 			$('#log2').css('borderColor', 'red');
 			return false;
 		}
-		if (document.getElementById('mdp2redoo').value == document.getElementById('mdp2').value) {
+		if (document.getElementById('mdp2redoo').value == document.getElementById('mdp2').value && document.getElementById('mdp2').value.length >= 8 ) {
 			return true;
+		}else if (document.getElementById('mdp2').value.length <= 8) {
+			errorUser('Mot de passe trop court');
+			$('#mdp2').css('borderColor', 'red');
+			return false;
 		}else{
 			document.getElementById('mdp2redoo').value = '';
 			$('#mdp2redoo').css('borderColor', 'red');
 			return false;
 		}
+	}
+	function errorUser($msg){
+		document.getElementById('erreur').innerHTML = $msg;
 	}
 
 	
