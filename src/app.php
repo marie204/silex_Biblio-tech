@@ -17,13 +17,20 @@ $app['twig'] = $app->extend('twig', function ($twig, $app) {
     // add custom globals, filters, tags, ...
 
  if (null !== $app['session']->get('user')) {
-	$app['global.loggin'] = $app['session']->get('user')['loggin'];
+	$app['global.loggin'] = $app['session']->get('user')['login'];
+	if ($app['session']->get('user')['statut'] == 1) {
+		$app['global.myStatut'] = 'Admin';
+	}else{
+		$app['global.myStatut'] = 'Membre';
+	}
+	
 }
 else{
-	$a = $app['session']->get('user');
 	$app['global.loggin'] = '';
+	$app['global.myStatut']= 'invite';
 }
 	$twig->addGlobal('loggin', $app['global.loggin']);
+	$twig->addGlobal('myStatut', $app['global.myStatut']);
     return $twig;
 });
 

@@ -27,8 +27,8 @@
                                 </div>
                             </div>
                             <div class="btns">
-								<input class="btn-default btn1" type="submit" name='loggin' value='connexion'>
-								<input class="btn-default btn1" type="submit" name='loggin' value='inscription'>
+								<input class="btn-default btn1" type="submit" name='login0' value='connexion'>
+								<input class="btn-default btn1" type="submit" name='login0' value='inscription'>
 								<p></p>
                             </div>  
                         </form>
@@ -38,11 +38,11 @@
         </section>
 </div>
 <script>
-	if ('{{erreur}}' == 'wrongLoggin') {
+	if ('{{erreur}}' == 'wrongLogin') {
 		document.getElementById('monErreur').innerHTML = 'Votre identifiant n\'est pas dans la base de donnée ou votre mot de passe ne correspond guère à votre identifiant!';
 		$('.text').css('borderColor', 'red');
 	}
-	if ('{{erreur}}' == 'noLoggin') {
+	if ('{{erreur}}' == 'noLogin') {
 		document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigné votre identifiant!';
 		$('#log1').css('borderColor', 'red');
 	}
