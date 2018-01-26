@@ -8,8 +8,24 @@
 	</p>
 
 	<p id="myComments">
+	{% if lastComId is null %}
+		N'hésitez pas à donner votre avis sur les livres que vous avez pu lire! <br>
 		Vous verrez ici votre dernier commentaire! <br>
-		cliquez ici pour voir l'intégralité de vos commentaires. 
+	{% else %}
+		<table class="table">
+			<tr>
+				<td>{{lastComDate}}</td>
+			</tr>
+			<tr><td>{{loggin}}</td></tr>
+			<tr>
+				<td spanrow='2'>{{lastComDescription}}</td>
+			</tr>
+		</table>
+		<a href="./mesCommentaires">cliquez ici pour voir l'intégralité de vos commentaires.</a>
+		
+	{% endif %}
+
+		
 	</p>
 
 	<p id="myEmprunt">

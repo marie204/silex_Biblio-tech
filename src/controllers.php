@@ -124,6 +124,14 @@ $app->get('/recherche', function () use ($app){
 $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
+$app->match('/mesCommentaires', function () use ($app){
+    if ($app['session']->get('user') == null) {
+        return $app['twig']->render('404.html.twig', array());
+    }
+    $arrayAllComments = recupAllCom($app);
+    return $app['twig']->render('mescommentaires.html.twig', array(
+            'arrayAllComments' => $arrayAllComments ));
+});
 
 $app->get('/profil', function () use ($app){
     if ($app['session']->get('user') == null) {
@@ -131,7 +139,7 @@ $app->get('/profil', function () use ($app){
     }
     $lastCom = recupLastCom($app);
     return $app['twig']->render('profil.html.twig', array(
-        'lastCom'=>$lastCom[0] ?? null,
+        'lastComId'=>$lastCom[0] ?? null,
         'lastComDate'=>$lastCom[1] ?? null,
         'lastComDescription'=>$lastCom[2] ?? null,));
 });
@@ -395,6 +403,23 @@ installStatut();
         $lastCom = $req->fetchAll();
         $lastCom = [$lastCom[0]['id'], $lastCom[0]['date'], $lastCom[0]['description']];
         return $lastCom;
+    }
+    function recupAllCom($app){
+        $a = $app['session']->get('user')['login'];
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT commentaire.id, commentaire.date, commentaire.description, livre.titre FROM commentaire, utilisateur, livre WHERE commentaire.utilisateur_id = utilisateur.id AND livre.id = commentaire.livre_id AND pseudo = :pseudo ORDER BY commentaire.id DESC");
+        $req->execute(array('pseudo'=>$a,));
+        $allC = $req->fetchAll();
+        $allCom = [];
+        for ($i=0; $i < count($allC) ; $i++) { 
+            $allCom[$i][0] = $allC[$i]["id"];
+            $allCom[$i][1] = $allC[$i]["date"];
+            $allCom[$i][2] = $allC[$i]["description"];
+            $allCom[$i][3] = $allC[$i]["titre"];
+        };
+        return $allCom;
     }
 
     function ouvertureSession($log, $app){
