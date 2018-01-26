@@ -5,48 +5,35 @@
     <section class="formBox">
 		<div class="container">
 			<div class="row">
-				<article class="col-lg-12 col-md-12 col-sm-12">
 					<h3>Inscrivez-vous</h3>
+					<article class="col-lg-3 col-md-12 col-sm-12">
 					<div id="erreur"></div>
 						<form class="inscription" id="contact-form" action="./inscription" method="post" onsubmit="return verifMdp();">
-							<div class="row">
+                            <div class="holder">
                                 <div class="form-div-1 clearfix">
-			                        <label class="name">
-			                            <input placeholder="Nom utilisateur" type="text" value="{{login}}" name="log2" id="log2">
-			                            <span class="empty-message">*Ce champ est requis.</span>
-			                        </label>	
+                                    <label class="log2">
+                                        <input placeholder="Nom utilisateur" type="text" value="{{login}}" name="log2" id="log2">
+                                    </label>
                                 </div>
-                            </div>{# ROW #}
-							<div class="row">
                                 <div class="form-div-2 clearfix">
-                                    <label class="email">
+                                    <label class="mailMar">
                                         <input placeholder="Votre E-mail" type="Email" name="mailMar">
-                                        <span class="empty-message">*Ce champ est requis.</span>
-                                    </label>
+                                   </label>
                                 </div>
-                           	</div>{# ROW #}
-                           	<div class="row">
-                                <div class="form-div-2 clearfix">
-                                    <label class="email">
+                                <div class="form-div-3 clearfix">
+                                    <label class="mdp2">
                                         <input placeholder="Votre mot de passe" type="password" value="{{mdp}}" id="mdp2" name="mdp2"> 
-                                        <span class="empty-message">*Ce champ est requis.</span>
                                     </label>
                                 </div>
-                            </div>{# ROW #}
-                            <div class="row">
-                                <div class="form-div-2 clearfix">
-                                    <label class="email">
+                                <div class="form-div-3 clearfix">
+                                    <label class="mdp2redoo">
                                         <input placeholder="Confirmation" type="password" id="mdp2redoo">
-                                        <span class="empty-message">*Ce champ est requis.</span>
                                     </label>
                                 </div>
-                            </div>{# ROW #}
-                            <div class="row">
-								<div class="btnsInscript">
-									<input class="btn-default btn1" type="submit" value='Inscription'>
-									<p></p>
-								</div>
-	                        </div>{# ROW #} 
+                            <div>
+                                <button type="submit" name="envoyer" id="envoyer" class="btn-default btn1">Envoyer</button>
+                            </div>
+                          </div>
                         </form>
 					</div>
 				</div>
