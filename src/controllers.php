@@ -123,6 +123,10 @@ $app->get('/recherche', function () use ($app){
 $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
+$app->match('/mesCommentaires', function () use ($app){
+    return $app['twig']->render('mescommentaires.html.twig');
+
+});
 
 $app->get('/profil', function () use ($app){
     if ($app['session']->get('user') == null) {
@@ -130,7 +134,7 @@ $app->get('/profil', function () use ($app){
     }
     $lastCom = recupLastCom($app);
     return $app['twig']->render('profil.html.twig', array(
-        'lastCom'=>$lastCom[0] ?? null,
+        'lastComId'=>$lastCom[0] ?? null,
         'lastComDate'=>$lastCom[1] ?? null,
         'lastComDescription'=>$lastCom[2] ?? null,));
 });
