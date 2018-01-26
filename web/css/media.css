@@ -1,4 +1,4 @@
-@media screen and (max-width:767px) {
+@media screen and (max-width:640px) {
     body {
         position: relative;
     }
@@ -8,7 +8,7 @@
     }
 }
 /*bouton burger*/
-@media screen and (max-width:767px) {
+@media screen and (max-width:640px) {
     .openbtn {
         display: block;   
         position: absolute;
@@ -31,17 +31,65 @@
         cursor: pointer;
     }
 
+    /*msgAccueil*/
+    .bienvenue   {
+        padding: 10px 0 10px 0 !important;
+    }
+    .msgAccueil {
+        margin-bottom: -25px !important;
+    } 
+    .msgAccueil h2{
+        font-size: 1.1em;
+    }
+    .der {
+        font-size: 1.6em;
+    }
     /*Navigation*/
-    nav {
+    .pc {
+        display: none !important;
+    }
+    #mySidenav {
+        display: block !important;
+        background-color: #333745;
+    }
+    .menuBox {
+        display: none;
+    }
+    .mySidenav {
+        display: block !important;
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        text-align: left;
+        background-color: 
+        z-index: 10000000000;
+    }
+
+/*    nav {
         display: block !important;     
     }
     nav#navbar {        
         position: absolute; 
-        border: 1px solid red;
         top: 0;
         right: 0;
         height: 100vh;
         background:#333745;
+        z-index: 10000000 !important;
 
     }
     nav#navbar ul {
@@ -50,7 +98,8 @@
             display: flex;
     }
     nav#navbar ul li {
-        border: 1px solid red;  
+        border: 1px solid blue;
+        width: 100% !important;  
 
             display: flex;
             flex-direction: column;
@@ -61,23 +110,23 @@
         display: block;
 
             flex: 1;
-    }   
+    } */  
 }
 /*Footer*/
-@media screen and (max-width:767px) {
+@media screen and (max-width:640px) {
     footer ul {
         margin-bottom: 15px !important;
     }
 }
 /*Réseaux sociaux*/
-@media screen and (max-width:767px) {
+@media screen and (max-width:640px) {
 	.rs {
 		margin-top: 50px;
 	}
 }
 
 /*Recherche rapide dans le footer*/
-@media screen and (max-width:767px) {
+@media screen and (max-width:640px) {
 	#inputSearchFooter {
 		z-index: 20000;
 	}
@@ -86,8 +135,8 @@
 	}
 }
 
-/*---767PX--------------------------------------------------------------------------------------------------------------------*/
-@media(max-width:767px) {
+/*---640px--------------------------------------------------------------------------------------------------------------------*/
+@media(max-width:640px) {
     .menuBox {
         float: none;
         text-align: center;

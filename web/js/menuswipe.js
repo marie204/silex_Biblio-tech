@@ -1,7 +1,7 @@
 function openNav() {
-    document.getElementById("tm_navbar").style.width = "100%";
-    document.getElementById("tm_navbar").style.display = "block%";
+    document.getElementById("mySidenav").style.width = "100%";
 }
+
 function closeNav() {
-    document.getElementById("tm_navbar").style.width = "0";
+    document.getElementById("mySidenav").style.width = "0";
 }

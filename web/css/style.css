@@ -74,7 +74,9 @@ h3 {
     font: 300 40px/40px 'Open Sans';
     color: #333745;
 }
-
+.der {
+    text-align: center;
+}
 h4 {
     margin: 0 0 16px 0;
     text-transform: uppercase;
@@ -183,7 +185,17 @@ nav.navbar li > a:hover {
     -webkit-transition: all 0.35s ease;
     transition: all 0.35s ease;
 }
-
+/*MOBILES*/
+#mySidenav {
+    display: none !important;
+}
+.mySidenav {
+    display: none !important;
+}
+/*INDICATORS BOOTSTRAP*/
+.carousel-indicators {
+    z-index: 1 !important;
+}
 /*ICON MENU DROP*/
 
 .caret {
@@ -1256,4 +1268,21 @@ footer .nav {
 
 .padBot {
     padding-bottom: 22px;
+}
+/*-----------------------------INSCRIPTION--------------------------------*/
+.btnsInscript {
+    margin:0 !important;
+    margin: 0px 0 10px 0 !important;
+    border: 1px solid transparent !important;
+    background-color: #333745;
+}
+.btnsInscript:hover {
+    text-decoration: none !important;
+    color: #333745;
+    background: #f2d13e;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+.inscription {
+    margin-left:0px !important;
 }
