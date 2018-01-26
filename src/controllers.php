@@ -129,12 +129,17 @@ $app->get('/profil', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
-    return $app['twig']->render('profil.html.twig', array());
+    $lastCom = recupLastCom($app);
+    return $app['twig']->render('profil.html.twig', array(
+        'lastCom'=>$lastCom[0] ?? null,
+        'lastComDate'=>$lastCom[1] ?? null,
+        'lastComDescription'=>$lastCom[2] ?? null,));
 });
 
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
-    if ($app['session']->get('user') !== null) {
+    //dump($app['session']->get('user') );
+    if ( $app['session']->get('user') ) {
         return $app['twig']->render('404.html.twig', array());
     }
     return $app['twig']->render('login.html.twig', array(
@@ -378,6 +383,18 @@ installStatut();
     }
     function fermetureSession($app){
         $app['session']->clear();
+    }
+
+    function recupLastCom($app){
+        $a = $app['session']->get('user')['login'];
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT commentaire.id, commentaire.date, description FROM commentaire, utilisateur WHERE commentaire.utilisateur_id = utilisateur.id AND pseudo = :pseudo ORDER BY commentaire.id DESC LIMIT 0,1");
+        $req->execute(array('pseudo'=>$a,));
+        $lastCom = $req->fetchAll();
+        $lastCom = [$lastCom[0]['id'], $lastCom[0]['date'], $lastCom[0]['description']];
+        return $lastCom;
     }
 
     function ouvertureSession($log, $app){
