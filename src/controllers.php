@@ -251,7 +251,7 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
 
 
 /*DEBUT ADMINISTRATION*/
-$app->get('/listeLivres', function () use ($app){
+$app->get('/admin', function () use ($app){
     return $app['twig']->render('admin/listeLivres.html.twig', array());
 });
 $app->get('/ajoutLivre', function () use ($app){
