@@ -10,7 +10,6 @@
 	<p id="myComments">
 	{% if lastComId is null %}
 		N'hésitez pas à donner votre avis sur les livres que vous avez pu lire! <br>
-		Vous verrez ici votre dernier commentaire! <br>
 	{% else %}
 		<table class="table">
 			<tr>
@@ -22,15 +21,36 @@
 			</tr>
 		</table>
 		<a href="./mesCommentaires">cliquez ici pour voir l'intégralité de vos commentaires.</a>
-		
 	{% endif %}
 
-		
+		<br><br>
 	</p>
-
 	<p id="myEmprunt">
-		Vous verrez ici votre dernier emprunt! <br>
-		cliquer ici pour voir l'intégralité de vos emprunts.
+		{% if lastComId is null %}
+			Commencez dès maintenant à emprunter des livres en vous rendant dans notre catalogue!<br>
+		{% else %}
+			<table class="table">
+				<tr>
+					<td>Titre du livre</td>
+					<td>{{lastEmpruntTitre}}</td>
+				</tr>
+				<tr>
+					<td>date début</td>
+					<td>{{lastEmpruntDateDebut}}</td>
+				</tr>
+				<tr>
+					<td>date fin</td>
+					<td>{{lastEmpruntDateFin}}</td>
+				</tr>
+				<tr>
+					<td>Statut</td>
+					<td>{{lastEmpruntStatut}}</td>
+				</tr>
+				
+			</table>
+		
+			<a href="./mesemprunts">cliquer ici pour voir l'intégralité de vos emprunts.</a>
+		{% endif %}
 	</p>
 
 	
