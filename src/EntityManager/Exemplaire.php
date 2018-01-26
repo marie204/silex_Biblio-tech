@@ -45,7 +45,7 @@ class Exemplaire {
     /**
      * emprunt linked to this exemplaire
      *
-     * @ManyToOne(targetEntity="EntityManager\Emprunt", inversedBy="exemplaire")
+     * @OneToMany(targetEntity="EntityManager\Emprunt", mappedBy="exemplaire")
      */
     private $emprunt;
 
@@ -95,24 +95,6 @@ class Exemplaire {
      */
     public function getLivre() {
         return $this->livre;
-    }
-
-    /**
-     * Set Emprunt
-     *
-     * @param \EntityManager\Emprunt $emprunt
-     */
-    public function setEmprunt($emprunt) {
-        $this->emprunt = $emprunt;
-        return $this;
-    }
-
-    /**
-     * Get Emprunt
-     * @return \EntityManager\Emprunt
-     */
-    public function getEmprunt() {
-        return $this->Emprunt;
     }
 }
 
