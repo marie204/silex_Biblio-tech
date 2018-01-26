@@ -39,8 +39,8 @@
               <label for="auteur">Auteur(e) *</label>
             </div>
             <div class="input-field col s12 m6 l6">
-              <input placeholder="Nombre d'exemplaires" id="exemplaire" name="exemplaire" type="text" class="validate" required>
-              <label for="auteur">Nombre d'exemplaires *</label>
+              <input placeholder="Image" id="image" name="image" type="text" class="validate" required value="{% if image is defined %}{{ image }}{% endif %}">
+              <label for="image">Image *</label>
             </div>
           </div>
           <div class="row">
@@ -49,10 +49,12 @@
               <label for="description">Description *</label>
             </div>
             <div class="input-field col s12 m6 l6">
+              <input placeholder="Nombre d'exemplaires" id="exemplaire" name="exemplaire" type="text" class="validate" required>
+              <label for="auteur">Nombre d'exemplaires *</label><br>
               <input id="dateAjout" name="dateAjout" type="date" required value="">
-              <label for="dateAjout">Date ajout *</label><br>
+              <label for="dateAjout">Date ajout *</label>
             </div>
-          </div>
+          </div><br>
           <div class="row">
             <div class="input-field col s12 m6 l8">
               <button class="btn btn-block blue btnFiche" id="envoyer" name="envoyer" type="submit">Créer la fiche livre<i class="material-icons right">send</i></button>
