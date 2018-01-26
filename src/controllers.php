@@ -124,10 +124,12 @@ $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
 $app->match('/mesCommentaires', function () use ($app){
+    if ($app['session']->get('user') == null) {
+        return $app['twig']->render('404.html.twig', array());
+    }
     $arrayAllComments = recupAllCom($app);
     return $app['twig']->render('mescommentaires.html.twig', array(
             'arrayAllComments' => $arrayAllComments ));
-
 });
 
 $app->get('/profil', function () use ($app){
@@ -412,7 +414,6 @@ installStatut();
             $allCom[$i][2] = $allC[$i]["description"];
             $allCom[$i][3] = $allC[$i]["titre"];
         };
-        dump($allCom);
         return $allCom;
     }
 
