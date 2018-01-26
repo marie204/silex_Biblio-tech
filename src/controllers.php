@@ -128,7 +128,11 @@ $app->get('/profil', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
-    return $app['twig']->render('profil.html.twig', array());
+    $lastCom = recupLastCom($app);
+    return $app['twig']->render('profil.html.twig', array(
+        'lastCom'=>$lastCom[0] ?? null,
+        'lastComDate'=>$lastCom[1] ?? null,
+        'lastComDescription'=>$lastCom[2] ?? null,));
 });
 
 //#loggin
@@ -386,8 +390,6 @@ installStatut();
         $lastCom = $req->fetchAll();
         $lastCom = [$lastCom[0]['id'], $lastCom[0]['date'], $lastCom[0]['description']];
         return $lastCom;
-
-
     }
 
     function ouvertureSession($log, $app){
