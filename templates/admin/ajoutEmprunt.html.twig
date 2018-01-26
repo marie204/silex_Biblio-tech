@@ -1,0 +1,46 @@
+{% extends "alayout.html.twig" %}
+{% block content %}
+  <div class="container">
+  <div class="row">
+    <div class="col s12 m12 l6">
+      <h4>Ajouter un emprunt</h4>
+      <div class="row">
+        <form action="" method="post" name="frm" id="frm" enctype="multipart/form-data" class="col s12">
+          <div class="row">
+            <div class="input-field col s12 m4 l3">
+              <select placeholder="Choisissez un utilisateur" id="genre" name="genre">
+                <option value="" disabled selected>Choisissez un utilisateur</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </select>
+              <label for="pages">Genre *</label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+              <input placeholder="Titre" id="titre" name="titre" type="text" class="validate" required value="">
+              <label for="titre">Titre *</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m4 l3">
+              <input placeholder="Date de début" id="dateDebut" name="dateDebut" type="date" class="validate" required value="">
+              <label class="date" for="dateDebut">Date de début *</label>
+            </div>
+           <div class="input-field col s12 m4 l3">
+              <input placeholder="Date de fin" id="dateDebut" name="dateFin" type="date" class="validate" required value="">
+              <label class="date" for="dateFin">Date de fin *</label>
+            </div>
+            <div class="input-field col s12 m4 l3">
+              <input placeholder="Statut" id="statut" name="statut" type="text" class="validate" required value="">
+              <label for="statut">Statut *</label>
+            </div>
+          </div>
+        <div class="row">
+          <div class="input-field col s12 m6 l8">
+            <button class="btnEmprunt btn btn-block blue" id="envoyer" name="envoyer" type="submit">Créer la fiche emprunt<i class="send material-icons right">send</i></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% endblock %}

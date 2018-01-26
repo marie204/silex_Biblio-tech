@@ -1,70 +1,84 @@
 {% extends "layout.html.twig" %}
 {% block content %}
-	<div id="erreur"></div>
-	<div id='test'>
-		<form action="./inscription" method="post" onsubmit="return verifMdp();"> 
-			<table class='table'>
-				<tr>
-					<td>login</td>
-					<td><input type="text" value="{{login}}" name="log2" id="log2"></td>
-				</tr>
-				<tr>
-					<td>Email</td>
-					<td><input type="Email" id="mail" name="mailMar"></td>
-				</tr>
-				<tr>
-					<td>Mot de passe :</td>
-					<td><input type="password" value="{{mdp}}" id="mdp2" name="mdp2"> <br></td>
-				</tr>
-				<tr>
-					<td>Confirmation mot de passe :</td>
-					<td><input type="password" id="mdp2redoo"><br></td>
-				</tr>
-				<tr><td colspan="2"><input type="submit"></td></tr>
-			</table>
-			<br>
-			
-		</form>
+<div class="global indent">
+    <!--content-->	
+    <section class="formBox">
+		<div class="container">
+			<div class="row">
+				<article class="col-lg-12 col-md-12 col-sm-12">
+					<h3>Inscrivez-vous</h3>
+					<div id="erreur"></div>
+						<form class="inscription" id="contact-form" action="./inscription" method="post" onsubmit="return verifMdp();">
+							<div class="row">
+                                <div class="form-div-1 clearfix">
+			                        <label class="name">
+			                            <input placeholder="Nom utilisateur" type="text" value="{{login}}" name="log2" id="log2">
+			                            <span class="empty-message">*Ce champ est requis.</span>
+			                        </label>	
+                                </div>
+                            </div>{# ROW #}
+							<div class="row">
+                                <div class="form-div-2 clearfix">
+                                    <label class="email">
+                                        <input placeholder="Votre E-mail" type="Email" name="mailMar">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                    </label>
+                                </div>
+                           	</div>{# ROW #}
+                           	<div class="row">
+                                <div class="form-div-2 clearfix">
+                                    <label class="email">
+                                        <input placeholder="Votre mot de passe" type="password" value="{{mdp}}" id="mdp2" name="mdp2"> 
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                    </label>
+                                </div>
+                            </div>{# ROW #}
+                            <div class="row">
+                                <div class="form-div-2 clearfix">
+                                    <label class="email">
+                                        <input placeholder="Confirmation" type="password" id="mdp2redoo">
+                                        <span class="empty-message">*Ce champ est requis.</span>
+                                    </label>
+                                </div>
+                            </div>{# ROW #}
+                            <div class="row">
+								<div class="btnsInscript">
+									<input class="btn-default btn1" type="submit" value='Inscription'>
+									<p></p>
+								</div>
+	                        </div>{# ROW #} 
+                        </form>
+					</div>
+				</div>
+			</article>
+		</div>
 	</div>
-	<script>
-	login = '{{login}}';
-	mdp = '{{mdp}}';
-	if ('{{erreur}}' == 'name') {
-		errorUser('Votre login\' a déjà été attribué! ');
-	}
-	if ('{{erreur}}' == 'mdplog') {
-		errorUser('Vous avez réussi à ne rien mettre comme mot de passe ou login\'. Vous êtes fortiche, vous!');
-	}
-	if ('{{erreur}}' == 'mail') {
-		errorUser('Votre mail a déjà été attribué ou n\' est pas valide! ');
-	}
-
-
-	function verifMdp(){
-		if (document.getElementById('mail').value.length == 0) {
-			$('#mail').css('borderColor', 'red');
-			return false;
-		}
-		if (document.getElementById('log2').value.length == 0) {
-			$('#log2').css('borderColor', 'red');
-			return false;
-		}
-		if (document.getElementById('mdp2redoo').value == document.getElementById('mdp2').value && document.getElementById('mdp2').value.length >= 8 ) {
-			return true;
-		}else if (document.getElementById('mdp2').value.length <= 8) {
-			errorUser('Mot de passe trop court');
-			$('#mdp2').css('borderColor', 'red');
-			return false;
-		}else{
-			document.getElementById('mdp2redoo').value = '';
-			$('#mdp2redoo').css('borderColor', 'red');
-			return false;
-		}
-	}
-	function errorUser($msg){
-		document.getElementById('erreur').innerHTML = $msg;
-	}
-
-	
-	</script>
-{% endblock %}
+</section>
+</div>
+					<script>
+					login = '{{login}}';
+					mdp = '{{mdp}}';
+					if ('{{erreur}}' == 'name') {
+						document.getElementById('erreur').innerHTML = 'Votre loggin\' a déjà été attribué! ';
+					}
+					if ('{{erreur}}' == 'mdplog') {
+						document.getElementById('erreur').innerHTML = 'Vous avez réussi à ne rien mettre comme mot de passe ou loggin\'. Merci de signaler ce bug à un webmaster '
+					}
+					if ('{{erreur}}' == 'mail') {
+						document.getElementById('erreur').innerHTML = 'Votre mail a déjà été attribué ou n\' pas valide! ';
+					}
+					function verifMdp(){
+						if (document.getElementById('log2').value.length == 0) {
+							$('#log2').css('borderColor', 'red');
+							return false;
+						}
+						if (document.getElementById('mdp2redoo').value == document.getElementById('mdp2').value) {
+							return true;
+						}else{
+							document.getElementById('mdp2redoo').value = '';
+							$('#mdp2redoo').css('borderColor', 'red');
+							return false;
+						}
+					}
+					</script>
+				{% endblock %}
