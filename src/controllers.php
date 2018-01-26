@@ -435,6 +435,9 @@ installStatut();
         "SELECT emprunt.id, emprunt.dateDebut, emprunt.dateFin, emprunt.statut, emprunt.valider, livre.titre FROM emprunt, utilisateur, livre, exemplaire WHERE emprunt.utilisateur_id = utilisateur.id AND pseudo = :pseudo AND exemplaire.id = emprunt.exemplaire_id AND exemplaire.livre_id = livre.id ORDER BY emprunt.id DESC LIMIT 0,1");
         $req->execute(array('pseudo'=>$a,));
         $lastEmprunt = $req->fetchAll();
+        if (!isset($lastEmprunt[0])||empty($lastEmprunt[0])) {
+            return false;
+        }
         $lastEmprunt = [$lastEmprunt[0]['id'], $lastEmprunt[0]['dateDebut'], $lastEmprunt[0]['dateFin'], $lastEmprunt[0]['statut'], $lastEmprunt[0]['valider'], $lastEmprunt[0]['titre']];
         //dump($lastEmprunt);
         return $lastEmprunt;
