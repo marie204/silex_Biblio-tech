@@ -133,7 +133,8 @@ $app->get('/profil', function () use ($app){
 
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
-    if ($app['session']->get('user') !== null) {
+    //dump($app['session']->get('user') );
+    if ( $app['session']->get('user') ) {
         return $app['twig']->render('404.html.twig', array());
     }
     return $app['twig']->render('login.html.twig', array(
