@@ -95,6 +95,8 @@ $app->get('/deconnextion', function () use ($app){
 });
 
 
+
+
 $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
@@ -123,6 +125,15 @@ $app->get('/recherche', function () use ($app){
 $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
+
+$app->match('/mesemprunts', function () use ($app){
+    if ($app['session']->get('user') == null) {
+        return $app['twig']->render('404.html.twig', array());
+    }
+    return $app['twig']->render('mesemprunts.html.twig', array(
+    ));
+});
+
 $app->match('/mesCommentaires', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
