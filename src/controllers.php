@@ -36,9 +36,6 @@ $app->match('/test', function () use ($app) {
             $infos['langue'] = $book->volumeInfo->language;
             $infos['pages'] = $book->volumeInfo->pageCount;
             $infos['description'] = $book->volumeInfo->description;
-            if( isset($book->volumeInfo->imageLinks) ){
-                $infos['image'] = str_replace('&zoom=1', '&zoom=2', $book->volumeInfo->imageLinks->thumbnail);
-            }
             
             return $app['twig']->render('formulaire_isbn.html.twig', array(
                 'ISBN' => $infos['isbn'],
@@ -46,8 +43,7 @@ $app->match('/test', function () use ($app) {
                 'auteur' => $infos['auteur'],
                 'langue' => $infos['langue'],
                 'pages' => $infos['pages'],
-                'description' => $infos['description'],
-                'image' => $infos['image']
+                'description' => $infos['description']
             ));
         }
         else {
@@ -66,7 +62,6 @@ $app->match('/test', function () use ($app) {
         $langue = isset($_POST['langue']) ? $_POST['langue'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $nbexemplaire = isset($_POST['exemplaire']) ? $_POST['exemplaire'] : '';
-        $image = isset($_POST['image']) ? $_POST['image'] : '';
 
         $livre = new Livre();
         $livre->setTitle($title);
@@ -76,7 +71,7 @@ $app->match('/test', function () use ($app) {
         $livre->setPages($pages);
         $livre->setLangue($langue);
         $livre->setDescription($description);
-        $livre->setImage($image);
+        $livre->setImage('');
 
         $exemplaire = new Exemplaire();
         $exemplaire->setEtat($nbexemplaire);
@@ -116,6 +111,10 @@ $app->get('/catalogue_a_z', function () use ($app){
     ));
 });
 
+$app->get('/catalogue_genre', function () use ($app){
+    return $app['twig']->render('catalogue_genre.html.twig', array());
+});
+
 $app->get('/recherche', function () use ($app){
     return $app->redirect('./test');
     //return $app['twig']->render('recherche.html.twig', array());
@@ -148,6 +147,7 @@ $app->get('/profil', function () use ($app){
         'lastEmpruntDateFin'=>$lastEmprunt[2] ?? null,
         'lastEmpruntStatut'=>$lastEmprunt[3] ?? null,
         'lastEmpruntValidation'=>$lastEmprunt[4] ?? null,
+        'lastEmpruntTitre' =>$lastEmprunt[5] ?? null,
         ));
 });
 
@@ -214,11 +214,7 @@ $app->get('/apropos', function () use ($app){
 });
 
 $app->get('/nouveautes', function () use ($app){
-    $repository = $app['em']->getRepository(Livre::class);
-    $livres = $repository->findAll();
-    return $app['twig']->render('nouveautes.html.twig', array(
-      'livres' => $livres
-    ));
+    return $app['twig']->render('nouveautes.html.twig', array());
 });
 
 if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
@@ -361,7 +357,7 @@ installStatut();
         $req->execute();
         $log2 = $req->fetchAll();
         if ($log2[0]['i'] == 0) {
-            dump($log2[0]['i']);
+            //dump($log2[0]['i']);
             $req->closeCursor();
             for ($i=0; $i < 2 ; $i++) {
                 $stature = 'membre';
@@ -408,6 +404,9 @@ installStatut();
         "SELECT commentaire.id, commentaire.date, description FROM commentaire, utilisateur WHERE commentaire.utilisateur_id = utilisateur.id AND pseudo = :pseudo ORDER BY commentaire.id DESC LIMIT 0,1");
         $req->execute(array('pseudo'=>$a,));
         $lastCom = $req->fetchAll();
+        if (!isset($lastCom[0]['id'])) {
+            return false;
+        }
         $lastCom = [$lastCom[0]['id'], $lastCom[0]['date'], $lastCom[0]['description']];
         return $lastCom;
     }
@@ -433,10 +432,10 @@ installStatut();
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $req = $bdd->prepare(
-        "SELECT emprunt.id, emprunt.dateDebut, emprunt.dateFin, emprunt.statut, emprunt.valider, livre.titre FROM emprunt, utilisateur, livre WHERE emprunt.utilisateur_id = utilisateur.id AND pseudo = :pseudo ORDER BY emprunt.id DESC LIMIT 0,1");
+        "SELECT emprunt.id, emprunt.dateDebut, emprunt.dateFin, emprunt.statut, emprunt.valider, livre.titre FROM emprunt, utilisateur, livre, exemplaire WHERE emprunt.utilisateur_id = utilisateur.id AND pseudo = :pseudo AND exemplaire.id = emprunt.exemplaire_id AND exemplaire.livre_id = livre.id ORDER BY emprunt.id DESC LIMIT 0,1");
         $req->execute(array('pseudo'=>$a,));
         $lastEmprunt = $req->fetchAll();
-        $lastEmprunt = [$lastEmprunt[0]['id'], $lastEmprunt[0]['dateDebut'], $lastEmprunt[0]['dateFin'], $lastEmprunt[0]['statut'], $lastEmprunt[0]['valider']];
+        $lastEmprunt = [$lastEmprunt[0]['id'], $lastEmprunt[0]['dateDebut'], $lastEmprunt[0]['dateFin'], $lastEmprunt[0]['statut'], $lastEmprunt[0]['valider'], $lastEmprunt[0]['titre']];
         //dump($lastEmprunt);
         return $lastEmprunt;
     }

@@ -30,7 +30,10 @@
 			Commencez dès maintenant à emprunter des livres en vous rendant dans notre catalogue!<br>
 		{% else %}
 			<table class="table">
-				
+				<tr>
+					<td>Titre du livre</td>
+					<td>{{lastEmpruntTitre}}</td>
+				</tr>
 				<tr>
 					<td>date début</td>
 					<td>{{lastEmpruntDateDebut}}</td>
@@ -43,8 +46,10 @@
 					<td>Statut</td>
 					<td>{{lastEmpruntStatut}}</td>
 				</tr>
+				
 			</table>
-		cliquer ici pour voir l'intégralité de vos emprunts.
+		
+			<a href="./mesEmprunts">cliquer ici pour voir l'intégralité de vos emprunts.</a>
 		{% endif %}
 	</p>
 
