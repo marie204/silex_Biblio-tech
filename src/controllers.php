@@ -199,7 +199,11 @@ $app->get('/apropos', function () use ($app){
 });
 
 $app->get('/nouveautes', function () use ($app){
-    return $app['twig']->render('nouveautes.html.twig', array());
+    $repository = $app['em']->getRepository(Livre::class);
+    $livres = $repository->findAll();
+    return $app['twig']->render('nouveautes.html.twig', array(
+      'livres' => $livres
+    ));
 });
 
 if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
