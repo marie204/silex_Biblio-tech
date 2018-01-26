@@ -137,10 +137,17 @@ $app->get('/profil', function () use ($app){
         return $app['twig']->render('404.html.twig', array());
     }
     $lastCom = recupLastCom($app);
+    $lastEmprunt = recupLastEmprunt($app);
     return $app['twig']->render('profil.html.twig', array(
         'lastComId'=>$lastCom[0] ?? null,
         'lastComDate'=>$lastCom[1] ?? null,
-        'lastComDescription'=>$lastCom[2] ?? null,));
+        'lastComDescription'=>$lastCom[2] ?? null,
+        'lastEmpruntId'=>$lastEmprunt[0] ?? null,
+        'lastEmpruntDateDebut'=>$lastEmprunt[1] ?? null,
+        'lastEmpruntDateFin'=>$lastEmprunt[2] ?? null,
+        'lastEmpruntStatut'=>$lastEmprunt[3] ?? null,
+        'lastEmpruntValidation'=>$lastEmprunt[4] ?? null,
+        ));
 });
 
 //#loggin
@@ -415,6 +422,18 @@ installStatut();
             $allCom[$i][3] = $allC[$i]["titre"];
         };
         return $allCom;
+    }
+    function recupLastEmprunt($app){
+        $a = $app['session']->get('user')['login'];
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT emprunt.id, emprunt.dateDebut, emprunt.dateFin, emprunt.statut, emprunt.valider, livre.titre FROM emprunt, utilisateur, livre WHERE emprunt.utilisateur_id = utilisateur.id AND pseudo = :pseudo ORDER BY emprunt.id DESC LIMIT 0,1");
+        $req->execute(array('pseudo'=>$a,));
+        $lastEmprunt = $req->fetchAll();
+        $lastEmprunt = [$lastEmprunt[0]['id'], $lastEmprunt[0]['dateDebut'], $lastEmprunt[0]['dateFin'], $lastEmprunt[0]['statut'], $lastEmprunt[0]['valider']];
+        //dump($lastEmprunt);
+        return $lastEmprunt;
     }
 
     function ouvertureSession($log, $app){
