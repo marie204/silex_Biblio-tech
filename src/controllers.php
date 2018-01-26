@@ -124,7 +124,9 @@ $app->get('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
 $app->match('/mesCommentaires', function () use ($app){
-    return $app['twig']->render('mescommentaires.html.twig');
+    $arrayAllComments = recupAllCom($app);
+    return $app['twig']->render('mescommentaires.html.twig', array(
+            'arrayAllComments' => $arrayAllComments ));
 
 });
 
@@ -394,6 +396,24 @@ installStatut();
         $lastCom = $req->fetchAll();
         $lastCom = [$lastCom[0]['id'], $lastCom[0]['date'], $lastCom[0]['description']];
         return $lastCom;
+    }
+    function recupAllCom($app){
+        $a = $app['session']->get('user')['login'];
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT commentaire.id, commentaire.date, commentaire.description, livre.titre FROM commentaire, utilisateur, livre WHERE commentaire.utilisateur_id = utilisateur.id AND livre.id = commentaire.livre_id AND pseudo = :pseudo ORDER BY commentaire.id DESC");
+        $req->execute(array('pseudo'=>$a,));
+        $allC = $req->fetchAll();
+        $allCom = [];
+        for ($i=0; $i < count($allC) ; $i++) { 
+            $allCom[$i][0] = $allC[$i]["id"];
+            $allCom[$i][1] = $allC[$i]["date"];
+            $allCom[$i][2] = $allC[$i]["description"];
+            $allCom[$i][3] = $allC[$i]["titre"];
+        };
+        dump($allCom);
+        return $allCom;
     }
 
     function ouvertureSession($log, $app){
