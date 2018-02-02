@@ -244,7 +244,11 @@ if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
 }
 
 $app->get('/livre', function () use ($app){
-    return $app['twig']->render('livre.html.twig', array());
+    $repository = $app['em']->getRepository(Livre::class);
+    $livre = $repository->find($_GET['id']);
+    return $app['twig']->render('livre.html.twig', array(
+      'livre' => $livre,
+    ));
 }); 
 
 /*Début pour ajouter un livre*/
@@ -271,7 +275,6 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
     return $app['twig']->render('ajoutLivre.html.twig', array());
 });
 /*Fin pour ajouter un livre*/
-
 
 /*DEBUT ADMINISTRATION*/
 $app->get('/listeLivres', function () use ($app){
