@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Session\Session;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
 use EntityManager\Exemplaire;
+use EntityManager\Commentaire;
 
 $app->get('/', function () use ($app) {
     if (strpos($_SERVER['PHP_SELF'], 'index_dev.php')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
@@ -245,9 +246,17 @@ if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
 
 $app->get('/livre', function () use ($app){
     $repository = $app['em']->getRepository(Livre::class);
+    $repoCom = $app['em']->getRepository(Commentaire::class);
+    $lastComs = $repoCom->findBy(
+        array('livre' => $_GET['id']),
+        array('date' => 'desc'), 
+        5, 
+        0
+    );
     $livre = $repository->find($_GET['id']);
     return $app['twig']->render('livre.html.twig', array(
       'livre' => $livre,
+      'lastComs'=>$lastComs,
     ));
 }); 
 

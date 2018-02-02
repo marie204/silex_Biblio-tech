@@ -30,6 +30,21 @@
                 <article> 
     </div>
 </div>
+<div id="container">
+    {% for lastCom in lastComs %}
+    <table class="table">
+        <tr>
+            <td>{{lastCom.utilisateur.pseudo}}</td>
+        </tr>
+        <tr>
+            <td colspan="2">{{lastCom.description}} </td>
+        </tr>
+    </table>
+        
+        
+
+    {% endfor %}
+</div>
 </section>
 </section>
 </div>
