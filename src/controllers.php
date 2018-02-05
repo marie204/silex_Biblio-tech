@@ -101,14 +101,32 @@ $app->get('/deconnextion', function () use ($app){
 });
 
 
+$app->get('/touslescommentaires', function() use ($app){
+    if (!isset($_GET['id'])) {
+        return $app['twig']->render('404.html.twig');
+    }
+    return $app['twig']->render('touslescommentaires.html.twig', array(
 
+    ));
+
+});
 
 $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
 
 $app->match('/accueil', function () use ($app){
-    return $app['twig']->render('accueil.html.twig', array());
+    $repoCom = $app['em']->getRepository(Commentaire::class);
+    $lastComs = $repoCom->findBy(
+        array(),
+        array('date' => 'desc'), 
+        4, //limite
+        0 
+    );
+    return $app['twig']->render('accueil.html.twig', array(
+        'lastComs' => $lastComs,
+    
+));
 });
 
 $app->get('/catalogue_a_z', function () use ($app){
@@ -250,7 +268,7 @@ $app->get('/livre', function () use ($app){
     $lastComs = $repoCom->findBy(
         array('livre' => $_GET['id']),
         array('date' => 'desc'), 
-        5, 
+        4, 
         0
     );
     $livre = $repository->find($_GET['id']);

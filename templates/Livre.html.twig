@@ -30,20 +30,26 @@
                 <article> 
     </div>
 </div>
-<div id="container">
-    {% for lastCom in lastComs %}
-    <table class="table">
-        <tr>
-            <td>{{lastCom.utilisateur.pseudo}}</td>
-        </tr>
-        <tr>
-            <td colspan="2">{{lastCom.description}} </td>
-        </tr>
-    </table>
+<div class="container">
+    <div class="row">
+    <h3>Derniers avis postés sur {{livre.title}}</h3>
+        {% for comment in lastComs %}
+        <article class="col-lg-3 col-md-6 col-sm-6">
+            <div class="thumb-pad1 maxheight">
+                <div class="box_inner">
+                    <div class="thumbnail">
+                        <h2> {{comment.utilisateur.pseudo}} </h2>
+                        <div class="caption">
+                            <p>{{comment.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
         
-        
-
-    {% endfor %}
+    </div>
+    <a href="./touslescommentaires?id={{livre.id}}"> voir tous les avis concernants {{livre.title}}</a>
 </div>
 </section>
 </section>

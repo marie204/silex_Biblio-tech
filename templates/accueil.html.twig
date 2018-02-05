@@ -168,66 +168,22 @@
 <div class="container">
     <div class="row">
         <h3>Les dernières critiqueS</h3>
+        {% for comment in lastComs %}
         <article class="col-lg-3 col-md-6 col-sm-6">
             <div class="thumb-pad1 maxheight">
                 <div class="box_inner">
                     <div class="thumbnail">
-                        <h2>Pseudo 1</h2>
+                        <h2> {{comment.utilisateur.pseudo}} </h2>
                         <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
+                            <p>{{comment.description}}</p>
+                            <a href="./livre?id={{comment.livre.id}}" class="btn-default btn1">Lire plus</a>
                         </div>
                     </div>
                 </div>
             </div>
         </article>
-        <article class="col-lg-3 col-md-6 col-sm-6">
-            <div class="thumb-pad1 maxheight">
-                <div class="box_inner">
-                    <div class="thumbnail">
-                        <h2>Pseudo 2</h2>
-                        <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-        <article class="col-lg-3 col-md-6 col-sm-6">
-            <div class="thumb-pad1 maxheight">
-                <div class="box_inner">
-                    <div class="thumbnail">
-                        <h2>Pseudo 3</h2>
-                        <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-        <article class="col-lg-3 col-md-6 col-sm-6">
-            <div class="thumb-pad1 maxheight">
-                <div class="box_inner">
-                    <div class="thumbnail">
-                        <h2>Pseudo 4</h2>
-                        <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
+        {% endfor %}
+        
     </div>
 </div>
 </section>
