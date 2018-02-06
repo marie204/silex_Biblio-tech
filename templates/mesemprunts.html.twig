@@ -2,7 +2,22 @@
 
 
 {% block content %}
-
-
-
+	{% for item in arrayEmprunt %}
+		<table class="table" style="border: solid white; ">
+			<tr>
+				<td>date</td>
+				<td>{{item.1}}</td>
+			</tr>
+			<tr>
+				<td>contenu</td>
+				<td>{{item.2}}</td>
+			</tr>
+			<tr>
+				<td>livre</td>
+				<td>{{item.3}}</td>
+			</tr>
+		</table>
+		<br>
+	{% endfor %}
+	
 {% endblock %}

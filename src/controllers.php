@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le dossier EntityManager
 use EntityManager\Exemplaire;
 use EntityManager\Commentaire;
+use EntityManager\Emprunt;
 
 $app->get('/', function () use ($app) {
     if (strpos($_SERVER['PHP_SELF'], 'index_dev.php')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
@@ -168,8 +169,13 @@ $app->match('/mesemprunts', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
-    //TODO la gestion des emprunts de la personne dont la session est lancée!(très facile)
+    //TODO la gestion des emprunts de la personne dont la session est lancée!(niveau moyen a finir!!!)
+    $repoBook = $app['em']->getRepository(Commentaire::class);
+    $userEmp = $app['session']->get('user');
+    $arrayEmprunt = $repoBook->findBy(array('utilisateur'=>$userEmp['login']));
+    var_dump($arrayEmprunt);
     return $app['twig']->render('mesemprunts.html.twig', array(
+        'arrayEmprunt'=> $arrayEmprunt,
     ));
 });
 
