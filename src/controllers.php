@@ -105,8 +105,14 @@ $app->get('/touslescommentaires', function() use ($app){
     if (!isset($_GET['id'])) {
         return $app['twig']->render('404.html.twig');
     }
+    $repoBook = $app['em']->getRepository(Commentaire::class);
+    $repoCom = $app['em']->getRepository(Commentaire::class);
+    $lastComs = $repoCom->findBy(
+        array('livre' => $_GET['id']),
+        array('date' => 'desc')
+    );
     return $app['twig']->render('touslescommentaires.html.twig', array(
-
+        'lastComs' => $lastComs,
     ));
 
 });
@@ -162,6 +168,7 @@ $app->match('/mesemprunts', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
+    //TODO la gestion des emprunts de la personne dont la session est lancée!(très facile)
     return $app['twig']->render('mesemprunts.html.twig', array(
     ));
 });

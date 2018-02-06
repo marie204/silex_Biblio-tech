@@ -1,5 +1,25 @@
 {% extends "layout.html.twig" %} 
 
 {% block content %}
-Page en construction revenez plus tard. 
+<h3>Commentaire à propos du livre choisi</h3>
+<div class="container">
+    <div class="row">
+	{% for comment in lastComs %}
+	        <article class="col-lg-6 col-md-12 col-sm-12">
+	            <div class="thumb-pad1 maxheight">
+	                <div class="box_inner">
+	                    <div class="thumbnail">
+	                        <h2> {{comment.utilisateur.pseudo}} </h2>
+	                        <div class="caption">
+	                            <p>{{comment.description}}</p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </article>
+	{% endfor %}
+	</div>
+</div>
+
+
 {% endblock %}
