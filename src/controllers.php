@@ -116,6 +116,7 @@ $app->get('/about', function () use ($app){
 });
 
 $app->match('/accueil', function () use ($app){
+    $repository = $app['em']->getRepository(Livre::class);
     $repoCom = $app['em']->getRepository(Commentaire::class);
     $lastComs = $repoCom->findBy(
         array(),
@@ -123,8 +124,15 @@ $app->match('/accueil', function () use ($app){
         4, //limite
         0 
     );
+    $popuLivre = $repository->findBy(
+        array(),
+        array(), 
+        8, 
+        0
+    );
     return $app['twig']->render('accueil.html.twig', array(
         'lastComs' => $lastComs,
+        'popuLivre'=> $popuLivre,
     
 ));
 });
