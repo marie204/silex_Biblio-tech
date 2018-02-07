@@ -12,6 +12,7 @@ use EntityManager\Livre; //On utilise la classe Livre qui se trouve dans le doss
 use EntityManager\Exemplaire;
 use EntityManager\Commentaire;
 use EntityManager\Emprunt;
+use EntityManager\Utilisateur;
 
 $app->get('/', function () use ($app) {
     if (strpos($_SERVER['PHP_SELF'], 'index_dev.php')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
@@ -170,10 +171,7 @@ $app->match('/mesemprunts', function () use ($app){
         return $app['twig']->render('404.html.twig', array());
     }
     //TODO la gestion des emprunts de la personne dont la session est lancée!(niveau moyen a finir!!!)
-    $repoBook = $app['em']->getRepository(Commentaire::class);
-    $userEmp = $app['session']->get('user');
-    $arrayEmprunt = $repoBook->findBy(array('utilisateur'=>$userEmp['login']));
-    var_dump($arrayEmprunt);
+    $arrayEmprunt = recupAllEmprunt($app);
     return $app['twig']->render('mesemprunts.html.twig', array(
         'arrayEmprunt'=> $arrayEmprunt,
     ));
@@ -498,6 +496,29 @@ installStatut();
         };
         return $allCom;
     }
+
+    function recupAllEmprunt($app){
+        $a = $app['session']->get('user')['login'];
+        $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $req = $bdd->prepare(
+        "SELECT emprunt.id, emprunt.dateDebut, emprunt.dateFin, emprunt.statut, emprunt.valider, livre.titre FROM emprunt, utilisateur, livre, exemplaire WHERE emprunt.utilisateur_id = utilisateur.id AND pseudo = :pseudo AND exemplaire.id = emprunt.exemplaire_id AND exemplaire.livre_id = livre.id ORDER BY emprunt.id");
+        $req->execute(array('pseudo'=>$a,));
+        $allE = $req->fetchAll();
+        for ($i=0; $i < count($allE) ; $i++) { 
+            $allEmp[$i][0] = $allE[$i]["id"];
+            $allEmp[$i][1] = $allE[$i]["dateDebut"];
+            $allEmp[$i][2] = $allE[$i]["dateFin"];
+            $allEmp[$i][3] = $allE[$i]["statut"];
+            $allEmp[$i][4] = $allE[$i]["valider"];
+            $allEmp[$i][5] = $allE[$i]["titre"];
+        };
+        //$allEmp = [$lastEmprunt[0]['id'], $lastEmprunt[0]['dateDebut'], $lastEmprunt[0]['dateFin'], $lastEmprunt[0]['statut'], $lastEmprunt[0]['valider'], $lastEmprunt[0]['titre']];
+        //dump($lastEmprunt);
+        return $allEmp;
+    }
+
+
     function recupLastEmprunt($app){
         $a = $app['session']->get('user')['login'];
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
