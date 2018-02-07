@@ -15,7 +15,7 @@ use EntityManager\Emprunt;
 use EntityManager\Utilisateur;
 
 $app->get('/', function () use ($app) {
-    if (strpos($_SERVER['PHP_SELF'], 'index_dev.php')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
+    if (strpos($_SERVER['PHP_SELF'], 'index_dev.php/')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
         return $app->redirect('./accueil');
     }else{
         return $app->redirect('index.php/accueil');
