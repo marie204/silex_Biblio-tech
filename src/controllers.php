@@ -23,7 +23,7 @@ $app->get('/', function () use ($app) {
 })
 ->bind('homepage');
 
-$app->match('/test', function () use ($app) {
+$app->match('/ajoutLivre', function () use ($app) {
     if (isset($_POST['rechercher'])) {
          $rechercheisbn = isset($_POST['rechercheisbn']) ? $_POST['rechercheisbn'] : '';
 
@@ -104,6 +104,7 @@ $app->get('/deconnextion', function () use ($app){
 
 
 $app->get('/touslescommentaires', function() use ($app){
+    //TODO faire en sorte que les utilisateurs puissent poster des commentaires
     if (!isset($_GET['id'])) {
         return $app['twig']->render('404.html.twig');
     }
@@ -120,6 +121,10 @@ $app->get('/touslescommentaires', function() use ($app){
 });
 
 $app->get('/about', function () use ($app){
+    return $app['twig']->render('about.html.twig', array());
+});
+
+$app->get('/mentionlegale', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
 
@@ -162,7 +167,7 @@ $app->get('/recherche', function () use ($app){
     //return $app['twig']->render('recherche.html.twig', array());
 });
 
-$app->get('/contact', function () use ($app){
+$app->match('/contact', function () use ($app){
     return $app['twig']->render('contact.html.twig', array());
 });
 
@@ -170,7 +175,6 @@ $app->match('/mesemprunts', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
-    //TODO la gestion des emprunts de la personne dont la session est lancée!(niveau moyen a finir!!!)
     $arrayEmprunt = recupAllEmprunt($app);
     return $app['twig']->render('mesemprunts.html.twig', array(
         'arrayEmprunt'=> $arrayEmprunt,
@@ -213,6 +217,38 @@ $app->match('/login', function (Request $request) use ($app){
     }
     return $app['twig']->render('login.html.twig', array(
         'erreur' => $_GET['erreur'] ?? null, ));
+});
+///log-admin
+$app->match('/log-admin', function(Request $request) use ($app){
+    if (!isset($_POST['login0']) || $_POST['login0'] == 'inscription' ){
+        return $app['twig']->render('log.admin.html.twig', array(
+        'login' => $_POST['log'] ??null,
+        'mdp' => $_POST['mdp'] ??null,
+        'login' => $_POST['login'] ?? null,
+        'erreur' => $_GET['erreur'] ?? null,
+        ));
+    }else{
+        if (!isset($_POST['log'])||empty($_POST['log'])) {
+            return $app->redirect('./admin?erreur=noLogin');
+        }
+        if (!isset($_POST['mdp'])||empty($_POST['mdp']||strlen($_POST['mdp'])<8)){
+            return $app->redirect('./admin?erreur=noPassa');
+        }
+        $verifLogA = verifLog($_POST['log']);
+        if ($verifLogA == false){
+            return $app->redirect('./admin?erreur=wrongLogin');
+        }
+
+        $verifLogB = compareMdp(htmlspecialchars($_POST['log']), htmlspecialchars($_POST['mdp']));
+        if ($verifLogB == false){
+            return $app->redirect('./admin?erreur=wrongLogin');
+        }
+        ouvertureSession($_POST['log'], $app);
+        if ($app['session']->get('user')['statut']==1) {
+            return $app->redirect('./admin'); 
+        }
+        return $app->redirect('./accueil'); 
+    }
 });
 
 $app->match('/log-server', function(Request $request) use ($app){
@@ -275,15 +311,13 @@ $app->get('/nouveautes', function () use ($app){
     ));
 });
 
-if ( isset($_SESSION['idEntity']) && $_SESSION['idEntity']=='1') {
-    $app->get('/u3jjbvb163qeh9lk', function () use ($app){
-        return 'ok8';
-    });
-}
-
 $app->get('/livre', function () use ($app){
+    //TODO ajouter demande d'emprunts
+    //TODO ajouter le statut des livres (emprunté ou non)
     $repository = $app['em']->getRepository(Livre::class);
     $repoCom = $app['em']->getRepository(Commentaire::class);
+    $repoEmp = $app['em']->getRepository(Emprunt::class);
+    $repoEx = $app['em']->getRepository(Exemplaire::class);
     $lastComs = $repoCom->findBy(
         array('livre' => $_GET['id']),
         array('date' => 'desc'), 
@@ -291,6 +325,7 @@ $app->get('/livre', function () use ($app){
         0
     );
     $livre = $repository->find($_GET['id']);
+    
     return $app['twig']->render('livre.html.twig', array(
       'livre' => $livre,
       'lastComs'=>$lastComs,
@@ -323,6 +358,11 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
 /*Fin pour ajouter un livre*/
 
 /*DEBUT ADMINISTRATION*/
+$app->get('/admin', function () use ($app){
+    //TODO condition pour que les non admins ne puisse y acceder mais je pense qu'il est préférable de le faire dans le render en mode
+    //Si t'es invité, connecte toi, si t'es membre not allowed et si t'es admin fais toi plaiz
+    return $app['twig']->render('admin/accueil.html.twig', array());
+});
 $app->get('/listeLivres', function () use ($app){
     return $app['twig']->render('admin/listeLivres.html.twig', array());
 });
@@ -385,6 +425,7 @@ installStatut();
     return 'done';
 }
 
+//fonction
     function compareMdp($log, $mdp){
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
