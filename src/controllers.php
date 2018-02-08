@@ -101,7 +101,10 @@ $app->get('/deconnextion', function () use ($app){
     fermetureSession($app);
     return $app->redirect('./accueil');
 });
-
+//TODO envoyerCommentaire
+$app->match('/envoyerCommentaire', function () use ($app){
+    return $app->redirect('./accueil');
+});
 
 $app->get('/touslescommentaires', function() use ($app){
     //TODO faire en sorte que les utilisateurs puissent poster des commentaires
@@ -116,6 +119,7 @@ $app->get('/touslescommentaires', function() use ($app){
     );
     return $app['twig']->render('touslescommentaires.html.twig', array(
         'lastComs' => $lastComs,
+        'idLivre' => $_GET['id'],
     ));
 
 });
