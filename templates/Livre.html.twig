@@ -29,6 +29,20 @@
                 <article> 
     </div>
 </div>
+<div class="container" id='containerEmprunt'>
+    <button onclick="affichEmp();">Faire une demande d'emprunt</button>
+</div>
+
+<script>
+    function affichEmp(){
+        document.getElementById('containerEmprunt').innerHTML = '<form action="./demandemp">'
+        +'<input type="hidden" name="idLivre" value="{{livre.id}}">'
+        +'<input type="date" value="maDate();">'
+        +'<input type="submit" value="Demande d\'emprunt">'
+    +'</form>'
+    }
+</script>
+
 <div class="container">
     <div class="row">
     <h3>Derniers avis postés sur {{livre.title}}</h3>
@@ -46,6 +60,7 @@
             </div>
         </article>
         {% endfor %}
+
         
     </div>
     <a href="./touslescommentaires?id={{livre.id}}"> voir tous les avis concernants {{livre.title}}</a>

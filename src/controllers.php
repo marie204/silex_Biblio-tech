@@ -107,7 +107,6 @@ $app->match('/envoyerCommentaire', function () use ($app){
 });
 
 $app->get('/touslescommentaires', function() use ($app){
-    //TODO faire en sorte que les utilisateurs puissent poster des commentaires
     if (!isset($_GET['id'])) {
         return $app['twig']->render('404.html.twig');
     }
@@ -126,6 +125,11 @@ $app->get('/touslescommentaires', function() use ($app){
 
 $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
+});
+
+///TODO demande d'emprunt
+$app->get('/demandemp', function () use ($app){
+    return $app->redirect('./livre?id='.$_GET['idLivre'].'&statut=envoye');
 });
 
 $app->get('/mentionlegale', function () use ($app){
@@ -167,7 +171,8 @@ $app->get('/catalogue_genre', function () use ($app){
 });
 
 $app->get('/recherche', function () use ($app){
-    return $app->redirect('./test');
+    //TODO recherche par titre/auteur/...
+    return $app->redirect('./ajoutLivre');
     //return $app['twig']->render('recherche.html.twig', array());
 });
 
@@ -195,6 +200,7 @@ $app->match('/mesCommentaires', function () use ($app){
 });
 
 $app->get('/profil', function () use ($app){
+    //TODO changer mot de passe
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
@@ -285,6 +291,7 @@ $app->match('/log-server', function(Request $request) use ($app){
 });
 
 $app->match('/inscription', function (Request $request) use ($app){
+    //TODO Mot de passe oublié
     if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar']) ){
         return $app->redirect('./log-server?erreur=mdplog');
     }
@@ -337,7 +344,7 @@ $app->get('/livre', function () use ($app){
 }); 
 
 /*Début pour ajouter un livre*/
-$app->get('/ajoutLivre', function (Request $request) use ($app){
+$app->match('/ajoutLivre', function (Request $request) use ($app){
     $li_title = $request->get('li_title');
     $li_auteur = $request->get('li_auteur');
     $li_date_ajout = $request->get('li_date_ajout');
@@ -363,8 +370,6 @@ $app->get('/ajoutLivre', function (Request $request) use ($app){
 
 /*DEBUT ADMINISTRATION*/
 $app->get('/admin', function () use ($app){
-    //TODO condition pour que les non admins ne puisse y acceder mais je pense qu'il est préférable de le faire dans le render en mode
-    //Si t'es invité, connecte toi, si t'es membre not allowed et si t'es admin fais toi plaiz
     return $app['twig']->render('admin/accueil.html.twig', array());
 });
 $app->get('/listeLivres', function () use ($app){
