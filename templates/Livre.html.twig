@@ -34,14 +34,36 @@
 </div>
 
 <script>
+
     function affichEmp(){
-        document.getElementById('containerEmprunt').innerHTML = '<form action="./demandemp">'
-        +'<input type="hidden" name="idLivre" value="{{livre.id}}">'
-        +'<input type="date" value="maDate();">'
+        varA = new Date(Date.now());
+              varB = ''+varA.getMonth();              
+              varB.length == 2 ? varB = varB : varB = '0'+ varB;
+              varC = ''+varA.getDate();
+              varC.length == 2 ? varC = varC : varC = '0'+ varC;
+              varA = varA.getFullYear() + '-' + varB + '-' + varC;
+        document.getElementById('containerEmprunt').innerHTML = '<form action="./demandemp" onsubmit="maDate()">'
+        +'<input type="hidden" name="idLivre" value="{{livre.id}}" required>'
+        +'<input type="hidden" id=dFin name="dateFin" required>'
+        +'A partir du: <input type="date" id="dateDebut" name="dateDebut" value="'+varA+'" required>'
         +'<input type="submit" value="Demande d\'emprunt">'
     +'</form>'
     }
+
+    function maDate(){
+        document.getElementById('dateDebut');
+        varD = new Date(new Date().getTime() + 14* 24 * 60 * 60 * 1000);
+              varE = ''+varD.getMonth();              
+              varE.length == 2 ? varE = varE : varE = '0'+ varE;
+              varF = ''+varD.getDate();
+              varF.length == 2 ? varF = varF : varF = '0'+ varF;
+              varD = varD.getFullYear() + '-' + varE + '-' + varF;
+              document.getElementById('dFin').value = varD
+
+    }
 </script>
+
+
 
 <div class="container">
     <div class="row">

@@ -127,8 +127,23 @@ $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
 
+/*$livre = new Livre();
+    $livre->setLiTitle($li_title);  //Entity / Classe Livre
+    $livre->setLiAuteur($li_auteur);
+    $livre->setLiDesc($li_date_ajout);
+    $livre->setLiIsbn($li_isbn);
+    $livre->setLiPages($li_pages);
+    $livre->setLangue($langue);
+    $livre->setLiDesc($li_desc);
+    $em->persist($Livre);
+    $em->flush();*/
+
 ///TODO demande d'emprunt
 $app->get('/demandemp', function () use ($app){
+    //$repoEmprunt = $app['em']->getRepository(Emprunt::class);
+    /*$emprunt = new Emprunt();
+    $emprunt->setDateDebut($_GET['dateDebut'])*/
+    var_dump($_GET['dateFin']);
     return $app->redirect('./livre?id='.$_GET['idLivre'].'&statut=envoye');
 });
 
