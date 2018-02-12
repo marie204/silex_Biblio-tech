@@ -704,6 +704,10 @@ footer .nav {
     transition: all 0.3s ease;
 }
 
+.lookatmyoverflowx{
+    overflow-x: none;
+}
+
 .trainerBox a:hover {
     opacity: 0.8;
     -webkit-transition: all 0.3s ease;

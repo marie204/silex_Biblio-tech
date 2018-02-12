@@ -1,1 +1,28 @@
 {% extends "layout.html.twig" %}
+
+
+{% block content %}
+	{% for item in arrayEmprunt %}
+		<table class="table" style="border: solid white; ">
+			<tr>
+				<td>Titre du livre emprunté</td>
+				<td>{{item.5}}</td>
+			</tr>
+			<tr>
+				<td>date</td>
+				<td>du {{item.1}} au {{item.2}}</td>
+			</tr>
+			<tr>
+				<td>validé</td>
+				<td>{{item.4}}</td>
+			</tr>
+			<tr>
+				<td>Statut</td>
+				<td>{{item.3}}</td>
+			</tr>
+			
+		</table>
+		<br>
+	{% endfor %}
+	
+{% endblock %}

@@ -1,6 +1,9 @@
-{% extends "layout.html.twig" %}
-
+{% extends "alayout.html.twig" %}
 {% block content %}
+{% if myStatut == 'Admin' %}
+Bienvenue sur le panneau d'administration de bibliotech, {{loggin}}! 
+{% endif %}
+{% if myStatut == 'Invite' %}
 <div class="global indent">
     <!--content-->
         <section class="formBox">
@@ -9,26 +12,22 @@
                     <article class="col-lg-12 col-md-12 col-sm-12">
                         <h3>Connectez-vous</h3>
 						<div id='monErreur'></div>
-                        <form id="contact-form" action="./log-server" method="post">
-                            <div class="success-message">envoyé avec succès.</div>
+                        <form id="contact-form" action="./log-admin" method="post">
                             <div class="holder">
                                 <div class="form-div-1 clearfix">
                                     <label class="name">
-                                        <input placeholder="Nom d'utilisateur" class='text' id='log1' type="text" name="log" required>
-                                        <span class="empty-message">*Ce champ est requis.</span>
+                                        <input placeholder="Nom d'utilisateur" class='text' id='log1' type="text" name="log">                                        
                                     </label>
                                 </div>
                             </div>
                                 <div class="form-div-2 clearfix">
                                     <label class="email">
-                                        <input placeholder="Mot de passe" class='text' id='mp1' type="password" name="mdp" required>
-                                        <span class="empty-message">*Ce champ est requis.</span>
+                                        <input placeholder="Mot de passe" class='text' id='mp1' type="password" name="mdp">                                        
                                     </label>
                                 </div>
                             </div>
                             <div class="btns">
 								<input class="btn-default btn1" type="submit" name='login0' value='connexion'>
-								<input class="btn-default btn1" type="submit" name='login0' value='inscription'>
 								<p></p>
                             </div>  
                         </form>
@@ -51,4 +50,9 @@
 		$('#mp1').css('borderColor', 'red');
 	}
 </script>
+{% endif %}
+{% if myStatut == 'Membre' %}
+<div>C'est moche mais vous n'êtes pas autorisé par ici. </div>
+
+{% endif %}
 {% endblock %}

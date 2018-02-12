@@ -14,8 +14,7 @@
                 <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
                     <div class="thumb-pad maxheight1"><div class="box_inner">
                         <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="{{ livre.image }}" alt=""></a></figure>
+                            <figure><img src="{{ livre.image }}" alt=""></figure>
                             <div class="caption">
                                 <a href="#
 ">by {{ livre.auteur }}</a>
@@ -30,20 +29,89 @@
                 <article> 
     </div>
 </div>
-<div id="container">
-    {% for lastCom in lastComs %}
-    <table class="table">
-        <tr>
-            <td>{{lastCom.utilisateur.pseudo}}</td>
-        </tr>
-        <tr>
-            <td colspan="2">{{lastCom.description}} </td>
-        </tr>
-    </table>
-        
-        
+<div class="container" id='containerEmprunt'>
+    <button onclick="affichEmp();">Faire une demande d'emprunt</button>
+</div>
 
-    {% endfor %}
+<script>
+
+    function affichEmp(){
+        varA = new Date(Date.now());
+              varB = ''+varA.getMonth();              
+              varB.length == 2 ? varB = varB : varB = '0'+ varB;
+              varC = ''+varA.getDate();
+              varC.length == 2 ? varC = varC : varC = '0'+ varC;
+              varA = varA.getFullYear() + '-' + varB + '-' + varC;
+        document.getElementById('containerEmprunt').innerHTML = '<form action="./demandemp" onsubmit="maDate()">'
+        +'<input type="hidden" name="idLivre" value="{{livre.id}}" required>'
+        +'<input type="hidden" id=dFin name="dateFin" required>'
+        +'A partir du: <input type="date" id="dateDebut" name="dateDebut" value="'+varA+'" required>'
+        +'<input type="submit" value="Demande d\'emprunt">'
+    +'</form>'
+    }
+
+    function maDate(){
+        dateDebut = document.getElementById('dateDebut').value;
+        dateDebut = dateDebut.split('-');
+        //console.log(dateDebut);
+        for(i in dateDebut){
+            dateDebut[i] = parseInt(dateDebut[i]);
+        }
+        if (dateDebut[1]%2 == 0) {
+            dateDebut[1] == 2 ? calculDay = 28 : calculDay = 30;
+        }else{
+            calculDay = 31;
+        }
+        if ((dateDebut[2]+14)<=calculDay) {
+            day = dateDebut[2]+14;
+            month = dateDebut[1];
+            years = dateDebut[0];
+        }else{
+            day = 14-(calculDay-dateDebut[2]);
+            if(dateDebut[1] == 12){
+                month = +1;
+                years = dateDebut[0]+1;
+            }else{
+                month = dateDebut[1] + 1 ;
+                years = dateDebut[0];
+            }  
+        }
+        if (dateDebut[1] == '02'&&dateDebut[2] >= 15&&(dateDebut[0]%4 == 0&&dateDebut[0]%100 !== 0)|| (dateDebut[0]%400 == 0)) {
+                if (day==1){day = 29;month--}else{ day--;}
+        }
+        day = ''+day;
+        month = ''+month;
+        day.length == 2 ? day = day: day = '0'+day;
+        console.log(day.length);
+        month.length == 2 ? month = month: month = '0'+month;
+        //console.log( day+'/'+month+'/'+years );
+        document.getElementById('dFin').value = years + '-'+month + '-'+day;
+    }
+</script>
+
+
+
+<div class="container">
+    <div class="row">
+    <h3>Derniers avis postés sur {{livre.title}}</h3>
+        {% for comment in lastComs %}
+        <article class="col-lg-3 col-md-6 col-sm-6">
+            <div class="thumb-pad1 maxheight">
+                <div class="box_inner">
+                    <div class="thumbnail">
+                        <h2> {{comment.utilisateur.pseudo}} </h2>
+                        <div class="caption">
+                            <p>{{comment.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+
+        
+    </div>
+    <a href="./touslescommentaires?id={{livre.id}}"> voir tous les avis concernants {{livre.title}}</a>
 </div>
 </section>
 </section>

@@ -4,7 +4,7 @@
 {% if envoyer is defined %}{{ envoyer }}{% endif %}
 {% if echec is defined %}{{ echec }}{% endif %}
 </p>
-<form action="./test" method="post" enctype="multipart/form-data" class="col s12">
+<form action="./ajoutLivre" method="post" enctype="multipart/form-data" class="col s12">
   <div class="row">
         <div class="input-field col s12 m6 l6">
             <input placeholder="Recherche par ISBN" name="rechercheisbn" type="text" class="validate" required value="">
@@ -12,7 +12,7 @@
         </div>
     </div>
 </form>
-<form action="./test" method="post" name="frm" id="frm" enctype="multipart/form-data" class="col s12">
+<form action="./ajoutLivre" method="post" name="frm" id="frm" enctype="multipart/form-data" class="col s12">
           <div class="row">
             <div class="input-field col s12 m6 l6">
               <input placeholder="ISBN" id="isbn" name="isbn" type="text" class="validate" required value="{% if ISBN is defined %}{{ ISBN }}{% endif %}">
