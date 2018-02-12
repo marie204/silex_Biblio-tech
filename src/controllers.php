@@ -103,6 +103,12 @@ $app->get('/deconnextion', function () use ($app){
 });
 //TODO envoyerCommentaire
 $app->match('/envoyerCommentaire', function () use ($app){
+    if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])) {
+        //return $app->
+    }
+    $com = new Commentaire();
+    $com->setDate($_GET);
+    $com->setUtilisateur($_GET['pseudoUser']);
     return $app->redirect('./accueil');
 });
 
@@ -139,6 +145,7 @@ $app->get('/about', function () use ($app){
     $em->flush();*/
 
 ///TODO demande d'emprunt
+    //TODO IMPORTANT! Refaire la fonction javascript d'ajout des dates!
 $app->get('/demandemp', function () use ($app){
     //$repoEmprunt = $app['em']->getRepository(Emprunt::class);
     /*$emprunt = new Emprunt();

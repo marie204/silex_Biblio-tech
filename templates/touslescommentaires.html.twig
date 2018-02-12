@@ -36,15 +36,9 @@
 	<article class="col-lg-6 col-md-12 col-sm-12">
             <div class="thumb-pad1 maxheight">
                 <div class="box_inner">
-                    <div class="thumbnail">
-                    	<form action="./envoyerCommentaire">
-                    		<input type="hidden" name="id" value="{{idLivre}}">
-                        
-                        <div class="caption">
-                        	<textarea name="" id=""  rows="10" style="width:100%;overflow:scroll"></textarea>
-                            <!-- <input type="textarea" cols="250" rows="250" style="width:100%;overflow:scroll" name="com"> -->
-                            <input type="submit">
-                         </form>
+                    <div class="thumbnail" id='ajoutCommentaire'>
+                    	<button onclick="ajoutAjoutCom();">Donne ton avis!</button>
+                    	
                         </div>
                     </div>
                 </div>
@@ -53,6 +47,22 @@
        {% endif %}
 	</div>
 </div>
-
+<script>
+function ajoutAjoutCom(){
+	varB = ''+varA.getMonth();              
+              varB.length == 2 ? varB = varB : varB = '0'+ varB;
+              varC = ''+varA.getDate();
+              varC.length == 2 ? varC = varC : varC = '0'+ varC;
+              varA = varA.getFullYear() + '-' + varB + '-' + varC;
+	document.getElementById('ajoutCommentaire').innerHTML = '<form action="./envoyerCommentaire">'
+                    		+'<input type="hidden" name="id" value="{{idLivre}}">'
+                    		+'<input type="hidden" name="dateAjout" value="'+varA+'">'
+                    		+'<input type="hidden" name="pseudoUser" value="{{loggin}}">'                        
+                        	+'<div class="caption">'
+                        	+'<textarea name="areaCom" rows="10" style="width:100%;overflow:scroll"></textarea>'
+                            +'<input type="submit">'
+                         	+'</form>';
+}
+</script>
 
 {% endblock %}

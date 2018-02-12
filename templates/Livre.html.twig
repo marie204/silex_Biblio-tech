@@ -51,15 +51,41 @@
     }
 
     function maDate(){
-        document.getElementById('dateDebut');
-        varD = new Date(new Date().getTime() + 14* 24 * 60 * 60 * 1000);
-              varE = ''+varD.getMonth();              
-              varE.length == 2 ? varE = varE : varE = '0'+ varE;
-              varF = ''+varD.getDate();
-              varF.length == 2 ? varF = varF : varF = '0'+ varF;
-              varD = varD.getFullYear() + '-' + varE + '-' + varF;
-              document.getElementById('dFin').value = varD
-
+        dateDebut = document.getElementById('dateDebut').value;
+        dateDebut = dateDebut.split('-');
+        //console.log(dateDebut);
+        for(i in dateDebut){
+            dateDebut[i] = parseInt(dateDebut[i]);
+        }
+        if (dateDebut[1]%2 == 0) {
+            dateDebut[1] == 2 ? calculDay = 28 : calculDay = 30;
+        }else{
+            calculDay = 31;
+        }
+        if ((dateDebut[2]+14)<=calculDay) {
+            day = dateDebut[2]+14;
+            month = dateDebut[1];
+            years = dateDebut[0];
+        }else{
+            day = 14-(calculDay-dateDebut[2]);
+            if(dateDebut[1] == 12){
+                month = +1;
+                years = dateDebut[0]+1;
+            }else{
+                month = dateDebut[1] + 1 ;
+                years = dateDebut[0];
+            }  
+        }
+        if (dateDebut[1] == '02'&&dateDebut[2] >= 15&&(dateDebut[0]%4 == 0&&dateDebut[0]%100 !== 0)|| (dateDebut[0]%400 == 0)) {
+                if (day==1){day = 29;month--}else{ day--;}
+        }
+        day = ''+day;
+        month = ''+month;
+        day.length == 2 ? day = day: day = '0'+day;
+        console.log(day.length);
+        month.length == 2 ? month = month: month = '0'+month;
+        //console.log( day+'/'+month+'/'+years );
+        document.getElementById('dFin').value = years + '-'+month + '-'+day;
     }
 </script>
 
