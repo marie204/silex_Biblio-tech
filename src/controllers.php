@@ -313,7 +313,7 @@ $app->match('/log-server', function(Request $request) use ($app){
 });
 
 $app->match('/inscription', function (Request $request) use ($app){
-    //TODO Mot de passe oublié
+    //TODO Mot de passe oublié A l'aide d'une question
     if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar']) ){
         return $app->redirect('./log-server?erreur=mdplog');
     }
