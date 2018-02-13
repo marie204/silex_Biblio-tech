@@ -613,6 +613,7 @@ installStatut();
     }
 
     function demandemp($dFin, $idLivre, $dateDebut, $app){
+        //var_dump($idLivre);
         $log = $app['session']->get('user')['login'];
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -621,11 +622,12 @@ installStatut();
         $log2 = $req->fetchAll();
         $userId = $log2[0]['id'];
         $req->closeCursor();
-        $req= $bdd->prepare('SELECT exemplaire.id FROM livre, exemplaire WHERE livre.id = :idLivre ');
+        $req= $bdd->prepare('SELECT * FROM exemplaire WHERE exemplaire.livre_id = :idLivre ');
         $req->execute(array('idLivre'=>$idLivre,));
         $log3 = $req->fetchAll();
         $req->closeCursor();
         $idExemplaire = $log3[0]['id'];
+        var_dump($idExemplaire);
         $req = $bdd->prepare("INSERT INTO `emprunt` (`id`, `utilisateur_id`, `exemplaire_id`, `dateDebut`, `dateFin`, `statut`, `valider`) VALUES (NULL, :userId, :idExemplaire, :dDebut, :dFin, 'Demande', 'En cours');");
         $req->execute(array(
             'userId'=>$userId,
