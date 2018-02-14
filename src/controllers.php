@@ -166,7 +166,7 @@ $app->match('/accueil', function () use ($app){
     $repoCom = $app['em']->getRepository(Commentaire::class);
     $lastComs = $repoCom->findBy(
         array(),
-        array('date' => 'desc'), 
+        array('id' => 'desc'), 
         4, //limite
         0 
     );
