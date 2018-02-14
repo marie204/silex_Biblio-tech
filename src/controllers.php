@@ -104,11 +104,21 @@ $app->get('/deconnextion', function () use ($app){
 //TODO envoyerCommentaire
 $app->match('/envoyerCommentaire', function () use ($app){
     if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])) {
-        //return $app->
+        //addComment($_GET['areaCom'], $_GET['id'], $_GET['pseudoUser']);
+        return $app->redirect('./touslescommentaires?id='.$_GET['id']);
     }
+
+    $repoAuth = $app['em']->getRepository(Utilisateur::class);
+    $repoBook = $app['em']->getRepository(Livre::class);
+    $author = $repoAuth->find($_GET['pseudoUser']);
+    $book = $repoBook->find($_GET['id']);
     $com = new Commentaire();
-    $com->setDate($_GET);
-    $com->setUtilisateur($_GET['pseudoUser']);
+    $com->setDate(new \DateTime($_GET['dateAjout']));
+    $com->setDescription($_GET['areaCom']);
+    $com->setUtilisateur($author);
+    $com->setLivre($book);
+    $app['em']->persist($com);
+    $app['em']->flush();
     return $app->redirect('./accueil');
 });
 
