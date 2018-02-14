@@ -152,6 +152,21 @@ $app->get('/demandemp', function () use ($app){
     $dFin = htmlspecialchars($_GET['dFin']);
     $idLivre = htmlspecialchars($_GET['idLivre']);
     $dateDebut = htmlspecialchars($_GET['dateDebut']);
+
+    $emp = new Emprunt();
+    $emp->setDateDebut(new DateTime($dateDebut));
+    $emp->setDateFin(new DateTime($dFin));
+    $emp->setStatut('Demande');
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $logUser = $app['session']->get('user')['login'];
+    $user = $repoUser->findOneBy(array('pseudo' => $logUser));
+    $emp->setUtilisateur($user);
+    $repoBook = $app['em']->getRepository(Livre::class);
+    $livre = $repoBook->find($_GET['idLivre']);
+    $emp->setLivre($livre);
+    $emp->setValider('non');
+    $app['em']->persist($emp);
+    $app['em']->flush();
     return $app->redirect('./livre?id='.$_GET['idLivre'].'&statut=envoye');
 });
 
