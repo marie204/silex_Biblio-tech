@@ -101,7 +101,6 @@ $app->get('/deconnextion', function () use ($app){
     fermetureSession($app);
     return $app->redirect('./accueil');
 });
-//TODO envoyerCommentaire
 $app->match('/envoyerCommentaire', function () use ($app){
     if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])) {
         //addComment($_GET['areaCom'], $_GET['id'], $_GET['pseudoUser']);
