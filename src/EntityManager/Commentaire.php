@@ -39,7 +39,7 @@ class Commentaire {
      * description commentaire
      *
      * @var string
-     * @Column(name="description", type="string", length=255)
+     * @Column(name="description", type="text")
      */
     private $description;
 
