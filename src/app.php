@@ -27,7 +27,7 @@ $app['twig'] = $app->extend('twig', function ($twig, $app) {
 }
 else{
 	$app['global.loggin'] = '';
-	$app['global.myStatut']= 'invite';
+	$app['global.myStatut']= 'Invite';
 }
 	$twig->addGlobal('loggin', $app['global.loggin']);
 	$twig->addGlobal('myStatut', $app['global.myStatut']);
