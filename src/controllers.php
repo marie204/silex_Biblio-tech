@@ -110,13 +110,15 @@ $app->match('/envoyerCommentaire', function () use ($app){
 
     $repoAuth = $app['em']->getRepository(Utilisateur::class);
     $repoBook = $app['em']->getRepository(Livre::class);
-    $author = $repoAuth->find($_GET['pseudoUser']);
+    $author = $repoAuth->findOneBy(array('pseudo' => $_GET['pseudoUser']));
     $book = $repoBook->find($_GET['id']);
     $com = new Commentaire();
     $com->setDate(new \DateTime($_GET['dateAjout']));
     $com->setDescription($_GET['areaCom']);
     $com->setUtilisateur($author);
     $com->setLivre($book);
+    //var_dump($com);
+    //var_dump($author);
     $app['em']->persist($com);
     $app['em']->flush();
     return $app->redirect('./accueil');
