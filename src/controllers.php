@@ -144,7 +144,6 @@ $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
 
-///TODO demande d'emprunt créer fonction!!!
 $app->get('/demandemp', function () use ($app){
     if (!isset($_GET['dFin']) or empty($_GET['dFin']) or !isset($_GET['idLivre']) or empty($_GET['idLivre'])or !isset($_GET['dateDebut']) or empty($_GET['dateDebut'])){
         return $app->redirect('./livre?id='.$_GET['idLivre'].'&statut=erreur');
@@ -330,12 +329,14 @@ $app->match('/log-server', function(Request $request) use ($app){
 
 $app->match('/inscription', function (Request $request) use ($app){
     //TODO Mot de passe oublié A l'aide d'une question
-    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar']) ){
+    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar'])|| !isset($_POST['question']) || empty($_POST['question'])|| !isset($_POST['reponse']) || empty($_POST['reponse']) ){
         return $app->redirect('./log-server?erreur=mdplog');
     }
-    $mdp2 = encryptMdp($_POST['mdp2']);
+    $passHachay = password_hash($_POST['mdp2'], PASSWORD_DEFAULT);
     $log2 = htmlspecialchars($_POST['log2']);
     $mail = htmlspecialchars($_POST['mailMar']);
+    $question = htmlspecialchars($_POST['question']);
+    $reponse = htmlspecialchars($_POST['reponse']);
     $verifMail = verifMail($mail);
     if (!$verifMail) {
         return $app->redirect('./log-server?erreur=mail');
@@ -344,7 +345,21 @@ $app->match('/inscription', function (Request $request) use ($app){
     if (!$verifPesudoInscrit) {
         return $app->redirect('./log-server?erreur=name');
     }
-    inscriptionBDD($log2, $mdp2, $mail);
+    var_dump($question);
+    var_dump($reponse);
+    var_dump($_POST['question']);
+    var_dump($_POST['reponse']);
+    $repoStat = $app['em']->getRepository(Livre::class);
+    $statUser = $repoStat->find('2');
+    $user = new Utilisateur();
+    $user->setPseudo($log2);
+    $user->setStatut($statUser);
+    $user->setPassword($passHachay);
+    $user->setEmail($mail);
+    $user->setQuestion($question);
+    $user->setReponse($reponse);
+    $app['em']->persist($user);
+    $app['em']->flush();
     return $app->redirect('./accueil');
 });
 $app->get('/apropos', function () use ($app){
@@ -361,7 +376,6 @@ $app->get('/nouveautes', function () use ($app){
 });
 
 $app->get('/livre', function () use ($app){
-    //TODO ajouter demande d'emprunts
     //TODO ajouter le statut des livres (emprunté ou non)
     $repository = $app['em']->getRepository(Livre::class);
     $repoCom = $app['em']->getRepository(Commentaire::class);
@@ -486,10 +500,7 @@ installStatut();
         return $mdpCompare;
     };
 
-    function encryptMdp($mdp){
-        $passHachay = password_hash($mdp, PASSWORD_DEFAULT);
-        return $passHachay;
-    };
+    
 
     function verifBDD($log){
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
