@@ -307,6 +307,12 @@ $app->match('/log-server', function(Request $request) use ($app){
         'login' => $_POST['login'] ?? null,
         'erreur' => $_GET['erreur'] ?? null,
         ));
+    }else if($_POST['login0'] == 'mot de passe oublié'){
+        return $app['twig']->render('forgotmdp.html.twig', array(
+        'login' => $_POST['log'] ??null,
+        'login' => $_POST['login'] ?? null,
+        'erreur' => $_GET['erreur'] ?? null,
+        ));
     }else{
         if (!isset($_POST['log'])||empty($_POST['log'])) {
             return $app->redirect('./login?erreur=noLogin');
