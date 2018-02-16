@@ -3,7 +3,6 @@
         <div class="row">
             <article class="col-lg-12 col-md-12 col-sm-12">
                 <span class="openbtn" onclick="openNav()">&#9776;</span>
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <h1 class="navbar-brand navbar-brand_"><a href="./accueil"><img src="../img/logo.png" alt="Logo du site biblio-tech"></a></h1>
                 <div class="menuBox clearfix">
                     <nav class="navbar" id="navbar" role="navigation">
@@ -20,21 +19,51 @@
                                 </li>
                             </ul>
                         </li>
-                            <li><a href="./nouveautes">Nouveautés</a></li>
-                            <li><a href="./about">A propos </a>
-                        </li>
-                            <li><a href="./contact">Contact</a></li>
-                            {% if loggin  == '' %}
-                            <li><a href="./login">Connexion</a></li>
-                            {% else %}
-                            <li><a href="./profil">{{loggin}}</a></li>
-                            <li><a href="./deconnextion">Deconnexion</a></li>
-                            {% endif %}
-                            
-                        </ul>
-                    </nav>
-                </div>
-            </article>
+                        <li><a href="./nouveautes">Nouveautés</a></li>
+                        <li><a href="./about">A propos </a>
+                    </li>
+                    <li><a href="./contact">Contact</a></li>
+                    {% if loggin  == '' %}
+                        <li><a href="./login">Connexion</a></li>
+                    {% else %}
+                        <li><a href="./profil">{{loggin}}</a></li>
+                        <li><a href="./deconnextion">Deconnexion</a></li>
+                    {% endif %}
+                    
+                </ul>
+            </nav>
         </div>
-    </div>
+    </article>
+</div>
+<!-- MENU MOBILES -->
+<nav id="mySidenav" class="sidenav">
+    <ul id="ulPrem">
+        <li class="logoMenuSwipe"><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+        <li><a href="./accueil">Accueil</a></li>
+        <li class="drop-mobiles-1"><a href="javascript:sous_menu1()">Catalogue<i id="open1" class="material-icons caretMobiles">add</i></a>
+            <ul id="mobiles-menu-1">
+                <li class="sl">
+                    <ul class="sous">
+                        <li><a href="./catalogue_a_z">De A à Z</a></li>
+                        <!-- <li><a href="./catalogue_genre">Par genre</a></li> -->
+                        <li><a href="./recherche">Recherche avancée</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="./nouveautes">Nouveautés</a></li>
+        <li><a href="./about">A propos </a>
+    </li>
+    <li><a href="./contact">Contact</a></li>
+    {% if loggin  == '' %}
+        <li><a href="./login">Connexion</a></li>
+    {% else %}
+        <li><a href="./profil">{{loggin}}</a></li>
+        <li><a href="./deconnextion">Deconnexion</a></li>
+    {% endif %}
+</ul>
+</li>
+</ul>
+</nav>
+</div>
 </header>

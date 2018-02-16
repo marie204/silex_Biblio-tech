@@ -63,14 +63,7 @@ class Emprunt {
      *
      * @ManyToOne(targetEntity="EntityManager\Exemplaire", inversedBy="emprunt")
      */
-    private $exemplaire = null;
-
-    /**
-     * livre linked to this emprunt
-     *
-     * @ManyToOne(targetEntity="EntityManager\Livre", inversedBy="emprunt")
-     */
-    private $livre;
+    private $exemplaire;
 
     /**
      * Valider emprunt
@@ -186,24 +179,6 @@ class Emprunt {
      */
     public function getExemplaire() {
         return $this->exemplaire;
-    }
-
-    /**
-     * Set Livre
-     *
-     * @param \EntityManager\Livre $livre
-     */
-    public function setLivre($livre) {
-        $this->livre = $livre;
-        return $this;
-    }
-
-    /**
-     * Get Livre
-     * @return \EntityManager\Livre
-     */
-    public function getLivre() {
-        return $this->livre;
     }
 
     /**
