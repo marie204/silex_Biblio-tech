@@ -13,6 +13,7 @@ use EntityManager\Exemplaire;
 use EntityManager\Commentaire;
 use EntityManager\Emprunt;
 use EntityManager\Utilisateur;
+use EntityManager\Statut;
 
 $app->get('/', function () use ($app) {
     if (strpos($_SERVER['PHP_SELF'], 'index_dev.php/')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
@@ -349,11 +350,11 @@ $app->match('/inscription', function (Request $request) use ($app){
     var_dump($reponse);
     var_dump($_POST['question']);
     var_dump($_POST['reponse']);
-    $repoStat = $app['em']->getRepository(Livre::class);
+    $repoStat = $app['em']->getRepository(Statut::class);
     $statUser = $repoStat->find('2');
     $user = new Utilisateur();
     $user->setPseudo($log2);
-    $user->setStatut($statUser);
+    //$user->setStatut($statUser);
     $user->setPassword($passHachay);
     $user->setEmail($mail);
     $user->setQuestion($question);
