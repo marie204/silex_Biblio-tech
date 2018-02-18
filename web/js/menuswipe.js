@@ -1,23 +1,25 @@
-function openNav() {
-    document.getElementById("mySidenav").style.width = "80%";
-}
+/*Ouverture menu swipe*/
+$(function(){
+    $("#openbtn").click(function(){
+    $("#mySidenav").css("width","80%");
+});
+});
+$(function(){
+    $("#closebtn").click(function(){
+    $("#mySidenav").css("width","0");
+});
+});
 
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-}
-
-/*SOUS MENU*/
-    function sous_menu1() {
-        sous_menu = document.getElementById('mobiles-menu-1');
-        btn_sous_menu = document.getElementById('open1');
-
-        if (sous_menu.style.display == 'none' ||  sous_menu.style.display == '') {
-            sous_menu.style.display = 'block';
-            btn_sous_menu.innerHTML = "clear";
-            }
-        else {
-            sous_menu.style.display = 'none';
-            btn_sous_menu.innerHTML = "add";
-            }
+/*Ouverture sous menu*/
+$(function(){
+    $("#open1").click(function ()
+        {
+        if($('#mobiles-menu-1').css('display')=='none') {
+            $("#open1").html("clear");
         }
-        btn_sous_menu.addEventListener("click", sous_menu1);
+        else {
+            $("#open1").html("add");
+        }   
+        $( "#mobiles-menu-1" ).slideToggle(250);
+    });
+});

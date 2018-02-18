@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <article class="col-lg-12 col-md-12 col-sm-12">
-                <span class="openbtn" onclick="openNav()">&#9776;</span>
+                <span id="openbtn" class="openbtn">&#9776;</span>
                 <h1 class="navbar-brand navbar-brand_"><a href="./accueil"><img src="../img/logo.png" alt="Logo du site biblio-tech"></a></h1>
                 <div class="menuBox clearfix">
                     <nav class="navbar" id="navbar" role="navigation">
@@ -38,9 +38,9 @@
 <!-- MENU MOBILES -->
 <nav id="mySidenav" class="sidenav">
     <ul id="ulPrem">
-        <li class="logoMenuSwipe"><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+        <li class="logoMenuSwipe"><a href="javascript:void(0)" id="closebtn" class="closebtn">&times;</a></li>
         <li><a href="./accueil">Accueil</a></li>
-        <li class="drop-mobiles-1"><a href="javascript:sous_menu1()">Catalogue<i id="open1" class="material-icons caretMobiles">add</i></a>
+        <li class="drop-mobiles-1"><a href="#">Catalogue<i id="open1" class="material-icons caretMobiles">add</i></a>
             <ul id="mobiles-menu-1">
                 <li class="sl">
                     <ul class="sous">
