@@ -1067,7 +1067,7 @@ footer .nav {
     transition: all 0.25s ease;
 }
 
-/*-----------------------------------------------Formualaire de contact--------------------------------------------*/
+/*---------------------------------------------------------------Formualaire de contact-----------------------------------------------*/
 
 /*-----Contact map-----*/
 
@@ -1131,7 +1131,7 @@ footer .nav {
 #contact-form .holder {
     overflow: hidden;
 }
-/*Inputs frm*/
+
 .form-div-1,
 .form-div-2,
 .form-div-3 {
@@ -1148,24 +1148,26 @@ footer .nav {
     display: block;
 }
 
-.form-control {
-    float: left;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    height: 41px;
-    margin: 0;
+#contact-form ._placeholder {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     padding: 10px 14px 10px 14px;
-    border: 1px solid #cecece;
     border-radius: 0;
-    font: 14px 'Arial',"Helvetica Neue",Helvetica,sans-serif;
-    line-height: 18px;
-    outline: none;
-    color: #bab9b9;
-    background: #ffffff;
+    cursor: text;
+}
+
+#contact-form ._placeholder.focused {
+    opacity: 0;
     box-shadow: none;
-    resize: none;                
+    filter: alpha(opacity=0);
+}
+
+#contact-form ._placeholder.hidden {
+    display: none;
 }
 
 #contact-form input,
@@ -1193,6 +1195,66 @@ footer .nav {
     height: 201px;
     margin-bottom: 35px;
 }
+
+#contact-form .error-message,
+#contact-form .empty-message {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    height: 0;
+    overflow: hidden;
+    font: 10px 'Arial';
+    color: #bab9b9;
+    -webkit-transition: 0.3s ease-in height;
+    transition: 0.3s ease-in height;
+}
+
+#contact-form .invalid .error-message,
+#contact-form .empty .empty-message {
+    height: 20px;
+}
+
+#contact-form .success-message {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 0;
+    padding: 0;
+    border-radius: 0;
+    overflow: hidden;
+    text-align: center;
+    line-height: 48px;
+    background: #fff;
+    box-shadow: none;
+    -webkit-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+}
+
+#contact-form.success .success-message {
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 41px;
+    margin: 0;
+    padding: 10px 14px 10px 14px;
+    border: 1px solid #cecece;
+    border-radius: 0;
+    font: 14px 'Arial',"Helvetica Neue",Helvetica,sans-serif;
+    line-height: 18px;
+    outline: none;
+    color: #bab9b9;
+    background: #ffffff;
+    box-shadow: none;
+    -webkit-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+    resize: none;
+}
+
 .mail {
     text-decoration: underline;
     font-size: 14px;
