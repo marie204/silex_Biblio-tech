@@ -222,7 +222,11 @@ $app->match('/mesemprunts', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
-    $arrayEmprunt = recupAllEmprunt($app);
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $repoEmp = $app['em']->getRepository(Emprunt::class);
+    $userCo = $repoUser->findOneBy(array('pseudo'=>$app['session']->get('user')['login']));
+    $arrayEmprunt = $repoEmp->findBy(array('utilisateur' => $userCo),array('id' => 'DESC'));
+    //$arrayEmprunt = recupAllEmprunt($app);
     return $app['twig']->render('mesemprunts.html.twig', array(
         'arrayEmprunt'=> $arrayEmprunt,
     ));
