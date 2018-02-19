@@ -242,18 +242,17 @@ $app->get('/profil', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
+    $repoEmp = $app['em']->getRepository(Emprunt::class);
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $userCo = $repoUser->findOneBy(array('pseudo'=>$app['session']->get('user')['login']));
+    $lastEmprunt = $repoEmp->findOneBy(array('utilisateur' => $userCo),array('id' => 'DESC'));
     $lastCom = recupLastCom($app);
-    $lastEmprunt = recupLastEmprunt($app);
+    //$lastEmprunt = recupLastEmprunt($app);
     return $app['twig']->render('profil.html.twig', array(
         'lastComId'=>$lastCom[0] ?? null,
         'lastComDate'=>$lastCom[1] ?? null,
         'lastComDescription'=>$lastCom[2] ?? null,
-        'lastEmpruntId'=>$lastEmprunt[0] ?? null,
-        'lastEmpruntDateDebut'=>$lastEmprunt[1] ?? null,
-        'lastEmpruntDateFin'=>$lastEmprunt[2] ?? null,
-        'lastEmpruntStatut'=>$lastEmprunt[3] ?? null,
-        'lastEmpruntValidation'=>$lastEmprunt[4] ?? null,
-        'lastEmpruntTitre' =>$lastEmprunt[5] ?? null,
+        'lastEmprunt'=>$lastEmprunt,
         ));
 });
 

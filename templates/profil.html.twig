@@ -26,25 +26,25 @@
 		<br><br>
 	</p>
 	<p id="myEmprunt">
-		{% if lastComId is null %}
+		{% if lastEmprunt.id is null %}
 			Commencez dès maintenant à emprunter des livres en vous rendant dans notre catalogue!<br>
 		{% else %}
 			<table class="table">
 				<tr>
 					<td>Titre du livre</td>
-					<td>{{lastEmpruntTitre}}</td>
+					<td>{{lastEmprunt.livre.title}}</td>
 				</tr>
 				<tr>
 					<td>date début</td>
-					<td>{{lastEmpruntDateDebut}}</td>
+					<td>{{lastEmprunt.dateDebut|date('d/m/Y')}}</td>
 				</tr>
 				<tr>
 					<td>date fin</td>
-					<td>{{lastEmpruntDateFin}}</td>
+					<td> {{lastEmprunt.dateFin|date('d/m/Y')}}</td>
 				</tr>
 				<tr>
 					<td>Statut</td>
-					<td>{{lastEmpruntStatut}}</td>
+					<td>{{lastEmprunt.statut}}</td>
 				</tr>
 				
 			</table>
