@@ -97,17 +97,14 @@ h4 {
 .global {
     padding: 0;
 }
-/*FND PAGES*/
+
 .global.indent {
     padding-top: 60px;
     background: #ffffff;
 }
 
-/*/////////////////////////////////////////////////// NAV ////////////////////////////////////////////////////////*/
-/*On cache menuswipe*/
-#mySidenav {
-    display: none;               
-}
+/*-----menu-----*/
+
 .closebtn {
     display: none;
 }
@@ -451,19 +448,6 @@ footer .nav {
     cursor: pointer;
 }
 
-/*/////////////////////////////////////////////////Log server////////////////////////////////////////////////////*/
-.tableLogServer {
-    border:none !important;      
-}
-.tableLogServer td {
-    padding: 10px;                    
-}
-.tableLogServer input {
-    padding: 10px;                    
-}
-.btnLogServer {
-     text-align:right;               
-}
 /*Titre Principal*/
 .popularBox {
     padding-top: 20px;
