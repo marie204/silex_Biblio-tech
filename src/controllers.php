@@ -251,12 +251,12 @@ $app->get('/profil', function () use ($app){
     $userCo = $repoUser->findOneBy(array('pseudo'=>$app['session']->get('user')['login']));
     $lastEmprunt = $repoEmp->findOneBy(array('utilisateur' => $userCo),array('id' => 'DESC'));
     $lastCom = recupLastCom($app);
-    //$lastEmprunt = recupLastEmprunt($app);
     return $app['twig']->render('profil.html.twig', array(
         'lastComId'=>$lastCom[0] ?? null,
         'lastComDate'=>$lastCom[1] ?? null,
         'lastComDescription'=>$lastCom[2] ?? null,
         'lastEmprunt'=>$lastEmprunt,
+        'userCo'=>$userCo,
         ));
 });
 
@@ -338,7 +338,6 @@ $app->match('/log-server', function(Request $request) use ($app){
 });
 
 $app->match('/inscription', function (Request $request) use ($app){
-    //TODO Mot de passe oublié A l'aide d'une question
     if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar'])|| !isset($_POST['question']) || empty($_POST['question'])|| !isset($_POST['reponse']) || empty($_POST['reponse']) ){
         return $app->redirect('./log-server?erreur=mdplog');
     }

@@ -1,11 +1,29 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-	<p>
+	
+
+{% if loggin == userCo.pseudo %}
+<p>
+
 	Bienvenue sur votre profil, {{loggin}}! <br>
 	<br>
 	Vous êtes actuellement un {{myStatut}}. <br> 
-	</p>
+	<div id='changementMDP'>
+	<button onclick="changementMDP();">Changer mon mot de passe</button></div>
+</p>
+    
+    <script>
+    function changementMDP(){
+    	document.getElementById('changementMDP').innerHTML = '<form action="./changementMDP"> <input type="text" name="ancienMDP"> <input type="text" name="newMDP"> <input type="text" name="newMDPconfirm"> <input type="submit"></form>';
+
+    }
+
+    </script>
+{% else %}
+	Bienvenue sur le profil de {{userCo.pseudo}}
+{% endif %}
+
 
 	<p id="myComments">
 	{% if lastComId is null %}
