@@ -260,6 +260,30 @@ $app->get('/profil', function () use ($app){
         ));
 });
 
+$app->match('/changementMDP', function (Request $request) use ($app){
+    if (!isset($_GET['newMDP'])||empty($_GET['newMDP'])||!isset($_GET['ancienMDP'])||empty($_GET['ancienMDP'])||!isset($_GET['newMDPconfirm'])||empty($_GET['newMDPconfirm'])) {
+        return $app->redirect('./profil?erreur=warning');        
+    }else if ($_GET['newMDP'] !== $_GET['newMDPconfirm']) {
+        return $app->redirect('./profil?erreur=reconfirmation'); 
+    }else if(strlen($_GET['newMDP']) < 8){
+        return $app->redirect('./profil?erreur=tropCourt');
+    }
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $user = $repoUser->findOneBy(array('pseudo' => $app['session']->get('user')['login']));
+    $verifMdp = true; //compareMdp($app['session']->get('user')['login'], htmlspecialchars($_GET['ancienMDP']));
+        if (!$verifMdp){
+            return $app->redirect('./profil?erreur=mauvaisMDP');
+        }
+    $passHachay = password_hash($_GET['newMDP'], PASSWORD_DEFAULT);
+    $user->setPassword(htmlspecialchars($passHachay));
+    $app['em']->persist($user);
+    $app['em']->flush();
+    return $app->redirect('./profil');
+
+
+
+
+});
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
     //dump($app['session']->get('user') );
