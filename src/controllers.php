@@ -13,6 +13,7 @@ use EntityManager\Exemplaire;
 use EntityManager\Commentaire;
 use EntityManager\Emprunt;
 use EntityManager\Utilisateur;
+use EntityManager\Statut;
 
 $app->get('/', function () use ($app) {
     if (strpos($_SERVER['PHP_SELF'], 'index_dev.php/')||strpos($_SERVER['PHP_SELF'], 'index.php/')) {
@@ -101,14 +102,25 @@ $app->get('/deconnextion', function () use ($app){
     fermetureSession($app);
     return $app->redirect('./accueil');
 });
-//TODO envoyerCommentaire
 $app->match('/envoyerCommentaire', function () use ($app){
     if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])) {
-        //return $app->
+        //addComment($_GET['areaCom'], $_GET['id'], $_GET['pseudoUser']);
+        return $app->redirect('./touslescommentaires?id='.$_GET['id']);
     }
+
+    $repoAuth = $app['em']->getRepository(Utilisateur::class);
+    $repoBook = $app['em']->getRepository(Livre::class);
+    $author = $repoAuth->findOneBy(array('pseudo' => $_GET['pseudoUser']));
+    $book = $repoBook->find($_GET['id']);
     $com = new Commentaire();
-    $com->setDate($_GET);
-    $com->setUtilisateur($_GET['pseudoUser']);
+    $com->setDate(new \DateTime($_GET['dateAjout']));
+    $com->setDescription($_GET['areaCom']);
+    $com->setUtilisateur($author);
+    $com->setLivre($book);
+    //var_dump($com);
+    //var_dump($author);
+    $app['em']->persist($com);
+    $app['em']->flush();
     return $app->redirect('./accueil');
 });
 
@@ -133,24 +145,28 @@ $app->get('/about', function () use ($app){
     return $app['twig']->render('about.html.twig', array());
 });
 
-/*$livre = new Livre();
-    $livre->setLiTitle($li_title);  //Entity / Classe Livre
-    $livre->setLiAuteur($li_auteur);
-    $livre->setLiDesc($li_date_ajout);
-    $livre->setLiIsbn($li_isbn);
-    $livre->setLiPages($li_pages);
-    $livre->setLangue($langue);
-    $livre->setLiDesc($li_desc);
-    $em->persist($Livre);
-    $em->flush();*/
-
-///TODO demande d'emprunt
-    //TODO IMPORTANT! Refaire la fonction javascript d'ajout des dates!
 $app->get('/demandemp', function () use ($app){
-    //$repoEmprunt = $app['em']->getRepository(Emprunt::class);
-    /*$emprunt = new Emprunt();
-    $emprunt->setDateDebut($_GET['dateDebut'])*/
-    var_dump($_GET['dateFin']);
+    if (!isset($_GET['dFin']) or empty($_GET['dFin']) or !isset($_GET['idLivre']) or empty($_GET['idLivre'])or !isset($_GET['dateDebut']) or empty($_GET['dateDebut'])){
+        return $app->redirect('./livre?id='.$_GET['idLivre'].'&statut=erreur');
+    }
+    $dFin = htmlspecialchars($_GET['dFin']);
+    $idLivre = htmlspecialchars($_GET['idLivre']);
+    $dateDebut = htmlspecialchars($_GET['dateDebut']);
+
+    $emp = new Emprunt();
+    $emp->setDateDebut(new DateTime($dateDebut));
+    $emp->setDateFin(new DateTime($dFin));
+    $emp->setStatut('Demande');
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $logUser = $app['session']->get('user')['login'];
+    $user = $repoUser->findOneBy(array('pseudo' => $logUser));
+    $emp->setUtilisateur($user);
+    $repoBook = $app['em']->getRepository(Livre::class);
+    $livre = $repoBook->find($_GET['idLivre']);
+    $emp->setLivre($livre);
+    $emp->setValider('non');
+    $app['em']->persist($emp);
+    $app['em']->flush();
     return $app->redirect('./livre?id='.$_GET['idLivre'].'&statut=envoye');
 });
 
@@ -163,7 +179,7 @@ $app->match('/accueil', function () use ($app){
     $repoCom = $app['em']->getRepository(Commentaire::class);
     $lastComs = $repoCom->findBy(
         array(),
-        array('date' => 'desc'), 
+        array('id' => 'desc'), 
         4, //limite
         0 
     );
@@ -206,7 +222,11 @@ $app->match('/mesemprunts', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
-    $arrayEmprunt = recupAllEmprunt($app);
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $repoEmp = $app['em']->getRepository(Emprunt::class);
+    $userCo = $repoUser->findOneBy(array('pseudo'=>$app['session']->get('user')['login']));
+    $arrayEmprunt = $repoEmp->findBy(array('utilisateur' => $userCo),array('id' => 'DESC'));
+    //$arrayEmprunt = recupAllEmprunt($app);
     return $app['twig']->render('mesemprunts.html.twig', array(
         'arrayEmprunt'=> $arrayEmprunt,
     ));
@@ -226,21 +246,44 @@ $app->get('/profil', function () use ($app){
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }
+    $repoEmp = $app['em']->getRepository(Emprunt::class);
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $userCo = $repoUser->findOneBy(array('pseudo'=>$app['session']->get('user')['login']));
+    $lastEmprunt = $repoEmp->findOneBy(array('utilisateur' => $userCo),array('id' => 'DESC'));
     $lastCom = recupLastCom($app);
-    $lastEmprunt = recupLastEmprunt($app);
     return $app['twig']->render('profil.html.twig', array(
         'lastComId'=>$lastCom[0] ?? null,
         'lastComDate'=>$lastCom[1] ?? null,
         'lastComDescription'=>$lastCom[2] ?? null,
-        'lastEmpruntId'=>$lastEmprunt[0] ?? null,
-        'lastEmpruntDateDebut'=>$lastEmprunt[1] ?? null,
-        'lastEmpruntDateFin'=>$lastEmprunt[2] ?? null,
-        'lastEmpruntStatut'=>$lastEmprunt[3] ?? null,
-        'lastEmpruntValidation'=>$lastEmprunt[4] ?? null,
-        'lastEmpruntTitre' =>$lastEmprunt[5] ?? null,
+        'lastEmprunt'=>$lastEmprunt,
+        'userCo'=>$userCo,
         ));
 });
 
+$app->match('/changementMDP', function (Request $request) use ($app){
+    if (!isset($_GET['newMDP'])||empty($_GET['newMDP'])||!isset($_GET['ancienMDP'])||empty($_GET['ancienMDP'])||!isset($_GET['newMDPconfirm'])||empty($_GET['newMDPconfirm'])) {
+        return $app->redirect('./profil?erreur=warning');        
+    }else if ($_GET['newMDP'] !== $_GET['newMDPconfirm']) {
+        return $app->redirect('./profil?erreur=reconfirmation'); 
+    }else if(strlen($_GET['newMDP']) < 8){
+        return $app->redirect('./profil?erreur=tropCourt');
+    }
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
+    $user = $repoUser->findOneBy(array('pseudo' => $app['session']->get('user')['login']));
+    $verifMdp = true; //compareMdp($app['session']->get('user')['login'], htmlspecialchars($_GET['ancienMDP']));
+        if (!$verifMdp){
+            return $app->redirect('./profil?erreur=mauvaisMDP');
+        }
+    $passHachay = password_hash($_GET['newMDP'], PASSWORD_DEFAULT);
+    $user->setPassword(htmlspecialchars($passHachay));
+    $app['em']->persist($user);
+    $app['em']->flush();
+    return $app->redirect('./profil');
+
+
+
+
+});
 //#loggin
 $app->match('/login', function (Request $request) use ($app){
     //dump($app['session']->get('user') );
@@ -291,6 +334,12 @@ $app->match('/log-server', function(Request $request) use ($app){
         'login' => $_POST['login'] ?? null,
         'erreur' => $_GET['erreur'] ?? null,
         ));
+    }else if($_POST['login0'] == 'mot de passe oublié'){
+        return $app['twig']->render('forgotmdp.html.twig', array(
+        'login' => $_POST['log'] ??null,
+        'login' => $_POST['login'] ?? null,
+        'erreur' => $_GET['erreur'] ?? null,
+        ));
     }else{
         if (!isset($_POST['log'])||empty($_POST['log'])) {
             return $app->redirect('./login?erreur=noLogin');
@@ -313,13 +362,14 @@ $app->match('/log-server', function(Request $request) use ($app){
 });
 
 $app->match('/inscription', function (Request $request) use ($app){
-    //TODO Mot de passe oublié
-    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar']) ){
+    if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar'])|| !isset($_POST['question']) || empty($_POST['question'])|| !isset($_POST['reponse']) || empty($_POST['reponse']) ){
         return $app->redirect('./log-server?erreur=mdplog');
     }
-    $mdp2 = encryptMdp($_POST['mdp2']);
+    $passHachay = password_hash($_POST['mdp2'], PASSWORD_DEFAULT);
     $log2 = htmlspecialchars($_POST['log2']);
     $mail = htmlspecialchars($_POST['mailMar']);
+    $question = htmlspecialchars($_POST['question']);
+    $reponse = htmlspecialchars($_POST['reponse']);
     $verifMail = verifMail($mail);
     if (!$verifMail) {
         return $app->redirect('./log-server?erreur=mail');
@@ -328,7 +378,21 @@ $app->match('/inscription', function (Request $request) use ($app){
     if (!$verifPesudoInscrit) {
         return $app->redirect('./log-server?erreur=name');
     }
-    inscriptionBDD($log2, $mdp2, $mail);
+    var_dump($question);
+    var_dump($reponse);
+    var_dump($_POST['question']);
+    var_dump($_POST['reponse']);
+    $repoStat = $app['em']->getRepository(Statut::class);
+    $statUser = $repoStat->find('2');
+    $user = new Utilisateur();
+    $user->setPseudo($log2);
+    //$user->setStatut($statUser);
+    $user->setPassword($passHachay);
+    $user->setEmail($mail);
+    $user->setQuestion($question);
+    $user->setReponse($reponse);
+    $app['em']->persist($user);
+    $app['em']->flush();
     return $app->redirect('./accueil');
 });
 $app->get('/apropos', function () use ($app){
@@ -345,7 +409,6 @@ $app->get('/nouveautes', function () use ($app){
 });
 
 $app->get('/livre', function () use ($app){
-    //TODO ajouter demande d'emprunts
     //TODO ajouter le statut des livres (emprunté ou non)
     $repository = $app['em']->getRepository(Livre::class);
     $repoCom = $app['em']->getRepository(Commentaire::class);
@@ -470,10 +533,7 @@ installStatut();
         return $mdpCompare;
     };
 
-    function encryptMdp($mdp){
-        $passHachay = password_hash($mdp, PASSWORD_DEFAULT);
-        return $passHachay;
-    };
+    
 
     function verifBDD($log){
         $bdd = new PDO('mysql:host=localhost;dbname=bibliotech;charset=utf8',"root",'', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -620,3 +680,5 @@ installStatut();
                                            'statut' => $statut, 
                                             ));
     }
+
+    

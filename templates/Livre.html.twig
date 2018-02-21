@@ -29,6 +29,11 @@
                 <article> 
     </div>
 </div>
+{% if loggin  == '' %}
+<div class="container" id='containerEmprunt'>
+    Si vous ne l'êtes pas encore, devenez membre afin de pouvoir emprunter ce livre et bien d'autres! 
+</div>
+{% else %}
 <div class="container" id='containerEmprunt'>
     <button onclick="affichEmp();">Faire une demande d'emprunt</button>
 </div>
@@ -44,7 +49,7 @@
               varA = varA.getFullYear() + '-' + varB + '-' + varC;
         document.getElementById('containerEmprunt').innerHTML = '<form action="./demandemp" onsubmit="maDate()">'
         +'<input type="hidden" name="idLivre" value="{{livre.id}}" required>'
-        +'<input type="hidden" id=dFin name="dateFin" required>'
+        +'<input type="hidden" id=dFin name="dFin" required>'
         +'A partir du: <input type="date" id="dateDebut" name="dateDebut" value="'+varA+'" required>'
         +'<input type="submit" value="Demande d\'emprunt">'
     +'</form>'
@@ -89,7 +94,7 @@
     }
 </script>
 
-
+{% endif %}
 
 <div class="container">
     <div class="row">
