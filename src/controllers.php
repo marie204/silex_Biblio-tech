@@ -361,20 +361,6 @@ $app->match('/log-server', function(Request $request) use ($app){
     }
 });
 
-$app->match('/forgot', function (Request $request) use ($app){
-    if( !isset($_GET['pseudo'])||empty($_GET['pseudo']) ) {
-        return '400';
-    }else if($_GET['pseudo']){
-        $pseudo = htmlspecialchars($_GET['pseudo']);
-        $repoUser = $app['em']->getRepository(Utilisateur::class);
-        $verifPseud = $repoUser->findOneBy(array('pseudo' => $pseudo));
-        if ($verifPseud == null) {
-            return '404';
-        }
-        return $verifPseud->getQuestion();
-    }
-});
-
 $app->match('/inscription', function (Request $request) use ($app){
     if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar'])|| !isset($_POST['question']) || empty($_POST['question'])|| !isset($_POST['reponse']) || empty($_POST['reponse']) ){
         return $app->redirect('./log-server?erreur=mdplog');
