@@ -242,7 +242,6 @@ $app->match('/mesCommentaires', function () use ($app){
 });
 
 $app->get('/profil', function () use ($app){
-    //TODO changer mot de passe
     if ($app['session']->get('user') == null) {
         return $app['twig']->render('404.html.twig', array());
     }

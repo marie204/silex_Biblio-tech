@@ -3,11 +3,13 @@
 {% block content %}
 
 <div id="containerErreur"></div>
-<input type="input" id="pseudo">
-<button onclick="recupPseudo();">valider</button>
+<input type="input" id="pseudo" >
+<div>
+<button id='validateur' onclick="recupPseudo();">valider</button>
 
 
 <script>
+//$('#validateur').bind('click',recupPseudo());
 	function recupPseudo(){
 		pseudo = document.getElementById('pseudo').value;
 		requete = new XMLHttpRequest();
@@ -16,15 +18,29 @@
 				var response = requete.responseText;
 				if (response == '400') {
 					$('#containerErreur').html('Le champ est vide');
+					$('#pseudo').css("border", 'solid red');
+					$('#pseudo').bind('click', function(){$('#pseudo').css('border', 'none')});
 				}else if(response == '404'){
 					$('#containerErreur').html('Mauvais pseudo');
+					$('#pseudo').css("border", 'solid red');
+					$('#pseudo').bind('click', function(){$('#pseudo').css('border', 'none')});
+				}else{
+					ajoutQuestion(response);
 				}
-				console.log(response);
 			}
 		};
 		requete.open('GET', './forgot?pseudo='+pseudo);
 		requete.send();
 		
+	}
+
+	function ajoutQuestion(response){
+		$('#pseudo').val('');
+		$('#pseudo').unbind('onclick');
+
+
+
+
 	}
 </script>
 {% endblock %}
