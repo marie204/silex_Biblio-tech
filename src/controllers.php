@@ -121,7 +121,7 @@ $app->match('/envoyerCommentaire', function () use ($app){
     //var_dump($author);
     $app['em']->persist($com);
     $app['em']->flush();
-    return $app->redirect('./accueil');
+    return $app->redirect('./livre?id='.$_GET['id']);
 });
 
 $app->get('/touslescommentaires', function() use ($app){
@@ -361,6 +361,20 @@ $app->match('/log-server', function(Request $request) use ($app){
     }
 });
 
+$app->match('/forgot', function (Request $request) use ($app){
+    if( !isset($_GET['pseudo'])||empty($_GET['pseudo']) ) {
+        return '400';
+    }else if($_GET['pseudo']){
+        $pseudo = htmlspecialchars($_GET['pseudo']);
+        $repoUser = $app['em']->getRepository(Utilisateur::class);
+        $verifPseud = $repoUser->findOneBy(array('pseudo' => $pseudo));
+        if ($verifPseud == null) {
+            return '404';
+        }
+        return $verifPseud->getQuestion();
+    }
+});
+
 $app->match('/inscription', function (Request $request) use ($app){
     if (!isset($_POST['mdp2']) || !isset($_POST['log2']) || empty($_POST['mdp2'])|| empty($_POST['log2']) || !isset($_POST['mailMar']) || empty($_POST['mailMar'])|| !isset($_POST['question']) || empty($_POST['question'])|| !isset($_POST['reponse']) || empty($_POST['reponse']) ){
         return $app->redirect('./log-server?erreur=mdplog');
@@ -416,7 +430,7 @@ $app->get('/livre', function () use ($app){
     $repoEx = $app['em']->getRepository(Exemplaire::class);
     $lastComs = $repoCom->findBy(
         array('livre' => $_GET['id']),
-        array('date' => 'desc'), 
+        array('id' => 'desc'), 
         4, 
         0
     );
