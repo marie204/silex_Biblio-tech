@@ -121,7 +121,7 @@ $app->match('/envoyerCommentaire', function () use ($app){
     //var_dump($author);
     $app['em']->persist($com);
     $app['em']->flush();
-    return $app->redirect('./accueil');
+    return $app->redirect('./livre?id='.$_GET['id']);
 });
 
 $app->get('/touslescommentaires', function() use ($app){
@@ -430,7 +430,7 @@ $app->get('/livre', function () use ($app){
     $repoEx = $app['em']->getRepository(Exemplaire::class);
     $lastComs = $repoCom->findBy(
         array('livre' => $_GET['id']),
-        array('date' => 'desc'), 
+        array('id' => 'desc'), 
         4, 
         0
     );
