@@ -214,9 +214,57 @@ $app->get('/recherche', function () use ($app){
     //return $app['twig']->render('recherche.html.twig', array());
 });
 
-$app->match('/contact', function () use ($app){
+//Formulaire de contact
+//----------------------------------------------------------------------------------------------------
+$app->match('/contact', function () use ($app) {
+
+$erreur = NULL;
+//Si les champs sont bien renseignés
+if (!empty($_POST['nom']) AND !empty($_POST['tel']) AND !empty($_POST['email']) AND !empty($_POST['message'])){
+
+    //Extraction et protection contre les failles XSS
+    $nom = htmlspecialchars($_POST['nom']);
+    $email = htmlspecialchars($_POST['email']);    
+    $tel = htmlspecialchars($_POST['tel']);       
+    $message = htmlspecialchars($_POST['message']);
+    $message = str_replace(array("\r\n","\n"),'<br>',$_POST['message']);
+    //Si l'email est valide
+    if (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)){
+
+        $expediteur   = 'tba.baroux@gmail.com';//Admin
+        $destinataire = $expediteur;
+        $reponse      = $expediteur;
+
+        //Message au format HTML
+        $messageHtml=
+            '<html><body>'.
+            '<h1>bibliotech</h1>'.
+            '<P>Ceci est une copie du courrier envoyé à partir du formulaire de contact de <a href="http://www.bibliotech.fr">http://www.bibliotech.fr</a></P>'.
+            'Nom complet: '.$nom .'<br>'.
+            'E-mail: '.$email .'<br>'.
+            'Téléphone: '.$tel .'<br>'.
+            'Message: '.$message .'<br>'.
+            '</body></html>';
+
+        //Envoi mail
+            mail($destinataire,
+            'BIBLIOTECH ',
+            $messageHtml,
+            "From: $expediteur\r\n".
+            "Reply-To: $reponse\r\n".
+            "Content-Type: text/html; charset=\"UTF-8\"\r\n");
+
+            return $app['twig']->render('mailok.html.twig', array());
+    }
+    //Si pas ok redirection vers page d'erreur
+    else{
+        return $app['twig']->render('erreurmail.html.twig', array());
+    }
+}
     return $app['twig']->render('contact.html.twig', array());
 });
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $app->match('/mesemprunts', function () use ($app){
     if ($app['session']->get('user') == null) {
