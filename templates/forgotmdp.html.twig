@@ -3,10 +3,12 @@
 {% block content %}
 
 <div id="containerErreur"></div>
-<input type="input" id="pseudo" >
-<div>
-<button id='validateur' onclick="recupPseudo();">valider</button>
+<div id="containerPseudo"></div>
 
+<div id='formulaire'>
+<input type="text" id="pseudo" >
+<button id='validateur' onclick="recupPseudo();">valider</button>
+</div>
 
 <script>
 //$('#validateur').bind('click',recupPseudo());
@@ -35,8 +37,7 @@
 	}
 
 	function ajoutQuestion(response){
-		$('#pseudo').val('');
-		$('#pseudo').unbind('onclick');
+		$('#formulaire').html('<input type="hidden" id="pseudo">');
 
 
 
