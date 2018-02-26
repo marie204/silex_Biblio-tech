@@ -45,8 +45,8 @@
                             document.getElementById('containerEmprunt').innerHTML = '<form action="./demandemp" onsubmit="maDate()">'
                                 +'<input type="hidden" name="idLivre" value="{{livre.id}}" required>'
                                 +'<input type="hidden" id=dFin name="dFin" required>'
-                                +'A partir du: <input type="date" id="dateDebut" name="dateDebut" value="'+varA+'" required>'
-                                +'<input type="submit" value="Demande d\'emprunt">'
+                                +'A partir du: <input class="formDdeEmprunt" type="date" id="dateDebut" name="dateDebut" value="'+varA+'" required>'
+                                +'<input class="btn-default btn1" type="submit" value="Demande d\'emprunt">'
                             +'</form>'
                             }
                             function maDate(){
@@ -95,7 +95,7 @@
                                         <div class="thumb-pad1 maxheight">
                                             <div class="box_inner">
                                                 <div class="thumbnail">
-                                                    <h2> {{comment.utilisateur.pseudo}} </h2>
+                                                    <h2 class="h2Comment"> {{comment.utilisateur.pseudo}} </h2>
                                                     <div class="caption">
                                                         <p>{{comment.description}}</p>
                                                     </div>
