@@ -52,6 +52,22 @@ class Utilisateur {
     private $email;
 
     /**
+     * question de l'utilisateur
+     *
+     * @var string
+     * @Column(name="question", type="string", length=255)
+     */
+    private $question;
+
+    /**
+     * reponse de l'utilisateur
+     *
+     * @var string
+     * @Column(name="reponse", type="string", length=255)
+     */
+    private $reponse;
+
+    /**
      * commentaire linked to this utilisateur
      *
      * @OneToMany(targetEntity="EntityManager\Commentaire", mappedBy="utilisateur")
@@ -142,6 +158,48 @@ class Utilisateur {
      */
     public function getEmail() {
         return $this->email;
+    }
+
+       /**
+     * Set Question
+     *
+     * @param string $question
+     *
+     * @return Utilisateur
+     */
+    public function setQuestion($question) {
+        $this->question = $question;
+        return $this;
+    }
+
+    /**
+     * Get Question
+     *
+     * @return string
+     */
+    public function getQuestion() {
+        return $this->question;
+    }
+
+       /**
+     * Set Reponse
+     *
+     * @param string $reponse
+     *
+     * @return Utilisateur
+     */
+    public function setReponse($reponse) {
+        $this->reponse = $reponse;
+        return $this;
+    }
+
+    /**
+     * Get Reponse
+     *
+     * @return string
+     */
+    public function getReponse() {
+        return $this->reponse;
     }
 
     /**

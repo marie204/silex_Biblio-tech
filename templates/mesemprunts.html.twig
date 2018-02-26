@@ -1,1 +1,28 @@
 {% extends "layout.html.twig" %}
+
+
+{% block content %}
+	{% for item in arrayEmprunt %}
+		<table class="table" style="border: solid white; ">
+			<tr>
+				<td>Titre du livre emprunté</td>
+				<td>{{item.livre.title}}</td>
+			</tr>
+			<tr>
+				<td>date</td>
+				<td>du {{item.dateDebut|date('d/m/Y')}} au {{item.dateFin|date('d/m/Y')}}</td>
+			</tr>
+			<tr>
+				<td>validé</td>
+				<td>{{item.valider}}</td>
+			</tr>
+			<tr>
+				<td>Statut</td>
+				<td>{{item.statut}}</td>
+			</tr>
+			
+		</table>
+		<br>
+	{% endfor %}
+	
+{% endblock %}
