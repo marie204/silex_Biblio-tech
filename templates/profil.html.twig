@@ -1,11 +1,29 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-	<p>
+	
+
+{% if loggin == userCo.pseudo %}
+<p>
+
 	Bienvenue sur votre profil, {{loggin}}! <br>
 	<br>
 	Vous êtes actuellement un {{myStatut}}. <br> 
-	</p>
+	<div id='changementMDP'>
+	<button onclick="changementMDP();">Changer mon mot de passe</button></div>
+</p>
+    
+    <script>
+    function changementMDP(){
+    	document.getElementById('changementMDP').innerHTML = '<form action="./changementMDP"> <table classe="table"> <tr> <td> Ancien Mot de passe </td><td> <input type="text" name="ancienMDP"></td> </tr> <tr> <td> Nouveau mot de passe </td><td> <input type="text" name="newMDP"> </td></tr> <tr> <td> confirmation Mot de passe </td><td> <input type="text" name="newMDPconfirm"> </td></tr> <tr> <td colspan="2"> <center> <input type="submit"> </center> </td></tr></table> </form>';
+
+    }
+
+    </script>
+{% else %}
+	Bienvenue sur le profil de {{userCo.pseudo}}
+{% endif %}
+
 
 	<p id="myComments">
 	{% if lastComId is null %}
@@ -26,25 +44,25 @@
 		<br><br>
 	</p>
 	<p id="myEmprunt">
-		{% if lastComId is null %}
+		{% if lastEmprunt.id is null %}
 			Commencez dès maintenant à emprunter des livres en vous rendant dans notre catalogue!<br>
 		{% else %}
 			<table class="table">
 				<tr>
 					<td>Titre du livre</td>
-					<td>{{lastEmpruntTitre}}</td>
+					<td>{{lastEmprunt.livre.title}}</td>
 				</tr>
 				<tr>
 					<td>date début</td>
-					<td>{{lastEmpruntDateDebut}}</td>
+					<td>{{lastEmprunt.dateDebut|date('d/m/Y')}}</td>
 				</tr>
 				<tr>
 					<td>date fin</td>
-					<td>{{lastEmpruntDateFin}}</td>
+					<td> {{lastEmprunt.dateFin|date('d/m/Y')}}</td>
 				</tr>
 				<tr>
 					<td>Statut</td>
-					<td>{{lastEmpruntStatut}}</td>
+					<td>{{lastEmprunt.statut}}</td>
 				</tr>
 				
 			</table>
