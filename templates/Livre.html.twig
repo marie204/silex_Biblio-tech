@@ -9,26 +9,148 @@
 <div class="container">
     <div class="row">
         <article class="col-lg-12 col-md-12 col-sm-12 banner-box">
-            <h3>Titre du livre</h3>
+            <h3>{{ livre.title }}</h3>
             <div class="row">
                 <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
                     <div class="thumb-pad maxheight1"><div class="box_inner">
                         <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic1.jpg" alt=""></a></figure>
+                            <figure><img src="{{ livre.image }}" alt=""></figure>
                             <div class="caption">
                                 <a href="#
-">Auteur</a>
+">by {{ livre.auteur }}</a>
+<p class="title"> </p>
                                 <p class="title">
-                                Genre<br>
-                                Description</p>
+
+                                </p>
                             </div>
                         </div>
                     </div></div>
-                </article>
+                </article><article class="col-lg-1"></article><article class='description col-lg-8'><p >{{ livre.description }}</p></article></article>
+                <article> 
     </div>
 </div>
+{% if loggin  == '' %}
+<div class="container" id='containerEmprunt'>
+    Si vous ne l'êtes pas encore, devenez membre afin de pouvoir emprunter ce livre et bien d'autres! 
+</div>
+{% else %}
+<div class="container" id='containerEmprunt'>
+    <button onclick="affichEmp();">Faire une demande d'emprunt</button>
+</div>
+
+<script>
+
+    function affichEmp(){
+        varA = new Date(Date.now());
+              varB = ''+varA.getMonth();              
+              varB.length == 2 ? varB = varB : varB = '0'+ varB;
+              varC = ''+varA.getDate();
+              varC.length == 2 ? varC = varC : varC = '0'+ varC;
+              varA = varA.getFullYear() + '-' + varB + '-' + varC;
+        document.getElementById('containerEmprunt').innerHTML = '<form action="./demandemp" onsubmit="maDate()">'
+        +'<input type="hidden" name="idLivre" value="{{livre.id}}" required>'
+        +'<input type="hidden" id=dFin name="dFin" required>'
+        +'A partir du: <input type="date" id="dateDebut" name="dateDebut" value="'+varA+'" required>'
+        +'<input type="submit" value="Demande d\'emprunt">'
+    +'</form>'
+    }
+
+    function maDate(){
+        dateDebut = document.getElementById('dateDebut').value;
+        dateDebut = dateDebut.split('-');
+        //console.log(dateDebut);
+        for(i in dateDebut){
+            dateDebut[i] = parseInt(dateDebut[i]);
+        }
+        if (dateDebut[1]%2 == 0) {
+            dateDebut[1] == 2 ? calculDay = 28 : calculDay = 30;
+        }else{
+            calculDay = 31;
+        }
+        if ((dateDebut[2]+14)<=calculDay) {
+            day = dateDebut[2]+14;
+            month = dateDebut[1];
+            years = dateDebut[0];
+        }else{
+            day = 14-(calculDay-dateDebut[2]);
+            if(dateDebut[1] == 12){
+                month = +1;
+                years = dateDebut[0]+1;
+            }else{
+                month = dateDebut[1] + 1 ;
+                years = dateDebut[0];
+            }  
+        }
+        if (dateDebut[1] == '02'&&dateDebut[2] >= 15&&(dateDebut[0]%4 == 0&&dateDebut[0]%100 !== 0)|| (dateDebut[0]%400 == 0)) {
+                if (day==1){day = 29;month--}else{ day--;}
+        }
+        day = ''+day;
+        month = ''+month;
+        day.length == 2 ? day = day: day = '0'+day;
+        console.log(day.length);
+        month.length == 2 ? month = month: month = '0'+month;
+        //console.log( day+'/'+month+'/'+years );
+        document.getElementById('dFin').value = years + '-'+month + '-'+day;
+    }
+</script>
+
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        {% for comment in lastComs %}
+        <article class="col-lg-3 col-md-6 col-sm-6">
+            <div class="thumb-pad1 maxheight">
+                <div class="box_inner">
+                    <div class="thumbnail">
+                        <h2> {{comment.utilisateur.pseudo}} </h2>
+                        <div class="caption">
+                            <p>{{comment.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        {% if loggin  != '' %}
+<article class="col-lg-6 col-md-12 col-sm-12">
+            <div class="thumb-pad1 maxheight">
+                <div class="box_inner">
+                    <div class="thumbnail" id='ajoutCommentaire'>
+                        <button onclick="ajoutAjoutCom();">Donne ton avis!</button>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+<script>
+function ajoutAjoutCom(){
+    varA = new Date(Date.now());
+    varB = ''+varA.getMonth();              
+              varB.length == 2 ? varB = varB : varB = '0'+ varB;
+              varC = ''+varA.getDate();
+              varC.length == 2 ? varC = varC : varC = '0'+ varC;
+              varA = varA.getFullYear() + '-' + varB + '-' + varC;
+    document.getElementById('ajoutCommentaire').innerHTML = '<form action="./envoyerCommentaire">'
+                            +'<input type="hidden" name="id" value="{{livre.id}}">'
+                            +'<input type="hidden" name="dateAjout" value="'+varA+'">'
+                            +'<input type="hidden" name="pseudoUser" value="{{loggin}}">'                        
+                            +'<div class="caption">'
+                            +'<textarea name="areaCom" rows="10" style="width:100%;overflow:scroll"></textarea>'
+                            +'<input type="submit">'
+                            +'</form>';
+}
+</script>
+{% endif %}
+
+    
+    </div>
+    {% if lastComs  != null %}
+    <a href="./touslescommentaires?id={{livre.id}}"> voir tous les avis concernants {{livre.title}}</a>
+    {% endif %}
+</div>
+
 </section>
 </section>
 </div>

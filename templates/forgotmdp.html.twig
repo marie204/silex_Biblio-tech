@@ -1,0 +1,30 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+
+<div id="containerErreur"></div>
+<input type="input" id="pseudo">
+<button onclick="recupPseudo();">valider</button>
+
+
+<script>
+	function recupPseudo(){
+		pseudo = document.getElementById('pseudo').value;
+		requete = new XMLHttpRequest();
+		requete.onreadystatechange = function() {
+			if (requete.readyState == 4 && requete.status == 200) {
+				var response = requete.responseText;
+				if (response == '400') {
+					$('#containerErreur').html('Le champ est vide');
+				}else if(response == '404'){
+					$('#containerErreur').html('Mauvais pseudo');
+				}
+				console.log(response);
+			}
+		};
+		requete.open('GET', './forgot?pseudo='+pseudo);
+		requete.send();
+		
+	}
+</script>
+{% endblock %}
