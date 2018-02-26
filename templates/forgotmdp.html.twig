@@ -3,11 +3,15 @@
 {% block content %}
 
 <div id="containerErreur"></div>
-<input type="input" id="pseudo">
-<button onclick="recupPseudo();">valider</button>
+<div id="containerPseudo"></div>
 
+<div id='formulaire'>
+<input type="text" id="pseudo" >
+<button id='validateur' onclick="recupPseudo();">valider</button>
+</div>
 
 <script>
+//$('#validateur').bind('click',recupPseudo());
 	function recupPseudo(){
 		pseudo = document.getElementById('pseudo').value;
 		requete = new XMLHttpRequest();
@@ -16,15 +20,77 @@
 				var response = requete.responseText;
 				if (response == '400') {
 					$('#containerErreur').html('Le champ est vide');
+					$('#pseudo').css("border", 'solid red');
+					$('#pseudo').bind('click', function(){$('#pseudo').css('border', 'none')});
 				}else if(response == '404'){
 					$('#containerErreur').html('Mauvais pseudo');
+					$('#pseudo').css("border", 'solid red');
+					$('#pseudo').bind('click', function(){$('#pseudo').css('border', 'none')});
+				}else{
+					ajoutQuestion(response, pseudo);
 				}
-				console.log(response);
 			}
 		};
 		requete.open('GET', './forgot?pseudo='+pseudo);
 		requete.send();
 		
+	}
+	function ajoutQuestion(response, pseudo){
+		$('#formulaire').html('<input type="hidden" id="pseudo" val="'+pseudo+'">Bonjour, '+pseudo+'<br> Votre question secrète: '+response+' <br>Reponse: <input type="text" id="reponse"> <button id="valQuestion">valider</button> ');
+		$('#valQuestion').bind('click', function(){repondre(pseudo);});
+	}
+	function repondre(pseudo){
+		var ajax = new XMLHttpRequest();
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				reponseAjax = ajax.responseText;
+				validation(reponseAjax, pseudo);
+			}
+		};
+		ajax.open('GET', './forgot?pseudo='+pseudo+'&reponse='+document.getElementById('reponse').value);
+		ajax.send();
+	}
+	function validation(reponseAjax, pseudo){
+		if (reponseAjax == '403') {
+			$('#reponse').css("border", 'solid red');
+			$('#reponse').bind('click', function(){$('#reponse').css('border', 'none')});
+		}
+		if (reponseAjax == '404') {
+			$('#formulaire').html('Une erreur est survenue. ')
+		}
+		if (reponseAjax == 'ok') {
+			$('#formulaire').html('<input type="hidden" id="pseudo" val="'+pseudo+'">Bonjour, '+pseudo+'<br> Votre question secrète a été validée <br> Nouveau mot de passe: <input type="password" id="mdp1"><br> Confirmation: <input type="password" id="mdp2"> <button id="valMDP">valider</button> ');
+			$('#valMDP').bind('click', function(){ajoutMDP(pseudo);});
+		}
+	}
+	function ajoutMDP(pseudo){
+		if(document.getElementById('mdp1').value.length < 8){
+			$('#mdp1').css("border", 'solid red');
+			$('#mdp1').bind('click', function(){$('#mdp1').css('border', 'none')});
+			$('#mdp2').val('');
+		}else{
+			if (document.getElementById('mdp1').value == document.getElementById('mdp2').value) {
+				var ajax = new XMLHttpRequest();
+				ajax.onreadystatechange = function() {
+					if (ajax.readyState == 4 && ajax.status == 200) {
+						var response = ajax.responseText;
+						traitementChangeMDP(response, pseudo);
+					}
+				};
+				ajax.open('GET', './forgot?pseudo='+pseudo+'&password='+document.getElementById('mdp1').value);
+				ajax.send();
+			}else{
+				$('#mdp2').css("border", 'solid red');
+				$('#mdp2').bind('click', function(){$('#mdp2').css('border', 'none')});
+			}
+		}
+	}
+	function traitementChangeMDP(response, pseudo){
+		if (response == '403') {
+			$('#formulaire').html('Une erreur est survenue!');
+		}else{
+			window.location.replace('./login');
+		}
 	}
 </script>
 {% endblock %}

@@ -490,6 +490,9 @@ $app->get('/livre', function () use ($app){
     ));
 }); 
 
+
+ 
+
 /*Début pour ajouter un livre*/
 $app->match('/ajoutLivre', function (Request $request) use ($app){
     $li_title = $request->get('li_title');
@@ -516,12 +519,16 @@ $app->match('/ajoutLivre', function (Request $request) use ($app){
 /*Fin pour ajouter un livre*/
 
 /*DEBUT ADMINISTRATION*/
-$app->get('/admin', function () use ($app){
-    return $app['twig']->render('admin/accueil.html.twig', array());
-});
+/*Page liste des livres*/
 $app->get('/listeLivres', function () use ($app){
-    return $app['twig']->render('admin/listeLivres.html.twig', array());
+    $repository = $app['em']->getRepository(Livre::class);
+    $livres = $repository->findAll();
+    return $app['twig']->render('admin/listeLivres.html.twig', array('livres' => $livres));
 });
+/*Pagination*/
+
+///////////////////////////////////////////////////////////////////////////
+
 $app->get('/ajoutLivre', function () use ($app){
     return $app['twig']->render('admin/ajoutLivre.html.twig', array());
 });

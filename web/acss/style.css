@@ -64,6 +64,12 @@ i {
     margin-top: 30px;
 }
 /****************************************** PAGE LISTE DES LIVRES ************************************/
+.striped td{
+    vertical-align: top !important;
+}
+.photoListeLivres {
+    width: 100px;
+}
 img {
     float: left;   
 }
