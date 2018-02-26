@@ -359,18 +359,44 @@ $app->match('/log-server', function(Request $request) use ($app){
         return $app->redirect('./accueil'); 
     }
 });
-
+//setPassword
 $app->match('/forgot', function (Request $request) use ($app){
+    $repoUser = $app['em']->getRepository(Utilisateur::class);
     if( !isset($_GET['pseudo'])||empty($_GET['pseudo']) ) {
         return '400';
-    }else if($_GET['pseudo']){
+    }else if($_GET['pseudo'] && !isset($_GET['reponse'])&& !isset($_GET['password'])){
         $pseudo = htmlspecialchars($_GET['pseudo']);
-        $repoUser = $app['em']->getRepository(Utilisateur::class);
         $verifPseud = $repoUser->findOneBy(array('pseudo' => $pseudo));
         if ($verifPseud == null) {
             return '404';
         }
         return $verifPseud->getQuestion();
+    }else if(isset($_GET['reponse'])&&$_GET['pseudo']){
+        $pseudo = htmlspecialchars($_GET['pseudo']);
+        $reponse = htmlspecialchars($_GET['reponse']);
+        $verifPseud = $repoUser->findOneBy(array('pseudo' => $pseudo));
+        if ($verifPseud == null) {
+            return '404';
+        }
+        if (($verifPseud->getReponse() == $reponse)) {
+            return 'ok';
+        }else{
+            return '403';
+        }
+
+    }else if(isset($_GET['password'])&&$_GET['pseudo']){
+        $pseudo = htmlspecialchars($_GET['pseudo']);
+        $password = htmlspecialchars($_GET['password']);
+        if (strlen($password) < 8) {
+            return '403';
+        }
+        $verifPseud = $repoUser->findOneBy(array('pseudo' => $pseudo));
+        $passHachay = password_hash($_GET['password'], PASSWORD_DEFAULT);
+        $verifPseud->setPassword($passHachay);
+        $app['em']->persist($verifPseud);
+        $app['em']->flush();
+        return 'ok';
+
     }
 });
 
