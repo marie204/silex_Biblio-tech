@@ -525,7 +525,6 @@ $app->get('/listeLivres', function () use ($app){
     $livres = $repository->findAll();
     return $app['twig']->render('admin/listeLivres.html.twig', array('livres' => $livres));
 });
-/*Pagination*/
 
 ///////////////////////////////////////////////////////////////////////////
 
