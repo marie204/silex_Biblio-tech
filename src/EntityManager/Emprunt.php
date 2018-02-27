@@ -59,13 +59,6 @@ class Emprunt {
     private $utilisateur;
 
     /**
-     * exemplaire linked to this emprunt
-     *
-     * @ManyToOne(targetEntity="EntityManager\Exemplaire", inversedBy="emprunt")
-     */
-    private $exemplaire = null;
-
-    /**
      * livre linked to this emprunt
      *
      * @ManyToOne(targetEntity="EntityManager\Livre", inversedBy="emprunt")
@@ -168,24 +161,6 @@ class Emprunt {
      */
     public function getUtilisateur() {
         return $this->utilisateur;
-    }
-
-    /**
-     * Set Exemplaire
-     *
-     * @param \EntityManager\Exemplaire $exemplaire
-     */
-    public function setExemplaire($exemplaire) {
-        $this->exemplaire = $exemplaire;
-        return $this;
-    }
-
-    /**
-     * Get Exemplaire
-     * @return \EntityManager\Exemplaire
-     */
-    public function getExemplaire() {
-        return $this->exemplaire;
     }
 
     /**
