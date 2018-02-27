@@ -136,8 +136,8 @@ $app->get('/catalogue_genre', function () use ($app){
 
 $app->get('/recherche', function () use ($app){
     //TODO recherche par titre/auteur/...
-    return $app->redirect('./ajoutLivre');
-    //return $app['twig']->render('recherche.html.twig', array());
+    //return $app->redirect('./ajoutLivre');
+    return $app['twig']->render('recherche.html.twig', array());
 });
 
 //Formulaire de contact
