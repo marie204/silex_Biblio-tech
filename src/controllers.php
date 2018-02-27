@@ -81,14 +81,10 @@ $app->match('/ajoutLivre', function () use ($app) {
         $livre->setLangue($langue);
         $livre->setDescription($description);
         $livre->setImage($image);
+        $livre->setEtat($nbexemplaire);
 
-        $exemplaire = new Exemplaire();
-        $exemplaire->setEtat($nbexemplaire);
-
-        $exemplaire->setLivre($livre);
-
+        
         $app['em']->persist($livre);
-        $app['em']->persist($exemplaire);
         $app['em']->flush();
 
         return $app['twig']->render('formulaire_isbn.html.twig', array(
