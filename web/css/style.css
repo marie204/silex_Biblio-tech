@@ -1239,3 +1239,6 @@ footer .nav {
     box-shadow: none;
     resize: none;  
 }
+#formulaire {
+    padding-bottom: 45px;
+}
