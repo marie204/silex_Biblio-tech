@@ -1,28 +1,37 @@
 {% extends "layout.html.twig" %}
 
-
 {% block content %}
-	{% for item in arrayEmprunt %}
-		<table class="table" style="border: solid white; ">
+
+<div class="global indent">
+	<div class="container row">
+		<article class="col-lg-12 col-md-12 col-sm-12">
+			<h3 class="h3MesEmprunts">Mes emprunts</h3>
+		</article>
+
+		{% for item in arrayEmprunt %}
+		<div class="col-md-3">
+		<table class="tableLogServeur table-responsive tableMesEmprunts" style="border: solid white; ">
 			<tr>
-				<td>Titre du livre emprunté</td>
+				<th>Titre du livre emprunté</th>
 				<td>{{item.livre.title}}</td>
 			</tr>
 			<tr>
-				<td>date</td>
+				<th>date</th>
 				<td>du {{item.dateDebut|date('d/m/Y')}} au {{item.dateFin|date('d/m/Y')}}</td>
 			</tr>
 			<tr>
-				<td>validé</td>
+				<th>validé</th>
 				<td>{{item.valider}}</td>
 			</tr>
 			<tr>
-				<td>Statut</td>
+				<th>Statut</th>
 				<td>{{item.statut}}</td>
 			</tr>
 			
-		</table>
+		</table><p>&nbsp;</p></div>
 		<br>
 	{% endfor %}
+</div>
+</div>
 	
 {% endblock %}
