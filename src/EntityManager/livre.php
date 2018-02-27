@@ -106,11 +106,12 @@ class Livre {
     private $genre;
 
     /**
-     * exemplaire linked to this livre
+     * Nombre de etats du livre
      *
-     * @OneToMany(targetEntity="EntityManager\Exemplaire", mappedBy="livre")
+     * @var int
+     * @Column(name="etatf", type="integer")
      */
-    private $exemplaire;
+    private $etat;
 
     /**
      * Get id
@@ -287,6 +288,27 @@ class Livre {
      */
     public function getPages() {
         return $this->pages;
+    }
+
+    /**
+     * Set Etat
+     *
+     * @param int $etat
+     *
+     * @return Livre
+     */
+    public function setEtat($etat) {
+        $this->etat = $etat;
+        return $this;
+    }
+
+    /**
+     * Get Etat
+     *
+     * @return int
+     */
+    public function getEtat() {
+        return $this->etat;
     }
 
     /**
