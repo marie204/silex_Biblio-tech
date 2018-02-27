@@ -1,36 +1,6 @@
 {% extends "layout.html.twig" %}
 {% block content %}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<div class="main">
-
-</div>
-<div class="global">
-<section class="popularBox">
-<div class="container">
-    <div class="row">
-        <article class="col-lg-12 col-md-12 col-sm-12 banner-box">
-            <h3>{{ livre.title }}</h3>
-            <div class="row">
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><img src="{{ livre.image }}" alt=""></figure>
-                            <div class="caption">
-                                <a href="#
-">by {{ livre.auteur }}</a>
-<p class="title"> </p>
-                                <p class="title">
-
-                                </p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article><article class="col-lg-1"></article><article class='description col-lg-8'><p >{{ livre.description }}</p></article></article>
-                <article> 
-=======
     <div class="main">
->>>>>>> develop
     </div>
     <div class="global">
         <section class="popularBox">
@@ -182,70 +152,4 @@
                     </section>
                 </section>
             </div>
-<<<<<<< HEAD
-        </article>
-<script>
-function ajoutAjoutCom(){
-    varA = new Date(Date.now());
-    varB = ''+varA.getMonth();              
-              varB.length == 2 ? varB = varB : varB = '0'+ varB;
-              varC = ''+varA.getDate();
-              varC.length == 2 ? varC = varC : varC = '0'+ varC;
-              varA = varA.getFullYear() + '-' + varB + '-' + varC;
-    document.getElementById('ajoutCommentaire').innerHTML = '<form action="./envoyerCommentaire">'
-                            +'<input type="hidden" name="id" value="{{livre.id}}">'
-                            +'<input type="hidden" name="dateAjout" value="'+varA+'">'
-                            +'<input type="hidden" name="pseudoUser" value="{{loggin}}">'                        
-                            +'<div class="caption">'
-                            +'<textarea name="areaCom" rows="10" style="width:100%;overflow:scroll"></textarea>'
-                            +'<input type="submit">'
-                            +'</form>';
-}
-</script>
-{% endif %}
-
-    
-    </div>
-    {% if lastComs  != null %}
-    <a href="./touslescommentaires?id={{livre.id}}"> voir tous les avis concernants {{livre.title}}</a>
-    {% endif %}
-</div>
-
-</section>
-</section>
-</div>
-{% endblock %}
-=======
-    <div class="main">
-    </div>
-    <div class="global">
-        <section class="popularBox">
-            <div class="container">
-                <div class="row">
-                    <article class="col-lg-12 col-md-12 col-sm-12 banner-box">
-                        <h3>Titre du livre</h3>
-                        <div class="row">
-                            <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                                <div class="thumb-pad maxheight1"><div class="box_inner">
-                                    <div class="thumbnail">
-                                        <figure><a href="./livre"><img src="../img/livres_img/page1_pic1.jpg" alt=""></a></figure>
-                                        <div class="caption">
-                                            <a href="#">Auteur</a>
-                                            <p class="title">
-                                            Langue<br>
-                                            Pages<br>
-                                            Description</p>
-                                        </div>
-                                    </div>
-                                </div></div>
-                            </article>
-                        </div>
-                    </div>
-                </section>
-            </section>
-        </div>
-    {% endblock %}
->>>>>>> Stashed changes
-=======
         {% endblock %}
->>>>>>> develop
