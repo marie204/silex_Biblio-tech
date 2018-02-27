@@ -445,8 +445,11 @@ $app->get('/livre', function () use ($app){
 $app->get('/admin', function () use ($app){
     return $app['twig']->render('admin/accueil.html.twig', array());
 });
+/*Page liste des livres*/
 $app->get('/listeLivres', function () use ($app){
-    return $app['twig']->render('admin/listeLivres.html.twig', array());
+    $repository = $app['em']->getRepository(Livre::class);
+    $livres = $repository->findAll();
+    return $app['twig']->render('admin/listeLivres.html.twig', array('livres' => $livres));
 });
 
 /*Début pour ajouter un livre*/
