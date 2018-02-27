@@ -24,6 +24,76 @@ $app->get('/', function () use ($app) {
 })
 ->bind('homepage');
 
+$app->match('/ajoutLivre', function () use ($app) {
+    if (isset($_POST['rechercher'])) {
+         $rechercheisbn = isset($_POST['rechercheisbn']) ? $_POST['rechercheisbn'] : '';
+
+         $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $rechercheisbn;
+         $response = file_get_contents($request);
+         $results = json_decode($response);
+
+        if ($results->totalItems > 0) {
+            $book = $results->items[0];
+            $infos['isbn'] = $book->volumeInfo->industryIdentifiers[0]->identifier;
+            $infos['titre'] = $book->volumeInfo->title;
+            $infos['auteur'] = $book->volumeInfo->authors[0];
+            $infos['langue'] = $book->volumeInfo->language;
+            $infos['pages'] = $book->volumeInfo->pageCount;
+            $infos['description'] = $book->volumeInfo->description;
+            if( isset($book->volumeInfo->imageLinks) ){
+                $infos['image'] = str_replace('&zoom=1', '&zoom=2', $book->volumeInfo->imageLinks->thumbnail);
+            }
+            
+            return $app['twig']->render('formulaire_isbn.html.twig', array(
+                'ISBN' => $infos['isbn'],
+                'titre' => $infos['titre'],
+                'auteur' => $infos['auteur'],
+                'langue' => $infos['langue'],
+                'pages' => $infos['pages'],
+                'description' => $infos['description'],
+                'image' => $infos['image']
+            ));
+        }
+        else {
+            return $app['twig']->render('formulaire_isbn.html.twig', array(
+              'echec' => "Livre introuvable"
+            ));
+        }
+    }
+    
+    if (isset($_POST['envoyer'])) {
+        $title = isset($_POST['title']) ? $_POST['title'] : '';
+        $auteur = isset($_POST['auteur']) ? $_POST['auteur'] : '';
+        $dateAjout = isset($_POST['dateAjout']) ? $_POST['dateAjout'] : '';
+        $isbn = isset($_POST['isbn']) ? $_POST['isbn'] : '';
+        $pages = isset($_POST['pages']) ? $_POST['pages'] : '';
+        $langue = isset($_POST['langue']) ? $_POST['langue'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $nbexemplaire = isset($_POST['exemplaire']) ? $_POST['exemplaire'] : '';
+        $image = isset($_POST['image']) ? $_POST['image'] : '';
+
+        $livre = new Livre();
+        $livre->setTitle($title);
+        $livre->setAuteur($auteur);
+        $livre->setDateAjout(new \DateTime($dateAjout));
+        $livre->setIsbn($isbn);
+        $livre->setPages($pages);
+        $livre->setLangue($langue);
+        $livre->setDescription($description);
+        $livre->setImage($image);
+        $livre->setEtat($nbexemplaire);
+
+        
+        $app['em']->persist($livre);
+        $app['em']->flush();
+
+        return $app['twig']->render('formulaire_isbn.html.twig', array(
+            'envoyer' => "Le livre ".$livre->getTitle()." à été ajouté"
+        ));
+    }
+    return $app['twig']->render('formulaire_isbn.html.twig', array());
+});
+
 $app->get('/deconnextion', function () use ($app){
     fermetureSession($app);
     return $app->redirect('./accueil');
@@ -441,6 +511,31 @@ $app->get('/livre', function () use ($app){
     ));
 }); 
 
+/*Début pour ajouter un livre*/
+$app->match('/ajoutLivre', function (Request $request) use ($app){
+    $li_title = $request->get('li_title');
+    $li_auteur = $request->get('li_auteur');
+    $li_date_ajout = $request->get('li_date_ajout');
+    $li_isbn = $request->get('li_isbn');
+    $li_pages = $request->get('li_pages');
+    $langue = $request->get('langue');
+    $li_desc = $request->get('li_desc');
+    $livre = new Livre();
+    $livre->setLiTitle($li_title);  //Entity / Classe Livre
+    $livre->setLiAuteur($li_auteur);
+    $livre->setLiDesc($li_date_ajout);
+    $livre->setLiIsbn($li_isbn);
+    $livre->setLiPages($li_pages);
+    $livre->setLangue($langue);
+    $livre->setLiDesc($li_desc);
+    /*$em = $app['orm.em'];*/
+    $em->persist($Livre);
+    $em->flush();
+    echo "Created livre with ID " . $livre->getId() . "\n";
+    return $app['twig']->render('ajoutLivre.html.twig', array());
+});
+/*Fin pour ajouter un livre*/
+
 /*DEBUT ADMINISTRATION*/
 $app->get('/admin', function () use ($app){
     return $app['twig']->render('admin/accueil.html.twig', array());
@@ -448,79 +543,9 @@ $app->get('/admin', function () use ($app){
 $app->get('/listeLivres', function () use ($app){
     return $app['twig']->render('admin/listeLivres.html.twig', array());
 });
-
-/*Début pour ajouter un livre*/
-$app->match('/ajoutLivre', function () use ($app) {
-    if (isset($_POST['rechercher'])) {
-         $rechercheisbn = isset($_POST['rechercheisbn']) ? $_POST['rechercheisbn'] : '';
-
-         $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $rechercheisbn;
-         $response = file_get_contents($request);
-         $results = json_decode($response);
-
-        if ($results->totalItems > 0) {
-            $book = $results->items[0];
-            $infos['isbn'] = $book->volumeInfo->industryIdentifiers[0]->identifier;
-            $infos['titre'] = $book->volumeInfo->title;
-            $infos['auteur'] = $book->volumeInfo->authors[0];
-            $infos['langue'] = $book->volumeInfo->language;
-            $infos['pages'] = $book->volumeInfo->pageCount;
-            $infos['description'] = $book->volumeInfo->description;
-            if( isset($book->volumeInfo->imageLinks) ){
-                $infos['image'] = str_replace('&zoom=1', '&zoom=2', $book->volumeInfo->imageLinks->thumbnail);
-            }
-            
-            return $app['twig']->render('admin/ajoutLivre.html.twig', array(
-                'ISBN' => $infos['isbn'],
-                'titre' => $infos['titre'],
-                'auteur' => $infos['auteur'],
-                'langue' => $infos['langue'],
-                'pages' => $infos['pages'],
-                'description' => $infos['description'],
-                'image' => $infos['image']
-            ));
-        }
-        else {
-            return $app['twig']->render('admin/ajoutLivre.html.twig', array(
-              'echec' => "Livre introuvable"
-            ));
-        }
-    }
-    
-    if (isset($_POST['envoyer'])) {
-        $title = isset($_POST['title']) ? $_POST['title'] : '';
-        $auteur = isset($_POST['auteur']) ? $_POST['auteur'] : '';
-        $dateAjout = isset($_POST['dateAjout']) ? $_POST['dateAjout'] : '';
-        $isbn = isset($_POST['isbn']) ? $_POST['isbn'] : '';
-        $pages = isset($_POST['pages']) ? $_POST['pages'] : '';
-        $langue = isset($_POST['langue']) ? $_POST['langue'] : '';
-        $description = isset($_POST['description']) ? $_POST['description'] : '';
-        $nbexemplaire = isset($_POST['exemplaire']) ? $_POST['exemplaire'] : '';
-        $image = isset($_POST['image']) ? $_POST['image'] : '';
-
-        $livre = new Livre();
-        $livre->setTitle($title);
-        $livre->setAuteur($auteur);
-        $livre->setDateAjout(new \DateTime($dateAjout));
-        $livre->setIsbn($isbn);
-        $livre->setPages($pages);
-        $livre->setLangue($langue);
-        $livre->setDescription($description);
-        $livre->setImage($image);
-        $livre->setEtat($nbexemplaire);
-
-        
-        $app['em']->persist($livre);
-        $app['em']->flush();
-
-        return $app['twig']->render('admin/ajoutLivre.html.twig', array(
-            'envoyer' => "Le livre ".$livre->getTitle()." à été ajouté"
-        ));
-    }
+$app->get('/ajoutLivre', function () use ($app){
     return $app['twig']->render('admin/ajoutLivre.html.twig', array());
 });
-/*Fin pour ajouter un livre*/
-
 $app->get('/ajoutGenre', function () use ($app){
     return $app['twig']->render('admin/ajoutGenre.html.twig', array());
 });
