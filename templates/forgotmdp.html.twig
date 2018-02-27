@@ -2,13 +2,15 @@
 
 {% block content %}
 
-<div id="containerErreur"></div>
-<div id="containerPseudo"></div>
-
-<div id='formulaire'>
-<input type="text" id="pseudo" >
-<button id='validateur' onclick="recupPseudo();">valider</button>
-</div>
+	<div class="global indent">
+		<div class="container">
+			<div id="containerErreur"></div>
+			<div id="containerPseudo"></div>
+			<div id='formulaire'>
+				<div>Votre nom d'utilisateur</div>
+				<input class="formDdeEmprunt" type="text" id="pseudo" >
+				<button class="btn-default btn1" id='validateur' onclick="recupPseudo();">valider</button>
+			</div>
 
 <script>
 //$('#validateur').bind('click',recupPseudo());
@@ -37,7 +39,7 @@
 	}
 
 	function ajoutQuestion(response, pseudo){
-		$('#formulaire').html('<input type="hidden" id="pseudo" val="'+pseudo+'">Bonjour, '+pseudo+'<br> Votre question secrète: '+response+' <br>Reponse: <input type="text" id="reponse"> <button id="valQuestion">valider</button> ');
+		$('#formulaire').html('<input type="hidden" id="pseudo" val="'+pseudo+'">Bonjour, '+pseudo+'<br> Votre question secrète: '+response+' <br>Reponse: <input class="formDdeEmprunt" type="text" id="reponse"> <button  class="btn-default btn1" id="valQuestion">valider</button> ');
 		$('#valQuestion').bind('click', function(){repondre(pseudo);});
 
 	}
@@ -61,7 +63,7 @@
 			$('#formulaire').html('Une erreur est survenue. ')
 		}
 		if (reponseAjax == 'ok') {
-			$('#formulaire').html('<input type="hidden" id="pseudo" val="'+pseudo+'">Bonjour, '+pseudo+'<br> Votre question secrète a été validée <br> Nouveau mot de passe: <input type="password" id="mdp1"><br> Confirmation: <input type="password" id="mdp2"> <button id="valMDP">valider</button> ');
+			$('#formulaire').html('<input type="hidden" id="pseudo" val="'+pseudo+'">Bonjour, '+pseudo+'<br> Votre question secrète a été validée <br> <table class="tableLogServer"><tr><td>Nouveau mot de passe: </td><td><input class="formDdeEmprunt" type="password" id="mdp1"></td></tr><tr><td>Confirmation: </td><td><input class="formDdeEmprunt" type="password" id="mdp2"></td></tr><tr><td colspan="2"> <button class="btn-default btn1" id="valMDP">valider</button></td></tr></table> ');
 			$('#valMDP').bind('click', function(){ajoutMDP(pseudo);});
 		}
 	}
@@ -95,4 +97,5 @@
 		}
 	}
 </script>
+</div></div>
 {% endblock %}
