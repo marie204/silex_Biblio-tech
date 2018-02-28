@@ -1,0 +1,47 @@
+{% extends "alayout.html.twig" %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col s12 m12 l12">
+				<p>Il y a: {{ emprunts|length }} emprunts dans la base.</p>
+			</div>
+		</div>{# ROW #}
+			<div class="row">
+				<div class="col l12">
+					<table id="myTable" class="striped">
+						<thead>
+							<tr>
+								<th>Photo</th>
+								<th>Titre</th>
+								<th>Auteur</th>
+								<th>Date d'ajout</th>
+								<th>ISBN</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for emprunt in emprunts|reverse %}
+								<tr>
+									<td class="photoListeemprunts"><img class="responsive-img" src="{{ emprunt.image }}"></td>
+									<td>{{ emprunt.title }}</td>
+									<td>{{ emprunt.auteur }}</td>
+									<td>{{ emprunt.dateAjout|date('d/m/Y') }}</td>
+									<td>{{ emprunt.isbn }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{# PLUGIN DATATABLE POUR LA PAGINATION #}
+					<script>
+						$(document).ready(function() {
+						$('#myTable').DataTable( {
+						"language": {
+						"decimal": ",",
+						"thousands": "."
+						}
+						} );
+						} );
+					</script>
+				</div>{# COL #}
+			</div>{# ROW #}
+		</div>{# CONTAINER #}
+	{% endblock %}

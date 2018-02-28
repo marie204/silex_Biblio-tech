@@ -1242,3 +1242,14 @@ footer .nav {
 #formulaire {
     padding-bottom: 45px;
 }
+.tableMesEmprunts {
+    margin-top:-15px;
+    margin-left:102px;
+    margin-bottom:25px;
+
+    padding: 3px;
+    border: 1px solid #777 !important;
+}
+.h3MesEmprunts {
+    margin-left:100px !important;;
+}
