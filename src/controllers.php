@@ -29,7 +29,7 @@ $app->get('/deconnextion', function () use ($app){
     return $app->redirect('./accueil');
 });
 $app->match('/envoyerCommentaire', function () use ($app){
-    if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])) {
+    if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])||empty($_GET['areaCom'])) {
         //addComment($_GET['areaCom'], $_GET['id'], $_GET['pseudoUser']);
         return $app->redirect('./touslescommentaires?id='.$_GET['id']);
     }
