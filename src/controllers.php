@@ -527,9 +527,15 @@ $app->match('/ajoutLivre', function () use ($app) {
 $app->get('/ajoutGenre', function () use ($app){
     return $app['twig']->render('admin/ajoutGenre.html.twig', array());
 });
+
+/*Page liste des emprunts*/
 $app->get('/listeEmprunts', function () use ($app){
-    return $app['twig']->render('admin/listeEmprunts.html.twig', array());
+    $repository = $app['em']->getRepository(Emprunt::class);
+    $emprunts = $repository->findAll();
+    return $app['twig']->render('admin/listeEmprunts.html.twig', array('emprunts' => $emprunts));
 });
+
+
 $app->get('/ajoutEmprunts', function () use ($app){
     return $app['twig']->render('admin/ajoutEmprunt.html.twig', array());
 });
