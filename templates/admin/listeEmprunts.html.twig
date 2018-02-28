@@ -11,21 +11,21 @@
 					<table id="myTable" class="striped">
 						<thead>
 							<tr>
-								<th>Photo</th>
-								<th>Titre</th>
-								<th>Auteur</th>
-								<th>Date d'ajout</th>
-								<th>ISBN</th>
+								<th>Utilisateur</th>
+								<th>Date de début</th>
+								<th>Date de fin</th>
+								<th>Statut</th>
+								<th>Validé</th>
 							</tr>
 						</thead>
 						<tbody>
-							{% for emprunt in emprunts|reverse %}
+							{% for emprunt in emprunts %}
 								<tr>
-									<td class="photoListeemprunts"><img class="responsive-img" src="{{ emprunt.image }}"></td>
-									<td>{{ emprunt.title }}</td>
-									<td>{{ emprunt.auteur }}</td>
-									<td>{{ emprunt.dateAjout|date('d/m/Y') }}</td>
-									<td>{{ emprunt.isbn }}</td>
+									<td>{{ emprunt.utilisateur.pseudo }}</td>
+									<td>{{ emprunt.dateDebut|date('d/m/Y') }}</td>
+									<td>{{ emprunt.dateFin|date('d/m/Y') }}</td>
+									<td>{{ emprunt.statut }}</td>
+									<td>{{ emprunt.valider }}</td>
 								</tr>
 							{% endfor %}
 						</tbody>
@@ -35,9 +35,8 @@
 						$(document).ready(function() {
 						$('#myTable').DataTable( {
 						"language": {
-						"decimal": ",",
-						"thousands": "."
-						}
+						"url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/French.json"
+						},
 						} );
 						} );
 					</script>

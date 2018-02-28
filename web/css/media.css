@@ -125,6 +125,15 @@
          margin-bottom: -20px;  
     }
 }
+/*//////////////////////////////////////// Mes emprunts ////////////////////////////////////////*/
+@media screen and (max-width:768px){
+    .h3MesEmprunts {
+        margin-left: 0px !important;
+    }
+    .tableMesEmprunts {
+        margin-left: 0px !important;
+    }
+}
 /*////////////////////////////////////////////////////// Footer ///////////////////////////////////////////////////*/
 @media screen and (max-width:767px) {
     footer ul {

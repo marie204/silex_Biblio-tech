@@ -29,7 +29,7 @@ $app->get('/deconnextion', function () use ($app){
     return $app->redirect('./accueil');
 });
 $app->match('/envoyerCommentaire', function () use ($app){
-    if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])) {
+    if (!isset($_GET['areaCom'])||!isset($_GET['id'])||!isset($_GET['pseudoUser'])||empty($_GET['areaCom'])) {
         //addComment($_GET['areaCom'], $_GET['id'], $_GET['pseudoUser']);
         return $app->redirect('./touslescommentaires?id='.$_GET['id']);
     }
@@ -527,11 +527,55 @@ $app->match('/ajoutLivre', function () use ($app) {
 $app->get('/ajoutGenre', function () use ($app){
     return $app['twig']->render('admin/ajoutGenre.html.twig', array());
 });
+
+/*Page liste des emprunts*/
 $app->get('/listeEmprunts', function () use ($app){
-    return $app['twig']->render('admin/listeEmprunts.html.twig', array());
+    $repository = $app['em']->getRepository(Emprunt::class);
+    $emprunts = $repository->findAll();
+    return $app['twig']->render('admin/listeEmprunts.html.twig', array('emprunts' => $emprunts));
 });
+
+
 $app->get('/ajoutEmprunts', function () use ($app){
-    return $app['twig']->render('admin/ajoutEmprunt.html.twig', array());
+    $repoBooks = $app['em']->getRepository(Livre::class);
+    $repoMember = $app['em']->getRepository(Utilisateur::class);
+    if (isset($_GET['pseudonyme'])&&isset($_GET['livre'])) {
+        $livre = $repoBooks->findOneBy(array('isbn'=>$_GET['livre']));
+        $membre = $repoMember->findOneBy(array('id'=>$_GET['pseudonyme']));
+        //var_dump($livre);
+        //var_dump($membre);
+        $emp = new Emprunt();
+        $emp->setDateDebut(new DateTime($_GET['dateDebut']));
+        $emp->setDateFin(new DateTime($_GET['dateFin']));
+        $emp->setStatut('Emprunt');
+        $emp->setUtilisateur($membre);
+        $emp->setLivre($livre);
+        $emp->setValider('oui');
+        $app['em']->persist($emp);
+        $app['em']->flush();
+
+        /*$newEmprunt = New Emprunt();
+        $newEmprunt->setDateDebut(new DateTime($_GET['dateDebut']));
+        $newEmprunt->setDateFin(new DateTime($_GET['dateFin']));
+        $newEmprunt->setStatut('Emprunté');
+        $newEmprunt->setUtilisateur($membre);
+        $newEmprunt->setLivre($livre);
+        $newEmprunt->setValider('Oui');
+        $app['em']->persist($newEmprunt);
+        $app['em']->flush();*/
+
+    }
+        $allMembers = $repoMember->findBy(array());    
+    $allBooks = $repoBooks->findBy(array());
+
+    //'lastComs' => $lastComs,
+    return $app['twig']->render('admin/ajoutEmprunt.html.twig', array(
+        'allMembers' => $allMembers,
+        'allBooks' => $allBooks,
+
+    ));
+    
+    
 });
 /*FIN ADMINISTRATION*/
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
