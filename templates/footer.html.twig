@@ -17,8 +17,11 @@
             <li><a href="./catalogue_a_z">De A à Z</a></li>
             <!-- <li><a href="./catalogue_genre">Par genre</a></li> -->
             <li><a href="./recherche">Recherche avancée</a></li>
+            {% if myStatut == 'Admin' %}
+                <li><a href="./admin">Administration</a></li>
+            {% endif %}
             <li>
-                <a href="./admin">Administrateur</a>
+                <a href="./mentionlegale">Mention Legale</a>
             </li>
         </ul>
     </div>

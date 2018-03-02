@@ -1,0 +1,76 @@
+{% extends "alayout.html.twig" %}
+{% block content %}
+	<div class="container">
+		<form method="GET" action="./ajoutEmprunts">
+			<br><br>
+			Membre : <select name='pseudonyme'>
+				{% for member in allMembers %}
+				<option name='pseudonyme' value="{{member.id}}">{{member.pseudo}}</option>
+				{% endfor %}
+
+			</select><br>
+			Livre : <select name='livre'>
+				{% for book in allBooks %}
+				<option name='livre' value="{{book.isbn}}">{{book.title}}</option>
+				{% endfor %}
+			</select>
+			<input type="hidden" name='dateDebut' id="dateDebut">
+			<input type="hidden" name='dateFin' id="dFin">
+			<input class="btn blue" type="submit">
+				
+		</form>
+</div>
+	
+<script>
+affichEmp();
+maDate();
+
+function affichEmp(){
+                            varA = new Date(Date.now());
+                            varB = ''+varA.getMonth();
+                            varB.length == 2 ? varB = varB : varB = '0'+ varB;
+                            varC = ''+varA.getDate();
+                            varC.length == 2 ? varC = varC : varC = '0'+ varC;
+                            varA = varA.getFullYear() + '-' + varB + '-' + varC;
+                           	$('#dateDebut').val(varA);
+                            }
+
+
+function maDate(){
+                            dateDebut = document.getElementById('dateDebut').value;
+                            dateDebut = dateDebut.split('-');
+                            //console.log(dateDebut);
+                            for(i in dateDebut){
+                            dateDebut[i] = parseInt(dateDebut[i]);
+                            }
+                            if (dateDebut[1]%2 == 0) {
+                            dateDebut[1] == 2 ? calculDay = 28 : calculDay = 30;
+                            }else{
+                            calculDay = 31;
+                            }
+                            if ((dateDebut[2]+14)<=calculDay) {
+                            day = dateDebut[2]+14;
+                            month = dateDebut[1];
+                            years = dateDebut[0];
+                            }else{
+                            day = 14-(calculDay-dateDebut[2]);
+                            if(dateDebut[1] == 12){
+                            month = +1;
+                            years = dateDebut[0]+1;
+                            }else{
+                            month = dateDebut[1] + 1 ;
+                            years = dateDebut[0];
+                            }
+                            }
+                            if (dateDebut[1] == '02'&&dateDebut[2] >= 15&&(dateDebut[0]%4 == 0&&dateDebut[0]%100 !== 0)|| (dateDebut[0]%400 == 0)) {
+                            if (day==1){day = 29;month--}else{ day--;}
+                            }
+                            day = ''+day;
+                            month = ''+month;
+                            day.length == 2 ? day = day: day = '0'+day;
+                            console.log(day.length);
+                            month.length == 2 ? month = month: month = '0'+month;
+                            //console.log( day+'/'+month+'/'+years );
+                            document.getElementById('dFin').value = years + '-'+month + '-'+day;
+                            }</script>
+{% endblock %}

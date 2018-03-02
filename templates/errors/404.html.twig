@@ -1,5 +1,16 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-    Page not found.
+
+    <h1>404</h1>
+
+    <h2>Le serveur à détecté une erreur!!"{{ status_code }} {{ status_text }}".</h2>
+
+
+    <div>
+
+      <strong>La page est vide, veuillez cliquer sur: "Accueil" </strong>
+     <img alt="page_not_found404.jpg" width="30%" id="page_not_found404" src="../img/404/livre-noir-error404.gif">
+     ...
+    </div>
 {% endblock %}

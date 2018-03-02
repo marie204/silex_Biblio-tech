@@ -30,40 +30,111 @@
     .closebtn:hover {
         cursor: pointer;
     }
-
-    /*Navigation*/
-    nav {
-        display: block !important;     
-    }
-    nav#navbar {        
-        position: absolute; 
-        border: 1px solid red;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        background:#333745;
-
-    }
-    nav#navbar ul {
-        height: 50%;
-
-            display: flex;
-    }
-    nav#navbar ul li {
-        border: 1px solid red;  
-
-            display: flex;
-            flex-direction: column;
-    flex: 1;
-    }   
-    nav#navbar ul li a{
-        border: 1px solid red;           
-        display: block;
-
-            flex: 1;
-    }   
 }
-/*Footer*/
+/*/////////////////////////////////////////////// NAV MOBILES ///////////////////////////////////////////////////*/
+@media screen and (max-width:768px){
+     /*Navigation*/
+    nav.navbar {
+        display: none !important;
+    } 
+    /*Pour masquer les btn du slider sur la nav mobiles*/
+    #carouselExampleIndicators {
+        z-index: 2;
+    }
+    /*Pour masquer la recherche sur la nav mobiles*/
+    .frmFooter {
+        position: relative;
+        margin-left: -15px;
+        z-index: 2 !important;
+    }
+    .h3suscribe {
+        margin-left:10px;
+    }
+    /*Mobiles menu*/
+    #mobiles-menu-1 {
+        display: none;
+    }
+    .drop-mobiles-1 {
+        position: relative;
+    }
+    #open1 {
+        position: absolute;
+        margin-top: -5px;
+        right: 10px;
+    }
+    #ulPrem {
+        margin-top: -25px !important;
+        margin-left: -15px;
+    }
+    .logoMenuSwipe {
+        display: block;
+        height: 80px;
+        position: relative;
+        background:#222530 url("../img/logo.png") left top  no-repeat!important;
+        background-position: 0px 0px !important;
+        background-size: 50% !important;   
+        z-index: 1;  
+    }
+    #mySidenav {
+        display: block;
+        z-index: 3 !important;
+        margin-top: 0px !important;
+        height: 100%;
+    }
+    .sidenav {
+        width: 0;
+        position: fixed;
+        z-index: 3 !important;
+        top: 0;
+        left: 0;
+        background-color: #222530;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+    .sidenav li {
+        list-style-type: none;
+    }
+    .sidenav a {
+        padding: 8px 8px 8px 0px;
+        text-decoration: none;
+        font-size: 1em;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: -20px;
+        right: 5px;
+        font-size: 36px;
+        margin-left: 50px;
+    }                                       
+}
+ /*///////////////////////////////////////////////////// PAGE ACCUEIL ////////////////////////////////////////////*/
+/*SLOGAN ACCUEIL*/
+@media screen and (max-width:768px){
+    .slogan {
+         font-size: 1em;
+         margin-top: -30px;  
+         margin-bottom: -20px;  
+    }
+}
+/*//////////////////////////////////////// Mes emprunts ////////////////////////////////////////*/
+@media screen and (max-width:768px){
+    .h3MesEmprunts {
+        margin-left: 0px !important;
+    }
+    .tableMesEmprunts {
+        margin-left: 0px !important;
+    }
+}
+/*////////////////////////////////////////////////////// Footer ///////////////////////////////////////////////////*/
 @media screen and (max-width:767px) {
     footer ul {
         margin-bottom: 15px !important;
@@ -73,6 +144,7 @@
 @media screen and (max-width:767px) {
 	.rs {
 		margin-top: 50px;
+        margin-left: -5px;
 	}
 }
 

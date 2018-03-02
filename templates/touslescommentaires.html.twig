@@ -1,0 +1,71 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+	<div class="global indent">
+		<div class="container">
+			<h3>Commentaires à propos du livre choisi</h3>
+		</div>
+		<div class="container">
+			<div class="row">
+				{% for comment in lastComs %}
+					<article class="col-lg-6 col-md-12 col-sm-12">
+						<div class="thumb-pad1 maxheight">
+							<div class="box_inner">
+								<div class="thumbnail">
+									<h2> {{comment.utilisateur.pseudo}} </h2>
+									<div class="caption">
+										<p>{{comment.description}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+				{% endfor %}
+				{% if loggin  == '' %}
+					<article class="col-lg-6 col-md-12 col-sm-12">
+						<div class="thumb-pad1 maxheight">
+							<div class="box_inner">
+								<div class="thumbnail">
+									<h2>  </h2>
+									<div class="caption">
+										<p>Connectez vous pour ajouter votre propre commentaire!</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					
+				{% else %}
+					<article class="col-lg-6 col-md-12 col-sm-12">
+						<div class="thumb-pad1 maxheight">
+							<div class="box_inner">
+								<div class="thumbnail" id='ajoutCommentaire'>
+									<button class="btn-default btn1"  onclick="ajoutAjoutCom();">Donne ton avis!</button>
+									<p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<script>
+function ajoutAjoutCom(){
+	varA = new Date(Date.now());
+	varB = ''+varA.getMonth();
+varB.length == 2 ? varB = varB : varB = '0'+ varB;
+varC = ''+varA.getDate();
+varC.length == 2 ? varC = varC : varC = '0'+ varC;
+varA = varA.getFullYear() + '-' + varB + '-' + varC;
+	document.getElementById('ajoutCommentaire').innerHTML = '<form action="./envoyerCommentaire">'
+				+'<input type="hidden" name="id" value="{{idLivre}}">'
+				+'<input type="hidden" name="dateAjout" value="'+varA+'">'
+				+'<input type="hidden" name="pseudoUser" value="{{loggin}}">'
+			+'<div class="caption">'
+					+'<textarea name="areaCom" rows="10" style="width:100%;overflow:scroll"></textarea>'
+				+'<input class="btn-default btn1" type="submit"><p></p>'
+			+'</form>';
+		}
+	</script>
+{% endblock %}

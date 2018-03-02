@@ -47,189 +47,55 @@
         <article class="col-lg-12 col-md-12 col-sm-12 banner-box">
             <h3>Les plus populaires</h3>
             <div class="row">
+                {% for pLivre in popuLivre %}
                 <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
                     <div class="thumb-pad maxheight1"><div class="box_inner">
                         <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic1.jpg" alt=""></a></figure>
+                            <figure><a href="./livre?id={{pLivre.id}}"><img class="img-fluid" src="{{pLivre.image}}" alt=""></a></figure>
                             <div class="caption">
-                                <a href="./livre
-">The Road</a>
-                                <p class="title">by Cormac McCarthy</p>
+                                <a href="./livre?id={{pLivre.id}}">{{pLivre.title}}</a>
+                                <p class="title">{{pLivre.auteur}}</p>
                             </div>
                         </div>
                     </div></div>
                 </article>
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic2.jpg" alt=""></a></figure>
-                            <div class="caption">
-                                <a href="./livre
-">Interpreter of Maladie</a>
-                                <p class="title">by Jhumpa Lahiri</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article>
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic3.jpg" alt=""></a></figure>
-                            <div class="caption">
-                                <a href="./livre
-">Middlesex: A Novel</a>
-                                <p class="title">by Jeffrey Eugenides</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article>
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic4.jpg" alt=""></a></figure>
-                            <div class="caption">
-                                <a href="./livre
-">Gilead: A Novel</a>
-                                <p class="title">by Marilynne Robinson</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article>
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic5.jpg" alt=""></a></figure>
-                            <div class="caption">
-                                <a href="./livre
-">kavalier &amp; clay</a>
-                                <p class="title">by michael chabon</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article>
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic6.jpg" alt=""></a></figure>
-                            <div class="caption">
-                                <a href="./livre
-">A canticle for</a>
-                                <p class="title">by walter m. miller jr.</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article>
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic7.jpg" alt=""></a></figure>
-                            <div class="caption">
-                                <a href="./livre
-">The Corrections</a>
-                                <p class="title">by jonathan franzen</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article>
-                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                    <div class="thumb-pad maxheight1"><div class="box_inner">
-                        <div class="thumbnail">
-                            <figure><a href="./livre
-"><img src="../img
-/livres_img/page1_pic8.jpg" alt=""></a></figure>
-                            <div class="caption">
-                                <a href="./livre
-">tree of smoke: A Novel</a>
-                                <p class="title">by denis johnson</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </article>
+                {% endfor %}
+                
             </div>
         </article>
     </div>
 </div>
 </section>
-<section class="circleIconBox">
+
+{# ////////////////////////////////////////////////////////////////////// #}
+<section class="popularBox">
 <div class="container">
     <div class="row">
-        <h3>Les dernières critiqueS</h3>
-        <article class="col-lg-3 col-md-6 col-sm-6">
-            <div class="thumb-pad1 maxheight">
-                <div class="box_inner">
-                    <div class="thumbnail">
-                        <h2>Pseudo 1</h2>
-                        <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
+        <article class="col-lg-12 col-md-12 col-sm-12 banner-box">
+            <h3>Les dernières critiques</h3>
+            <div class="row">
+                {% for comment in lastComs %}
+                <article class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="thumb-pad maxheight1"><div class="box_inner">
+                        <div class="thumbnail">
+                          <h2>{{comment.utilisateur.pseudo}}</h2>
+                            <div class="caption">
+                                <p>{{comment.description}}</p>
+                                <a href="./livre?id={{comment.livre.id}}" class="btn-default btn1">Lire plus</a><p></p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-        <article class="col-lg-3 col-md-6 col-sm-6">
-            <div class="thumb-pad1 maxheight">
-                <div class="box_inner">
-                    <div class="thumbnail">
-                        <h2>Pseudo 2</h2>
-                        <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-        <article class="col-lg-3 col-md-6 col-sm-6">
-            <div class="thumb-pad1 maxheight">
-                <div class="box_inner">
-                    <div class="thumbnail">
-                        <h2>Pseudo 3</h2>
-                        <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-        <article class="col-lg-3 col-md-6 col-sm-6">
-            <div class="thumb-pad1 maxheight">
-                <div class="box_inner">
-                    <div class="thumbnail">
-                        <h2>Pseudo 4</h2>
-                        <div class="caption">
-                            <p class="title">Mes cuml dia sed ineniet inger lot aliiqs dolore.</p>
-                            <p>Mes cuml dia sed in lacus ut eniascet inger aliiqt es site amet eismod ictor ut ligulate ameti dapibus ticdu nt mtsen dolor.</p>
-                            <a href="./livre
-" class="btn-default btn1">Lire plus</a>
-                        </div>
-                    </div>
-                </div>
+                    </div></div>
+                </article>
+                {% endfor %}
+                
             </div>
         </article>
     </div>
 </div>
 </section>
+
+{# ///////////////////////////////////////////////////////////////////// #}
+
+</div>
 </div>
 {% endblock %}

@@ -1,0 +1,57 @@
+{% extends "alayout.html.twig" %}
+{% block content %}
+    {% if myStatut == 'Admin' %}
+        <article class="col-s12">
+            <div class="container">
+                <h3>Bienvenue sur le panneau d'administration de bibliotech, {{loggin}}!</h3>
+            </article>
+        </div>
+    {% endif %}
+    {% if myStatut == 'Invite' %}
+        <div class="global indent">
+            <!--content-->
+            <section class="formBox">
+                <div class="container">
+                    <div class="row">
+                        <article class="col-s12">
+                            <h3>Connectez-vous</h3>
+                            <div id='monErreur'></div>
+                            <div class="row">
+                                <form class="col s12" id="contact-form" action="./log-admin" method="post">
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <input placeholder="Nom d'utilisateur" class='text' id='log1' type="text" name="log">
+                                            <label for="first_name">Utilisateur</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <input placeholder="Mot de passe" class='text' id='mp1' type="password" name="mdp">
+                                            <label for="last_name">Mot de passe</label>
+                                        </div>
+                                    </div>
+                                    <input class="btn-default btn blue btn1" type="submit" name='login0' value='connexion'>
+                                </article>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <script>
+                if ('{{erreur}}' == 'wrongLogin') {
+                document.getElementById('monErreur').innerHTML = 'Votre identifiant n\'est pas dans la base de donnée ou votre mot de passe ne correspond guère à votre identifiant!';
+                $('.text').css('borderColor', 'red');
+                }
+                if ('{{erreur}}' == 'noLogin') {
+                document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigné votre identifiant!';
+                $('#log1').css('borderColor', 'red');
+                }
+                if ('{{erreur}}' == 'noPassa') {
+                document.getElementById('monErreur').innerHTML = 'Vous n\'avez pas renseigner votre mot de passe!';
+                $('#mp1').css('borderColor', 'red');
+                }
+                </script>
+            {% endif %}
+            {% if myStatut == 'Membre' %}
+                <div>C'est moche mais vous n'êtes pas autorisé par ici. </div>
+            {% endif %}
+        {% endblock %}

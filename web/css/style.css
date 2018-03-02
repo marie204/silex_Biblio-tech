@@ -1,5 +1,4 @@
-/* @import url(//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
- */
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 
 /* *[class*=col] {
 	border: 1px solid red;
@@ -97,14 +96,17 @@ h4 {
 .global {
     padding: 0;
 }
-
+/*FND PAGES*/
 .global.indent {
     padding-top: 60px;
     background: #ffffff;
 }
 
-/*-----menu-----*/
-
+/*/////////////////////////////////////////////////// NAV ////////////////////////////////////////////////////////*/
+/*On cache menuswipe*/
+#mySidenav {
+    display: none;               
+}
 .closebtn {
     display: none;
 }
@@ -196,7 +198,6 @@ nav.navbar li > a:hover {
     position: absolute;
     top: 25px;
     left: 0;
-    zoom: 1;
     width: 224px;
     margin: 0;
     max-height: 0;
@@ -235,7 +236,6 @@ nav.navbar .sub-menu > ul {
     position: absolute;
     top: 20px;
     left: 0;
-    zoom: 1;
     width: 200px;
     margin: 0;
     padding: 33px 0;
@@ -312,7 +312,6 @@ nav.navbar .sub-menu ul ul {
     position: absolute;
     top: -28px;
     left: 230px;
-    zoom: 1;
     width: 217px;
     margin: 0;
     padding: 28px 0;
@@ -448,6 +447,19 @@ footer .nav {
     cursor: pointer;
 }
 
+/*/////////////////////////////////////////////////Log server////////////////////////////////////////////////////*/
+.tableLogServer {
+    border:none !important;      
+}
+.tableLogServer td {
+    padding: 10px;                    
+}
+.tableLogServer input {
+    padding: 10px;                    
+}
+.btnLogServer {
+     text-align:right;               
+}
 /*Titre Principal*/
 .popularBox {
     padding-top: 20px;
@@ -464,7 +476,7 @@ footer .nav {
 .opportunitiesBox .title {
     margin-bottom: 9px;
     color: #3e454c;
-    font-sixe: 15px;
+    font-size: 15px;
 }
 
 .testimonialsBox {
@@ -702,6 +714,10 @@ footer .nav {
     opacity: 1;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
+}
+
+.lookatmyoverflowx{
+    overflow-x: none;
 }
 
 .trainerBox a:hover {
@@ -1047,7 +1063,7 @@ footer .nav {
     transition: all 0.25s ease;
 }
 
-/*---------------------------------------------------------------Formualaire de contact-----------------------------------------------*/
+/*-----------------------------------------------Formualaire de contact--------------------------------------------*/
 
 /*-----Contact map-----*/
 
@@ -1078,6 +1094,9 @@ footer .nav {
     color: #333745;
 }
 
+#erreurMessage {
+    margin-left: 120px;                
+}
 
 .contactBox2 {
     margin-bottom: 100px;
@@ -1111,7 +1130,7 @@ footer .nav {
 #contact-form .holder {
     overflow: hidden;
 }
-
+/*Inputs frm*/
 .form-div-1,
 .form-div-2,
 .form-div-3 {
@@ -1128,26 +1147,24 @@ footer .nav {
     display: block;
 }
 
-#contact-form ._placeholder {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+.form-control {
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 41px;
+    margin: 0;
     padding: 10px 14px 10px 14px;
+    border: 1px solid #cecece;
     border-radius: 0;
-    cursor: text;
-}
-
-#contact-form ._placeholder.focused {
-    opacity: 0;
+    font: 14px 'Arial',"Helvetica Neue",Helvetica,sans-serif;
+    line-height: 18px;
+    outline: none;
+    color: #bab9b9;
+    background: #ffffff;
     box-shadow: none;
-    filter: alpha(opacity=0);
-}
-
-#contact-form ._placeholder.hidden {
-    display: none;
+    resize: none;                
 }
 
 #contact-form input,
@@ -1175,66 +1192,6 @@ footer .nav {
     height: 201px;
     margin-bottom: 35px;
 }
-
-#contact-form .error-message,
-#contact-form .empty-message {
-    position: absolute;
-    top: 2px;
-    right: 5px;
-    height: 0;
-    overflow: hidden;
-    font: 10px 'Arial';
-    color: #bab9b9;
-    -webkit-transition: 0.3s ease-in height;
-    transition: 0.3s ease-in height;
-}
-
-#contact-form .invalid .error-message,
-#contact-form .empty .empty-message {
-    height: 20px;
-}
-
-#contact-form .success-message {
-    z-index: 10;
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    width: 100%;
-    height: 0;
-    padding: 0;
-    border-radius: 0;
-    overflow: hidden;
-    text-align: center;
-    line-height: 48px;
-    background: #fff;
-    box-shadow: none;
-    -webkit-transition: all 0.35s ease;
-    transition: all 0.35s ease;
-}
-
-#contact-form.success .success-message {
-    float: left;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    height: 41px;
-    margin: 0;
-    padding: 10px 14px 10px 14px;
-    border: 1px solid #cecece;
-    border-radius: 0;
-    font: 14px 'Arial',"Helvetica Neue",Helvetica,sans-serif;
-    line-height: 18px;
-    outline: none;
-    color: #bab9b9;
-    background: #ffffff;
-    box-shadow: none;
-    -webkit-transition: all 0.35s ease;
-    transition: all 0.35s ease;
-    resize: none;
-}
-
 .mail {
     text-decoration: underline;
     font-size: 14px;
@@ -1256,4 +1213,43 @@ footer .nav {
 
 .padBot {
     padding-bottom: 22px;
+}
+/*Commentaires site*/
+.divComment {
+    padding:15px;
+}
+.h2Comment {
+    margin-top: 15px;
+}
+.formDdeEmprunt {
+    width: 300px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 44px;
+    margin: 0;
+    padding: 10px 14px 10px 14px;
+    border: 1px solid #cecece;
+    border-radius: 0;
+    font: 14px 'Arial',"Helvetica Neue",Helvetica,sans-serif;
+    line-height: 18px;
+    outline: none;
+    color: #bab9b9;
+    background: #ffffff;
+    box-shadow: none;
+    resize: none;  
+}
+#formulaire {
+    padding-bottom: 45px;
+}
+.tableMesEmprunts {
+    margin-top:-15px;
+    margin-left:102px;
+    margin-bottom:25px;
+
+    padding: 3px;
+    border: 1px solid #777 !important;
+}
+.h3MesEmprunts {
+    margin-left:100px !important;;
 }

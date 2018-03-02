@@ -1,0 +1,18 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+	<div class="global indent">
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+					<div style="margin-bottom:50px" class="alert alert-danger" role="alert">
+						<h4 class="alert-heading">Le message n'a pas été envoyé !</h4>
+						<p>Il y a eu une erreur lors de l'envoi de votre courrier !</p>
+						<hr>
+						<p class="mb-0">Veuillez nous excuser pour cette erreur serveur, vous pouvez nous contacter au 02 33 06 41 00.</p>
+						<p></p><button onclick="document.location.href='./accueil'" class="btn btn-primary">Retour à l'accueil</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

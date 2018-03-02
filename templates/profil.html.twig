@@ -1,38 +1,73 @@
 {% extends "layout.html.twig" %}
-
 {% block content %}
-	<p>
-	Bienvenue sur votre profil, {{loggin}}! <br>
-	<br>
-	Vous êtes actuellement un {{myStatut}}. <br> 
-	</p>
-
-	<p id="myComments">
-	{% if lastComId is null %}
-		N'hésitez pas à donner votre avis sur les livres que vous avez pu lire! <br>
-		Vous verrez ici votre dernier commentaire! <br>
-	{% else %}
-		<table class="table">
-			<tr>
-				<td>{{lastComDate}}</td>
-			</tr>
-			<tr><td>{{loggin}}</td></tr>
-			<tr>
-				<td spanrow='2'>{{lastComDescription}}</td>
-			</tr>
-		</table>
-		<a href="./mesCommentaires">cliquez ici pour voir l'intégralité de vos commentaires.</a>
-		
-	{% endif %}
-
-		
-	</p>
-
-	<p id="myEmprunt">
-		Vous verrez ici votre dernier emprunt! <br>
-		cliquer ici pour voir l'intégralité de vos emprunts.
-	</p>
-
 	
-
-{% endblock %}
+	{% if loggin == userCo.pseudo %}
+		<div class="global indent">
+				<section class="formBox">
+					<div class="container">
+						<div class="row">
+							<article class="col-lg-12 col-md-12 col-sm-12">
+							<h3 class="h3suscribe">Votre profil</h3>
+								<p>
+									Bienvenue sur votre profil, {{loggin}}! <br>
+									<br>
+									Vous êtes actuellement un {{myStatut}}. <br>
+									<div id='changementMDP'>
+									<button class="btn-default btn1" onclick="changementMDP();">Changer mon mot de passe</button></div>
+								</p>
+								
+								<script>
+								function changementMDP(){
+									document.getElementById('changementMDP').innerHTML = '<form action="./changementMDP"> <table class="tableLogServer"> <tr> <td> Ancien Mot de passe </td><td> <input class="form-control" type="password" name="ancienMDP"></td> </tr> <tr> <td> Nouveau mot de passe </td><td> <input class="form-control" type="password" name="newMDP"> </td></tr> <tr> <td> confirmation Mot de passe </td><td> <input class="form-control" type="password" name="newMDPconfirm"> </td></tr> <tr class="btnLogServer"> <td colspan="2"> <input class="btn-default btn1" type="submit"> </td></tr></table> </form>';
+								}
+								</script>
+							{% else %}
+								Bienvenue sur le profil de {{userCo.pseudo}}
+							{% endif %}
+							<p id="myComments">
+								{% if lastComId is null %}
+									N'hésitez pas à donner votre avis sur les livres que vous avez pu lire! <br>
+								{% else %}
+									<table class="tableLogServer">
+										<tr>
+											<td>{{lastComDate}}</td>
+										</tr>
+										<tr><td>{{loggin}}</td></tr>
+										<tr>
+											<td spanrow='2'>{{lastComDescription}}</td>
+										</tr>
+									</table>
+									<a href="./mesCommentaires">cliquez ici pour voir l'intégralité de vos commentaires.</a>
+								{% endif %}
+								<br><br>
+							</p>
+							<p id="myEmprunt">
+								{% if lastEmprunt.id is null %}
+									Commencez dès maintenant à emprunter des livres en vous rendant dans notre catalogue!<br>
+								{% else %}
+									<table class="tableLogServer">
+										<tr>
+											<td>Titre du livre</td>
+											<td>{{lastEmprunt.livre.title}}</td>
+										</tr>
+										<tr>
+											<td>date début</td>
+											<td>{{lastEmprunt.dateDebut|date('d/m/Y')}}</td>
+										</tr>
+										<tr>
+											<td>date fin</td>
+											<td> {{lastEmprunt.dateFin|date('d/m/Y')}}</td>
+										</tr>
+										<tr>
+											<td>Statut</td>
+											<td>{{lastEmprunt.statut}}</td>
+										</tr>
+										
+									</table>
+									
+									<a href="./mesemprunts">cliquer ici pour voir l'intégralité de vos emprunts.</a>
+								{% endif %}
+							</p>
+						</article></div></div></section></div>
+						
+					{% endblock %}

@@ -59,11 +59,11 @@ class Emprunt {
     private $utilisateur;
 
     /**
-     * exemplaire linked to this emprunt
+     * livre linked to this emprunt
      *
-     * @OneToMany(targetEntity="EntityManager\Exemplaire", mappedBy="emprunt")
+     * @ManyToOne(targetEntity="EntityManager\Livre", inversedBy="emprunt")
      */
-    private $exemplaire;
+    private $livre;
 
     /**
      * Valider emprunt
@@ -164,6 +164,24 @@ class Emprunt {
     }
 
     /**
+     * Set Livre
+     *
+     * @param \EntityManager\Livre $livre
+     */
+    public function setLivre($livre) {
+        $this->livre = $livre;
+        return $this;
+    }
+
+    /**
+     * Get Livre
+     * @return \EntityManager\Livre
+     */
+    public function getLivre() {
+        return $this->livre;
+    }
+
+    /**
      * Set Valider
      *
      * @param string $valider
@@ -183,4 +201,5 @@ class Emprunt {
     public function getValider() {
         return $this->valider;
     }
+
 }
